@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "zHefc+kDRNqPSbipwfHqIu2F2T0Q/oGfAEZvZ+Q35TzCTDYahIgms50Fdl/IEVOd7qCYIQg8hbJBYhB6kfusFg==",
+  "success": true,
+  "projectFilePath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Domain/Mari.Domain.csproj",
+  "expectedPackageFiles": [
+    "/home/Nanoster/.nuget/packages/erroror/1.0.1/erroror.1.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

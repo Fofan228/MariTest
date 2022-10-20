@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "SG1kNlghkhRTQkHYejKEmHV8vJSFjkeqxMRoFzh7zm4=",
+  "Source": "Mari.Server",
+  "BasePath": "_content/Mari.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
