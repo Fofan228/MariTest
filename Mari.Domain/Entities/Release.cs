@@ -1,5 +1,6 @@
 using Mari.Domain.Common.BaseClasses;
 using Mari.Domain.Enums;
+using Mari.Domain.ValueObjects;
 
 namespace Mari.Domain.Entities;
 
@@ -11,20 +12,20 @@ public class Release : EntityBase<Guid>
 
     public Release(
         Guid id,
-        Version version,
         Platform platform,
-        ReleaseStatus status,
+        ReleaseStatus status, // TODO Должен ли быть статус по умолчанию?
         DateTime completionDate,
-        DateTime updationDate) : base(id)
+        DateTime currentDate,
+        ReleaseVersion? version = null) : base(id)
     {
-        Version = version;
         Platform = platform;
         Status = status;
         CompletionDate = completionDate;
-        UpdationDate = updationDate;
+        UpdationDate = currentDate;
+        Version = version ?? ReleaseVersion.MinValue;
     }
 
-    public Version Version { get; private set; } = null!;
+    public ReleaseVersion Version { get; private set; } = null!;
     public Platform Platform { get; private set; } = null!;
     public ReleaseStatus Status { get; private set; }
     public DateTime CompletionDate { get; private set; }
@@ -39,7 +40,7 @@ public class Release : EntityBase<Guid>
         ChangeUpdationDate(currentDateTime);
     }
 
-    public void ChangeVersion(Version version, DateTime currentDateTime)
+    public void ChangeVersion(ReleaseVersion version, DateTime currentDateTime)
     {
         Version = version;
         ChangeUpdationDate(currentDateTime);
