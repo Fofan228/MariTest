@@ -34,3 +34,15 @@ D:/Mari/Mari.Contracts/obj/Debug/net6.0/ref/Mari.Contracts.dll
 /home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Contracts/obj/Debug/net6.0/Mari.Contracts.dll
 /home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Contracts/obj/Debug/net6.0/ref/Mari.Contracts.dll
 /home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Contracts/obj/Debug/net6.0/Mari.Contracts.pdb
+/home/nanoster/projects/MariTest/Mari.Contracts/bin/Debug/net6.0/Mari.Contracts.deps.json
+/home/nanoster/projects/MariTest/Mari.Contracts/bin/Debug/net6.0/Mari.Contracts.dll
+/home/nanoster/projects/MariTest/Mari.Contracts/bin/Debug/net6.0/Mari.Contracts.pdb
+/home/nanoster/projects/MariTest/Mari.Contracts/obj/Debug/net6.0/Mari.Contracts.csproj.AssemblyReference.cache
+/home/nanoster/projects/MariTest/Mari.Contracts/obj/Debug/net6.0/Mari.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+/home/nanoster/projects/MariTest/Mari.Contracts/obj/Debug/net6.0/Mari.Contracts.AssemblyInfoInputs.cache
+/home/nanoster/projects/MariTest/Mari.Contracts/obj/Debug/net6.0/Mari.Contracts.AssemblyInfo.cs
+/home/nanoster/projects/MariTest/Mari.Contracts/obj/Debug/net6.0/Mari.Contracts.csproj.CoreCompileInputs.cache
+/home/nanoster/projects/MariTest/Mari.Contracts/obj/Debug/net6.0/Mari.Contracts.dll
+/home/nanoster/projects/MariTest/Mari.Contracts/obj/Debug/net6.0/refint/Mari.Contracts.dll
+/home/nanoster/projects/MariTest/Mari.Contracts/obj/Debug/net6.0/Mari.Contracts.pdb
+/home/nanoster/projects/MariTest/Mari.Contracts/obj/Debug/net6.0/ref/Mari.Contracts.dll

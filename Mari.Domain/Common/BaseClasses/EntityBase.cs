@@ -5,12 +5,7 @@ namespace Mari.Domain.Common.BaseClasses;
 public abstract class EntityBase<TId> : IEntity<TId>
     where TId : IEquatable<TId>
 {
-    public TId Id { get; set; } = default(TId)!;
-
-    protected EntityBase(TId id)
-    {
-        Id = id;
-    }
+    public TId Id { get; init; } = default(TId)!;
 
     protected EntityBase() { }
 

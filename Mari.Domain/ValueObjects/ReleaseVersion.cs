@@ -8,7 +8,7 @@ public record ReleaseVersion(
     VersionPart ThirdPart) : ValueObjectBase, IComparable<ReleaseVersion>
 {
     public static readonly ReleaseVersion MinValue = ReleaseVersion.Parse("0.0.1");
-    
+
     public static ReleaseVersion Parse(string version)
     {
         var parts = version.Split('.');
@@ -49,37 +49,19 @@ public record ReleaseVersion(
     #region Operators
     public static bool operator >(ReleaseVersion left, ReleaseVersion right)
     {
-        if (left.FirstPart > right.FirstPart)
-            return true;
-        if (left.FirstPart < right.FirstPart)
-            return false;
-
-        if (left.SecondPart > right.SecondPart)
-            return true;
-        if (left.SecondPart < right.SecondPart)
-            return false;
-
-        if (left.ThirdPart > right.ThirdPart)
-            return true;
-        if (left.ThirdPart < right.ThirdPart)
-            return false;
-
-        return false;
+        return left.CompareTo(right) > 0;
     }
-
     public static bool operator <(ReleaseVersion left, ReleaseVersion right)
     {
-        return !(left > right);
+        return left.CompareTo(right) < 0;
     }
-
     public static bool operator <=(ReleaseVersion left, ReleaseVersion right)
     {
-        return left == right || left < right;
+        return left.CompareTo(right) <= 0;
     }
-
     public static bool operator >=(ReleaseVersion left, ReleaseVersion right)
     {
-        return left == right || left > right;
+        return left.CompareTo(right) >= 0;
     }
     #endregion
 }

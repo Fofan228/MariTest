@@ -2,7 +2,11 @@ namespace Mari.Domain.Enums;
 
 public enum ReleaseStatus
 {
-    Released,
-    InDevelopment,
-    Cancelled
+    Planning,
+    Developing,
+    Testing,
+    MarketModeration,
+    InPublicationProcess,
+    Complete,
+    Paused
 }

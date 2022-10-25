@@ -5,16 +5,17 @@ namespace Mari.Domain.Entities;
 
 public class Comment : EntityBase<Guid>
 {
-    public Comment()
+    private Comment()
     {
     }
 
-    public Comment(Guid id, CommentContent content, Guid releaseId, int userId) : base(id)
+    public Comment(CommentContent content, Guid releaseId, int userId)
     {
         Content = content;
         ReleaseId = releaseId;
         UserId = userId;
     }
+
     public CommentContent Content { get; private set; } = null!;
     public int UserId { get; init; }
     public Guid ReleaseId { get; init; }
@@ -23,4 +24,11 @@ public class Comment : EntityBase<Guid>
     {
         Content = content;
     }
+
+    public static Comment Create(int userId, Guid releaseId, CommentContent content) => new Comment
+    {
+        Content = content,
+        ReleaseId = releaseId,
+        UserId = userId
+    };
 }

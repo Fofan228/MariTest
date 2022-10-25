@@ -5,13 +5,8 @@ namespace Mari.Domain.Entities;
 
 public class Platform : EntityBase<int>
 {
-    public Platform()
+    private Platform()
     {
-    }
-
-    public Platform(int id, PlatformName name) : base(id)
-    {
-        Name = name;
     }
 
     public PlatformName Name { get; private set; } = null!;
@@ -20,4 +15,9 @@ public class Platform : EntityBase<int>
     {
         Name = name;
     }
+
+    public static Platform Create(PlatformName name) => new Platform
+    {
+        Name = name
+    };
 }

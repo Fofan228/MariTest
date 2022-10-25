@@ -5,11 +5,11 @@ namespace Mari.Domain.Entities;
 
 public class Issue : EntityBase<Guid>
 {
-    public Issue()
+    private Issue()
     {
     }
 
-    public Issue(Guid id, IssueTitle title, IssueLink link) : base(id)
+    public Issue(IssueTitle title, IssueLink link)
     {
         Title = title;
         Link = link;
@@ -27,4 +27,10 @@ public class Issue : EntityBase<Guid>
     {
         Link = link;
     }
+
+    public static Issue Create(IssueTitle title, IssueLink link) => new Issue
+    {
+        Title = title,
+        Link = link
+    };
 }
