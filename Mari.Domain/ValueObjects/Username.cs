@@ -1,9 +1,17 @@
-using Mari.Domain.Common.BaseClasses;
+using Mari.Domain.Common.Models;
 
 namespace Mari.Domain.ValueObjects;
 
-public record Username(string Value) : ValueObjectBase
+public record Username : ValueObjectWrapper<string>
 {
-    public static implicit operator string(Username value) => value.ToString();
-    public override string ToString() => Value;
+    public const string Pattern = @"^[^\d\W]+.*";
+
+    public static Username Create(string value)
+    {
+        return new Username(value);
+    }
+
+    private Username(string Value) : base(Value)
+    {
+    }
 }

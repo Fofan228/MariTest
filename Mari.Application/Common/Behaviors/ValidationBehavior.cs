@@ -1,5 +1,6 @@
 using ErrorOr;
 using FluentValidation;
+using Mari.Application.Common.Extensions;
 using MediatR;
 
 namespace Mari.Application.Common.Behaviors;
@@ -25,15 +26,14 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
             return await next();
         }
 
-        var validationResult = await _validator.ValidateAsync(request);
+        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
 
         if (validationResult.IsValid)
         {
             return await next();
         }
 
-        var errors = validationResult.Errors
-            .ConvertAll(x => Error.Validation(x.PropertyName, x.ErrorMessage));
+        var errors = validationResult.ToDomainErrors();
 
         return (dynamic)errors;
     }

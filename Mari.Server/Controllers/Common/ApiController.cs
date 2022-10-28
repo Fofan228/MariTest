@@ -1,9 +1,11 @@
 using ErrorOr;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mari.Server.Controllers.Common;
 
 [ApiController]
+[Authorize]
 public class ApiController : ControllerBase
 {
     protected IActionResult Problem(List<Error> errors)

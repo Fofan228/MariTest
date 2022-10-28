@@ -1,12 +1,22 @@
-using Mari.Domain.Common.BaseClasses;
+using Mari.Domain.Common.Models;
 using Mari.Domain.ValueObjects;
 
 namespace Mari.Domain.Entities;
 
-public class Platform : EntityBase<int>
+public class Platform : Entity<int>
 {
-    private Platform()
+    public static Platform Create(PlatformName name) => new Platform(
+        id: default,
+        name: name
+    );
+
+    private Platform() : base(default)
     {
+    }
+
+    private Platform(int id, PlatformName name) : base(id)
+    {
+        Name = name;
     }
 
     public PlatformName Name { get; private set; } = null!;
@@ -15,9 +25,4 @@ public class Platform : EntityBase<int>
     {
         Name = name;
     }
-
-    public static Platform Create(PlatformName name) => new Platform
-    {
-        Name = name
-    };
 }

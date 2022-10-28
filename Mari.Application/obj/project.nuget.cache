@@ -1,17 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "Z+0lNb9jDKNIcYk42ACMvwR51CZq2w2GFYe8LGKOMLFR0RIGPR9OzNRTCWwvdkS6f4binGQb+yGCe798QbzkCw==",
+  "dgSpecHash": "9kwJ8zLlFTBkBXzLoLVGhnPAuaPu+Sty958pA7enBmFQLYhnLM+q6x6KGH65GW6RjqnLQSkVpGj8GaZZktHZXA==",
   "success": true,
-  "projectFilePath": "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj",
+  "projectFilePath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Application/Mari.Application.csproj",
   "expectedPackageFiles": [
-    "/home/nanoster/.nuget/packages/erroror/1.0.1/erroror.1.0.1.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/fluentvalidation/11.2.2/fluentvalidation.11.2.2.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/fluentvalidation.dependencyinjectionextensions/11.2.2/fluentvalidation.dependencyinjectionextensions.11.2.2.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/linqspecs/3.1.1/linqspecs.3.1.1.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/mediatr/11.0.0/mediatr.11.0.0.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/mediatr.contracts/1.0.1/mediatr.contracts.1.0.1.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/mediatr.extensions.microsoft.dependencyinjection/11.0.0/mediatr.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/6.0.0/microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
+    "/home/Nanoster/.nuget/packages/erroror/1.0.1/erroror.1.0.1.nupkg.sha512",
+    "/home/Nanoster/.nuget/packages/fluentvalidation/11.2.2/fluentvalidation.11.2.2.nupkg.sha512",
+    "/home/Nanoster/.nuget/packages/fluentvalidation.dependencyinjectionextensions/11.2.2/fluentvalidation.dependencyinjectionextensions.11.2.2.nupkg.sha512",
+    "/home/Nanoster/.nuget/packages/linqspecs/3.1.1/linqspecs.3.1.1.nupkg.sha512",
+    "/home/Nanoster/.nuget/packages/mediatr/11.0.0/mediatr.11.0.0.nupkg.sha512",
+    "/home/Nanoster/.nuget/packages/mediatr.contracts/1.0.1/mediatr.contracts.1.0.1.nupkg.sha512",
+    "/home/Nanoster/.nuget/packages/mediatr.extensions.microsoft.dependencyinjection/11.0.0/mediatr.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
+    "/home/Nanoster/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/6.0.0/microsoft.extensions.dependencyinjection.abstractions.6.0.0.nupkg.sha512"
   ],
   "logs": []
 }

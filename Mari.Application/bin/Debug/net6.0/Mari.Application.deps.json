@@ -47,6 +47,14 @@
           }
         }
       },
+      "LinqSpecs/3.1.1": {
+        "runtime": {
+          "lib/netstandard2.1/LinqSpecs.dll": {
+            "assemblyVersion": "3.1.1.0",
+            "fileVersion": "3.1.1.0"
+          }
+        }
+      },
       "MediatR/11.0.0": {
         "dependencies": {
           "MediatR.Contracts": "1.0.1"
@@ -88,7 +96,8 @@
       },
       "Mari.Domain/1.0.0": {
         "dependencies": {
-          "ErrorOr": "1.0.1"
+          "ErrorOr": "1.0.1",
+          "LinqSpecs": "3.1.1"
         },
         "runtime": {
           "Mari.Domain.dll": {}
@@ -122,6 +131,13 @@
       "sha512": "sha512-4JFJec9ILLax7vrVN7S6mVzlvc2Lwqu0lN3yl0LUoNVsJ8m1QB/twif/DX05EG+pYD83SWJ07wQ65WePGu2iGg==",
       "path": "fluentvalidation.dependencyinjectionextensions/11.2.2",
       "hashPath": "fluentvalidation.dependencyinjectionextensions.11.2.2.nupkg.sha512"
+    },
+    "LinqSpecs/3.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-goXyIg2KqUwgLVs5iP99HRyNTjHUNURp6VtNqzZwyqhf4HDiEPvd5f15HzATD6sUB8jI2AcuVbL5OInibay+JQ==",
+      "path": "linqspecs/3.1.1",
+      "hashPath": "linqspecs.3.1.1.nupkg.sha512"
     },
     "MediatR/11.0.0": {
       "type": "package",

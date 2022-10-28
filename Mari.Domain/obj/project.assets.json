@@ -5,27 +5,19 @@
       "ErrorOr/1.0.1": {
         "type": "package",
         "compile": {
-          "lib/net6.0/ErrorOr.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/ErrorOr.dll": {}
         },
         "runtime": {
-          "lib/net6.0/ErrorOr.dll": {
-            "related": ".xml"
-          }
+          "lib/net6.0/ErrorOr.dll": {}
         }
       },
       "LinqSpecs/3.1.1": {
         "type": "package",
         "compile": {
-          "lib/netstandard2.1/LinqSpecs.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.1/LinqSpecs.dll": {}
         },
         "runtime": {
-          "lib/netstandard2.1/LinqSpecs.dll": {
-            "related": ".xml"
-          }
+          "lib/netstandard2.1/LinqSpecs.dll": {}
         }
       }
     }
@@ -71,25 +63,26 @@
     ]
   },
   "packageFolders": {
-    "/home/nanoster/.nuget/packages/": {}
+    "/home/Nanoster/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj",
+      "projectUniqueName": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Domain/Mari.Domain.csproj",
       "projectName": "Mari.Domain",
-      "projectPath": "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj",
-      "packagesPath": "/home/nanoster/.nuget/packages/",
-      "outputPath": "/home/nanoster/projects/MariTest/Mari.Domain/obj/",
+      "projectPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Domain/Mari.Domain.csproj",
+      "packagesPath": "/home/Nanoster/.nuget/packages/",
+      "outputPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Domain/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/nanoster/.nuget/NuGet/NuGet.Config"
+        "/home/Nanoster/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://nuget.pkg.jetbrains.space/maboys/p/mari/nuget/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
@@ -122,8 +115,7 @@
           "net47",
           "net471",
           "net472",
-          "net48",
-          "net481"
+          "net48"
         ],
         "assetTargetFallback": true,
         "warn": true,
@@ -132,7 +124,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/6.0.108/RuntimeIdentifierGraph.json"
       }
     }
   }

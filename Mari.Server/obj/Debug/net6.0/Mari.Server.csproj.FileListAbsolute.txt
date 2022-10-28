@@ -162,3 +162,12 @@ D:/Mari/Mari.Server/obj/Debug/net6.0/ref/Mari.Server.dll
 /home/nanoster/projects/MariTest/Mari.Server/obj/Debug/net6.0/Mari.Server.pdb
 /home/nanoster/projects/MariTest/Mari.Server/obj/Debug/net6.0/Mari.Server.genruntimeconfig.cache
 /home/nanoster/projects/MariTest/Mari.Server/obj/Debug/net6.0/ref/Mari.Server.dll
+/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/bin/Debug/net6.0/LinqSpecs.dll
+/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/bin/Debug/net6.0/Microsoft.IdentityModel.Abstractions.dll
+/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/bin/Debug/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/bin/Debug/net6.0/Microsoft.IdentityModel.Logging.dll
+/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.dll
+/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/bin/Debug/net6.0/Microsoft.IdentityModel.Tokens.dll
+/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/bin/Debug/net6.0/System.IdentityModel.Tokens.Jwt.dll

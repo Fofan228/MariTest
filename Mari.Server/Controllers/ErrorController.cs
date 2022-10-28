@@ -4,7 +4,7 @@ using Mari.Contracts.Common;
 
 namespace Mari.Server.Controllers;
 
-[Route(Routes.Server.Error)]
+[Route(Routes.Server.ErrorController)]
 public class ErrorController : ApiController
 {
     public IActionResult Error()

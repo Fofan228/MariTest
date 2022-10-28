@@ -1,11 +1,14 @@
 using Mari.Application;
 using Mari.Contracts.Common;
 using Mari.Infrastructure;
+using Mari.Server.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddApplication();
-    builder.Services.AddInfrastructure();
+    builder.Services.AddInfrastructure(builder.Configuration);
+
+    builder.Services.AddMariAuthentication(builder.Configuration);
 
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
@@ -21,9 +24,12 @@ var app = builder.Build();
     }
     else
     {
-        app.UseExceptionHandler(Routes.Server.Error);
+        app.UseExceptionHandler(Routes.Server.ErrorController);
     }
-    app.UseHttpsRedirection();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
     app.MapControllers();
 }
 
