@@ -1,5 +1,5 @@
 using Mari.Application.Authentication.Results;
-using Mari.Domain.ValueObjects;
+using Mari.Domain.Users.ValueObjects;
 using MediatR;
 
 namespace Mari.Application.Authentication.Queries.Login;

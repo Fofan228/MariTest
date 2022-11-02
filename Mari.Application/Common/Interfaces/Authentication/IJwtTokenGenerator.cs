@@ -1,4 +1,4 @@
-using Mari.Domain.Entities;
+using Mari.Domain.Users;
 
 namespace Mari.Application.Common.Interfaces.Authentication;
 

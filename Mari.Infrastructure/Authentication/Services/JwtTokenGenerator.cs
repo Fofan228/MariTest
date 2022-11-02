@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Mari.Application.Common.Interfaces.Authentication;
 using Mari.Application.Common.Interfaces.CommonServices;
-using Mari.Domain.Entities;
+using Mari.Domain.Users;
 using Mari.Infrastructure.Authentication.Settings;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -25,8 +25,9 @@ public class JwtTokenGenerator : IJwtTokenGenerator
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.Username),
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+            new Claim(JwtRegisteredClaimNames.Name, user.Username),
+            new Claim(ClaimTypes.Role, user.Id.ToString()),
         };
 
         var jwt = new JwtSecurityToken(

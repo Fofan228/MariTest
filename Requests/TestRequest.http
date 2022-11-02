@@ -1,3 +1,4 @@
-@host = https://localhost:7177
+@host = http://localhost:5001
 
-GET {{host}}/api/test
+GET {{host}}/error
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwIiwibmFtZSI6InRlc3RfdXNlcl9hZG1pbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IjAiLCJleHAiOjE2NjY5ODI0ODIsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTAwMSJ9.hMTCkhi0ypqMcmpFOJmaJ_TQiaMKGFjzJAbQrtaNUGI

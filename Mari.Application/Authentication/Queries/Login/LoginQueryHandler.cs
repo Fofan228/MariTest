@@ -1,8 +1,8 @@
 using Mari.Application.Authentication.Results;
 using Mari.Application.Common.Interfaces.Authentication;
-using Mari.Domain.Entities;
-using Mari.Domain.Enums;
-using Mari.Domain.ValueObjects;
+using Mari.Domain.Users;
+using Mari.Domain.Users.Enums;
+using Mari.Domain.Users.ValueObjects;
 using MediatR;
 
 namespace Mari.Application.Authentication.Queries.Login;

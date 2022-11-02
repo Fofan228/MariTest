@@ -1,34 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/Mari.Server.csproj": {}
+    "/home/nanoster/projects/MariTest/Mari.Server/Mari.Server.csproj": {}
   },
   "projects": {
-    "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Application/Mari.Application.csproj": {
+    "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Application/Mari.Application.csproj",
+        "projectUniqueName": "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj",
         "projectName": "Mari.Application",
-        "projectPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Application/Mari.Application.csproj",
-        "packagesPath": "/home/Nanoster/.nuget/packages/",
-        "outputPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Application/obj/",
+        "projectPath": "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj",
+        "packagesPath": "/home/nanoster/.nuget/packages/",
+        "outputPath": "/home/nanoster/projects/MariTest/Mari.Application/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/Nanoster/.nuget/NuGet/NuGet.Config"
+          "/home/nanoster/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.pkg.jetbrains.space/maboys/p/mari/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Domain/Mari.Domain.csproj": {
-                "projectPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Domain/Mari.Domain.csproj"
+              "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj": {
+                "projectPath": "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj"
               }
             }
           }
@@ -70,7 +69,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -79,28 +79,27 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/6.0.108/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Contracts/Mari.Contracts.csproj": {
+    "/home/nanoster/projects/MariTest/Mari.Contracts/Mari.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Contracts/Mari.Contracts.csproj",
+        "projectUniqueName": "/home/nanoster/projects/MariTest/Mari.Contracts/Mari.Contracts.csproj",
         "projectName": "Mari.Contracts",
-        "projectPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Contracts/Mari.Contracts.csproj",
-        "packagesPath": "/home/Nanoster/.nuget/packages/",
-        "outputPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Contracts/obj/",
+        "projectPath": "/home/nanoster/projects/MariTest/Mari.Contracts/Mari.Contracts.csproj",
+        "packagesPath": "/home/nanoster/.nuget/packages/",
+        "outputPath": "/home/nanoster/projects/MariTest/Mari.Contracts/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/Nanoster/.nuget/NuGet/NuGet.Config"
+          "/home/nanoster/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.pkg.jetbrains.space/maboys/p/mari/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -123,7 +122,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -132,28 +132,27 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/6.0.108/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Domain/Mari.Domain.csproj": {
+    "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Domain/Mari.Domain.csproj",
+        "projectUniqueName": "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj",
         "projectName": "Mari.Domain",
-        "projectPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Domain/Mari.Domain.csproj",
-        "packagesPath": "/home/Nanoster/.nuget/packages/",
-        "outputPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Domain/obj/",
+        "projectPath": "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj",
+        "packagesPath": "/home/nanoster/.nuget/packages/",
+        "outputPath": "/home/nanoster/projects/MariTest/Mari.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/Nanoster/.nuget/NuGet/NuGet.Config"
+          "/home/nanoster/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.pkg.jetbrains.space/maboys/p/mari/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -186,7 +185,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -195,35 +195,34 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/6.0.108/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj": {
+    "/home/nanoster/projects/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj",
+        "projectUniqueName": "/home/nanoster/projects/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj",
         "projectName": "Mari.Infrastructure",
-        "projectPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj",
-        "packagesPath": "/home/Nanoster/.nuget/packages/",
-        "outputPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Infrastructure/obj/",
+        "projectPath": "/home/nanoster/projects/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj",
+        "packagesPath": "/home/nanoster/.nuget/packages/",
+        "outputPath": "/home/nanoster/projects/MariTest/Mari.Infrastructure/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/Nanoster/.nuget/NuGet/NuGet.Config"
+          "/home/nanoster/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.pkg.jetbrains.space/maboys/p/mari/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Application/Mari.Application.csproj": {
-                "projectPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Application/Mari.Application.csproj"
+              "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj": {
+                "projectPath": "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj"
               }
             }
           }
@@ -238,6 +237,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "EFCore.NamingConventions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.10, )"
+            },
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
               "version": "[6.0.0, )"
@@ -254,6 +261,10 @@
               "target": "Package",
               "version": "[6.0.0, )"
             },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[6.0.7, )"
+            },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[6.24.0, )"
@@ -265,7 +276,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -274,41 +286,40 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/6.0.108/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/Mari.Server.csproj": {
+    "/home/nanoster/projects/MariTest/Mari.Server/Mari.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/Mari.Server.csproj",
+        "projectUniqueName": "/home/nanoster/projects/MariTest/Mari.Server/Mari.Server.csproj",
         "projectName": "Mari.Server",
-        "projectPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/Mari.Server.csproj",
-        "packagesPath": "/home/Nanoster/.nuget/packages/",
-        "outputPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Server/obj/",
+        "projectPath": "/home/nanoster/projects/MariTest/Mari.Server/Mari.Server.csproj",
+        "packagesPath": "/home/nanoster/.nuget/packages/",
+        "outputPath": "/home/nanoster/projects/MariTest/Mari.Server/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/Nanoster/.nuget/NuGet/NuGet.Config"
+          "/home/nanoster/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.pkg.jetbrains.space/maboys/p/mari/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Application/Mari.Application.csproj": {
-                "projectPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Application/Mari.Application.csproj"
+              "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj": {
+                "projectPath": "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj"
               },
-              "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Contracts/Mari.Contracts.csproj": {
-                "projectPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Contracts/Mari.Contracts.csproj"
+              "/home/nanoster/projects/MariTest/Mari.Contracts/Mari.Contracts.csproj": {
+                "projectPath": "/home/nanoster/projects/MariTest/Mari.Contracts/Mari.Contracts.csproj"
               },
-              "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj": {
-                "projectPath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj"
+              "/home/nanoster/projects/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj": {
+                "projectPath": "/home/nanoster/projects/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj"
               }
             }
           }
@@ -338,7 +349,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -350,7 +362,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/6.0.108/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Mari.Server.Authentication.Configurations;
 using MediatR;
 using Mari.Application.Authentication.Queries.Login;
+using Mari.Contracts.Authentication;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Mari.Server.Controllers;
 
@@ -21,20 +23,22 @@ public class AuthenticationController : ApiController
 
     [HttpGet]
     [Authorize(AuthenticationSchemes = $"{CookieConfig.AuthenticationScheme}, {OAuthConfig.AuthenticationScheme}")]
-    public async Task<RedirectResult> GetToken()
+    public async Task<RedirectResult> GetToken(/*AuthenticationRequest request*/)
     {
-        var redirectUrl = "http://localhost:5001/token";
+        var request = new AuthenticationRequest("http://localhost:5001/token");
         var userId = int.Parse(
             User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
         var query = new LoginQuery(userId);
         var authResult = await _sender.Send(query);
-        return Redirect($"{redirectUrl}?token={authResult.Token}");
+        return Redirect($"{request.redirectUrl}?token={authResult.Token}");
     }
 
+    //TODO Тестовый метод
     [AllowAnonymous]
     [HttpGet("/token")]
-    public string Get(string token)
+    public IEnumerable<Claim> Get(string token)
     {
-        return token;
+        var jwtToken = new JwtSecurityToken(token);
+        return jwtToken.Claims;
     }
 }
