@@ -2,16 +2,10 @@ using Mari.Domain.Common.Models;
 
 namespace Mari.Domain.Releases.ValueObjects;
 
-public record ReleaseId : ValueObjectWrapper<Guid>
+public record ReleaseId : ValueObjectWrapper<Guid, ReleaseId>
 {
-    public static ReleaseId Create(Guid value)
-    {
-        return new ReleaseId(value);
-    }
+    [Obsolete(PublicConstructorObsoleteMessage, true)]
+    public ReleaseId() { }
 
-    public static ReleaseId Default { get; } = new ReleaseId(default(Guid));
-
-    private ReleaseId(Guid Value) : base(Value)
-    {
-    }
+    public static ReleaseId Default { get; } = ReleaseId.Create(default);
 }

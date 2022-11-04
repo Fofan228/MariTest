@@ -1,27 +1,29 @@
 using Mari.Application.Authentication.Results;
 using Mari.Application.Common.Interfaces.Authentication;
-using Mari.Domain.Users;
-using Mari.Domain.Users.Enums;
-using Mari.Domain.Users.ValueObjects;
+using Mari.Application.Common.Interfaces.Persistence;
 using MediatR;
+using Mari.Domain.Common.Errors;
+using ErrorOr;
 
 namespace Mari.Application.Authentication.Queries.Login;
 
-public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthenticationResult>
+internal class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>
 {
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
+    private readonly IUserRepository _userRepository;
 
-    public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator)
+    public LoginQueryHandler(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
     {
         _jwtTokenGenerator = jwtTokenGenerator;
+        _userRepository = userRepository;
     }
 
-    public Task<AuthenticationResult> Handle(LoginQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery request, CancellationToken cancellationToken)
     {
-        //TODO Репозиторий
-        var user = User.Create(Username.Create("test_user_admin"), UserRole.Admin);
+        var user = await _userRepository.GetById(request.UserId, cancellationToken);
+        if (user is null) return Errors.User.UserNotFound;
+        if (!user.IsActive) return Errors.User.UserIsBlocked;
         var token = _jwtTokenGenerator.GenerateToken(user);
-
-        return Task.FromResult(new AuthenticationResult(token));
+        return new AuthenticationResult(token);
     }
 }

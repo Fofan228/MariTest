@@ -1,50 +1,69 @@
+using System.ComponentModel;
 namespace Mari.Domain.Common.Models;
 
-public abstract record ValueObjectWrapper<T>(T Value) :
+public abstract record ValueObjectWrapper<TBase, TWrapper> :
     ValueObject,
-    IComparable<ValueObjectWrapper<T>>,
-    IEquatable<T>,
-    IComparable<T>
-    where T : IComparable<T>
+    IComparable<ValueObjectWrapper<TBase, TWrapper>>,
+    IEquatable<TBase>,
+    IComparable<TBase>
+    where TBase : IComparable<TBase>
+    where TWrapper : ValueObjectWrapper<TBase, TWrapper>, new()
 {
+    protected const string PublicConstructorObsoleteMessage = "Use factory method instead";
+
+    [Obsolete(PublicConstructorObsoleteMessage, true)]
+    protected ValueObjectWrapper() { }
+
+    public static TWrapper Create(TBase value)
+    {
+        var instance = new TWrapper();
+        instance.OnCreate(ref value);
+        instance.Value = value;
+        return instance;
+    }
+
+    public TBase Value { get; private set; } = default!;
+
+    public virtual void OnCreate(ref TBase value) { }
+
     public sealed override string ToString()
     {
         return Value.ToString() ?? string.Empty;
     }
 
-    public int CompareTo(ValueObjectWrapper<T>? other)
+    public int CompareTo(ValueObjectWrapper<TBase, TWrapper>? other)
     {
         return Value.CompareTo(other == null ? default : other.Value);
     }
 
-    public bool Equals(T? other)
+    public bool Equals(TBase? other)
     {
         return Value.Equals(other);
     }
 
-    public int CompareTo(T? other)
+    public int CompareTo(TBase? other)
     {
         return Value.CompareTo(other);
     }
 
-    public static implicit operator T(ValueObjectWrapper<T> value) => value.Value;
+    public static implicit operator TBase(ValueObjectWrapper<TBase, TWrapper> value) => value.Value;
 
     #region Operators
-    public static bool operator <(ValueObjectWrapper<T> left, ValueObjectWrapper<T> right) => left.CompareTo(right) < 0;
-    public static bool operator >(ValueObjectWrapper<T> left, ValueObjectWrapper<T> right) => left.CompareTo(right) > 0;
-    public static bool operator <=(ValueObjectWrapper<T> left, ValueObjectWrapper<T> right) => left.CompareTo(right) <= 0;
-    public static bool operator >=(ValueObjectWrapper<T> left, ValueObjectWrapper<T> right) => left.CompareTo(right) >= 0;
-    public static bool operator <(ValueObjectWrapper<T> left, T right) => left.CompareTo(right) < 0;
-    public static bool operator >(ValueObjectWrapper<T> left, T right) => left.CompareTo(right) > 0;
-    public static bool operator <=(ValueObjectWrapper<T> left, T right) => left.CompareTo(right) <= 0;
-    public static bool operator >=(ValueObjectWrapper<T> left, T right) => left.CompareTo(right) >= 0;
-    public static bool operator <(T left, ValueObjectWrapper<T> right) => left.CompareTo(right) < 0;
-    public static bool operator >(T left, ValueObjectWrapper<T> right) => left.CompareTo(right) > 0;
-    public static bool operator <=(T left, ValueObjectWrapper<T> right) => left.CompareTo(right) <= 0;
-    public static bool operator >=(T left, ValueObjectWrapper<T> right) => left.CompareTo(right) >= 0;
-    public static bool operator ==(ValueObjectWrapper<T> left, T right) => left.CompareTo(right) == 0;
-    public static bool operator !=(ValueObjectWrapper<T> left, T right) => left.CompareTo(right) != 0;
-    public static bool operator ==(T left, ValueObjectWrapper<T> right) => left.CompareTo(right) == 0;
-    public static bool operator !=(T left, ValueObjectWrapper<T> right) => left.CompareTo(right) != 0;
+    public static bool operator <(ValueObjectWrapper<TBase, TWrapper> left, ValueObjectWrapper<TBase, TWrapper> right) => left.CompareTo(right) < 0;
+    public static bool operator >(ValueObjectWrapper<TBase, TWrapper> left, ValueObjectWrapper<TBase, TWrapper> right) => left.CompareTo(right) > 0;
+    public static bool operator <=(ValueObjectWrapper<TBase, TWrapper> left, ValueObjectWrapper<TBase, TWrapper> right) => left.CompareTo(right) <= 0;
+    public static bool operator >=(ValueObjectWrapper<TBase, TWrapper> left, ValueObjectWrapper<TBase, TWrapper> right) => left.CompareTo(right) >= 0;
+    public static bool operator <(ValueObjectWrapper<TBase, TWrapper> left, TBase right) => left.CompareTo(right) < 0;
+    public static bool operator >(ValueObjectWrapper<TBase, TWrapper> left, TBase right) => left.CompareTo(right) > 0;
+    public static bool operator <=(ValueObjectWrapper<TBase, TWrapper> left, TBase right) => left.CompareTo(right) <= 0;
+    public static bool operator >=(ValueObjectWrapper<TBase, TWrapper> left, TBase right) => left.CompareTo(right) >= 0;
+    public static bool operator <(TBase left, ValueObjectWrapper<TBase, TWrapper> right) => left.CompareTo(right) < 0;
+    public static bool operator >(TBase left, ValueObjectWrapper<TBase, TWrapper> right) => left.CompareTo(right) > 0;
+    public static bool operator <=(TBase left, ValueObjectWrapper<TBase, TWrapper> right) => left.CompareTo(right) <= 0;
+    public static bool operator >=(TBase left, ValueObjectWrapper<TBase, TWrapper> right) => left.CompareTo(right) >= 0;
+    public static bool operator ==(ValueObjectWrapper<TBase, TWrapper> left, TBase right) => left.CompareTo(right) == 0;
+    public static bool operator !=(ValueObjectWrapper<TBase, TWrapper> left, TBase right) => left.CompareTo(right) != 0;
+    public static bool operator ==(TBase left, ValueObjectWrapper<TBase, TWrapper> right) => left.CompareTo(right) == 0;
+    public static bool operator !=(TBase left, ValueObjectWrapper<TBase, TWrapper> right) => left.CompareTo(right) != 0;
     #endregion
 }

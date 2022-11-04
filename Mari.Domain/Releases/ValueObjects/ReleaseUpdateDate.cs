@@ -2,14 +2,8 @@ using Mari.Domain.Common.Models;
 
 namespace Mari.Domain.Releases.ValueObjects;
 
-public record ReleaseUpdateDate : ValueObjectWrapper<DateTime>
+public record ReleaseUpdateDate : ValueObjectWrapper<DateTime, ReleaseUpdateDate>
 {
-    public static ReleaseUpdateDate Create(DateTime value)
-    {
-        return new ReleaseUpdateDate(value);
-    }
-
-    private ReleaseUpdateDate(DateTime Value) : base(Value)
-    {
-    }
+    [Obsolete(PublicConstructorObsoleteMessage, true)]
+    public ReleaseUpdateDate() { }
 }

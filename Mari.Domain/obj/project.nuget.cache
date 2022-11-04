@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "YdMDUYU2LgzXXWKtf3J9d0lHlzooer45k3Sc6lhBbJcq5YSACUL0bsuGrOqy89UsSa8fzF3sOIgR3ObeNO1Q3A==",
+  "dgSpecHash": "Pfke0hl1JpwzIT6eIJ5vWxKNRhV7bWP1OCsTJof/9uyGicHX7VOx/95rN/hYrapi2svno3I7S42Oofy/f/3wHw==",
   "success": true,
-  "projectFilePath": "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj",
+  "projectFilePath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Domain/Mari.Domain.csproj",
   "expectedPackageFiles": [
-    "/home/nanoster/.nuget/packages/erroror/1.0.1/erroror.1.0.1.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/linqspecs/3.1.1/linqspecs.3.1.1.nupkg.sha512"
+    "/home/Nanoster/.nuget/packages/erroror/1.0.1/erroror.1.0.1.nupkg.sha512",
+    "/home/Nanoster/.nuget/packages/linqspecs/3.1.1/linqspecs.3.1.1.nupkg.sha512"
   ],
   "logs": []
 }

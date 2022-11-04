@@ -11,10 +11,11 @@ public class Release : AggregateRoot<ReleaseId>
         Platform platform,
         ReleaseCompleteDate completeDate,
         ReleaseVersion? version = null,
-        List<Issue>? issues = null)
+        List<Issue>? issues = null,
+        ReleaseId? id = null)
     {
         return new Release(
-            id: ReleaseId.Default,
+            id: id ?? ReleaseId.Default,
             platform: platform,
             completeDate: completeDate,
             updateDate: ReleaseUpdateDate.Create(completeDate.Value),

@@ -6,10 +6,10 @@ namespace Mari.Domain.Users;
 
 public class User : AggregateRoot<UserId>
 {
-    public static User Create(Username username, UserRole role)
+    public static User Create(Username username, UserRole role = UserRole.Guest, UserId? id = null)
     {
         return new User(
-            id: UserId.Default,
+            id: id ?? UserId.Default,
             name: username,
             role: role
         );

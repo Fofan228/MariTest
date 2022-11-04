@@ -1,3 +1,4 @@
+using System.Reflection.Metadata;
 using Mari.Application.Common.Interfaces.Authentication;
 using Mari.Application.Common.Interfaces.CommonServices;
 using Mari.Application.Common.Interfaces.Persistence;
@@ -25,6 +26,7 @@ public static class DependencyInjection
         services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
 
         return services;

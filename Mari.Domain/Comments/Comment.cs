@@ -10,10 +10,11 @@ public class Comment : AggregateRoot<CommentId>
     public static Comment Create(
         UserId userId,
         ReleaseId releaseId,
-        CommentContent content)
+        CommentContent content,
+        CommentId? id = null)
     {
         return new Comment(
-            id: CommentId.Create(default),
+            id: id ?? CommentId.Default,
             userId: userId,
             releaseId: releaseId,
             content: content

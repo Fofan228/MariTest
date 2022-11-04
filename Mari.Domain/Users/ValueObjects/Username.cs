@@ -2,16 +2,17 @@ using Mari.Domain.Common.Models;
 
 namespace Mari.Domain.Users.ValueObjects;
 
-public record Username : ValueObjectWrapper<string>
+public record Username : ValueObjectWrapper<string, Username>
 {
+    [Obsolete(PublicConstructorObsoleteMessage, true)]
+    public Username() { }
+
     public const string Pattern = @"^[^\d\W]+.*";
+    public const int MaxLength = 30;
 
-    public static Username Create(string value)
+    public override void OnCreate(ref string value)
     {
-        return new Username(value);
-    }
-
-    private Username(string Value) : base(Value)
-    {
+        if (value.Length > MaxLength)
+            value = value.Substring(0, MaxLength);
     }
 }

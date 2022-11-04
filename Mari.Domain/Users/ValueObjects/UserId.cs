@@ -2,16 +2,10 @@ using Mari.Domain.Common.Models;
 
 namespace Mari.Domain.Users.ValueObjects;
 
-public record UserId : ValueObjectWrapper<int>
+public record UserId : ValueObjectWrapper<int, UserId>
 {
-    public static UserId Create(int value)
-    {
-        return new UserId(value);
-    }
+    [Obsolete(PublicConstructorObsoleteMessage, true)]
+    public UserId() { }
 
-    public static UserId Default { get; } = new UserId(default(int));
-
-    private UserId(int Value) : base(Value)
-    {
-    }
+    public static UserId Default { get; } = UserId.Create(default);
 }
