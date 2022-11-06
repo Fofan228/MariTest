@@ -15,7 +15,7 @@ public class PlatformConfiguration : IEntityTypeConfiguration<Platform>
 
         builder.Property(p => p.Name)
             .IsValueObjectWrapper<string, PlatformName>()
-            .HasMaxLength(PlatformName.MaxLength)
-            .IsRequired();
+            .IsRequired()
+            .HasMaxLength(PlatformName.MaxLength);
     }
 }

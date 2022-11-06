@@ -1,3 +1,4 @@
+using ErrorOr;
 using Mari.Domain.Comments.ValueObjects;
 using Mari.Domain.Common.Models;
 using Mari.Domain.Releases.ValueObjects;
@@ -7,7 +8,7 @@ namespace Mari.Domain.Comments;
 
 public class Comment : AggregateRoot<CommentId>
 {
-    public static Comment Create(
+    public static ErrorOr<Comment> Create(
         UserId userId,
         ReleaseId releaseId,
         CommentContent content,
@@ -40,8 +41,9 @@ public class Comment : AggregateRoot<CommentId>
     public UserId UserId { get; private set; } = null!;
     public ReleaseId ReleaseId { get; private set; } = null!;
 
-    public void ChangeContent(CommentContent content)
+    public ErrorOr<Updated> ChangeContent(CommentContent content)
     {
         Content = content;
+        return Result.Updated;
     }
 }

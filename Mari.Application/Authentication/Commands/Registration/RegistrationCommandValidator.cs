@@ -11,6 +11,7 @@ internal class RegistrationCommandValidator : AbstractValidator<RegistrationComm
     {
         RuleFor(x => x.UserId)
             .SetValidator(userIdValidator);
+
         RuleFor(x => x.Username)
             .SetValidator(usernameValidator);
     }

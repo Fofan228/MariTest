@@ -7,30 +7,31 @@ using Mari.Server.Authentication.Configurations;
 using MediatR;
 using Mari.Application.Authentication.Queries.Login;
 using Mari.Contracts.Authentication;
-using System.IdentityModel.Tokens.Jwt;
 using Mari.Application.Users.Queries.Exists;
 using Mari.Application.Authentication.Commands.Registration;
 using Mari.Application.Authentication.Results;
 using ErrorOr;
+using Mari.Server.Settings;
+using Microsoft.Extensions.Options;
 
 namespace Mari.Server.Controllers;
 
-[Route(Routes.Server.AuthorizationController)]
+[Route(Routes.Server.AuthenticationController)]
 public class AuthorizationController : ApiController
 {
     private readonly ISender _sender;
+    private readonly HostSettings _hostSettings;
 
-    public AuthorizationController(ISender sender)
+    public AuthorizationController(ISender sender, IOptions<HostSettings> hostSettings)
     {
         _sender = sender;
+        _hostSettings = hostSettings.Value;
     }
 
     [HttpGet]
     [Authorize(AuthenticationSchemes = $"{CookieConfig.AuthenticationScheme}, {OAuthConfig.AuthenticationScheme}")]
-    public async Task<IActionResult> GetToken(/*AuthenticationRequest request*/)
+    public async Task<IActionResult> GetToken()
     {
-        var request = new AuthenticationRequest("http://localhost:5001/token");
-
         var userIdClaim = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
         var userName = User.Claims.First(c => c.Type == ClaimTypes.Name).Value;
@@ -47,21 +48,20 @@ public class AuthorizationController : ApiController
             var loginQuery = new LoginQuery(userId);
             authResult = await _sender.Send(loginQuery);
             if (authResult.IsError) return Problem(authResult.Errors);
-            return Redirect($"{request.redirectUrl}?token={authResult.Value.Token}");
+        }
+        else
+        {
+            var registrationCommand = new RegistrationCommand(userId, userName);
+            authResult = await _sender.Send(registrationCommand);
+            if (authResult.IsError) return Problem(authResult.Errors);
         }
 
-        var registrationCommand = new RegistrationCommand(userId, userName);
-        authResult = await _sender.Send(registrationCommand);
-        if (authResult.IsError) return Problem(authResult.Errors);
-        return Redirect($"{request.redirectUrl}?token={authResult.Value.Token}");
-    }
-
-    //TODO Тестовый метод
-    [AllowAnonymous]
-    [HttpGet("/token")]
-    public IEnumerable<Claim> Get(string token)
-    {
-        var jwtToken = new JwtSecurityToken(token);
-        return jwtToken.Claims;
+        var request = new AuthenticationRequest(authResult.Value.Token);
+        var builder = new UriBuilder
+        {
+            Path = $"{_hostSettings.Host}{Routes.Client.TokenHandler}",
+            Query = request.ToUrlEncodedQuery()
+        };
+        return Redirect(builder.Uri.ToString());
     }
 }

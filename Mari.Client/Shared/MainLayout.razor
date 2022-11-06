@@ -1,0 +1,27 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+
+<MudLayout>
+    <MudAppBar Elevation="0" Bottom="true" Fixed="true">
+        <AppBar DrawerButtonOnClick="DrawerButtonOnClick"/>
+    </MudAppBar>
+    <MudDrawer @bind-Open="IsDrawerOpened">
+        <NavMenu/>
+    </MudDrawer>
+    <MudMainContent Class="pt-0">
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code
+{
+    private bool IsDrawerOpened { get; set; }
+
+    private void DrawerButtonOnClick()
+    {
+        IsDrawerOpened = !IsDrawerOpened;
+    }
+}

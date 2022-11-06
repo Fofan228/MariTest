@@ -1,0 +1,15 @@
+﻿@inject NavigationManager NavigationManager
+
+<div>asd</div>
+
+@code
+{
+    protected override void OnInitialized()
+    {
+        var builder = new UriBuilder(NavigationManager.Uri)
+        {
+            Path = Routes.Server.AuthenticationController
+        };
+        NavigationManager.NavigateTo(builder.Uri.ToString());
+    }
+}

@@ -33,7 +33,7 @@ public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TReques
             return await next();
         }
 
-        var errors = validationResult.ToDomainErrors();
+        var errors = validationResult.Errors.ToDomainErrors();
 
         return (dynamic)errors;
     }

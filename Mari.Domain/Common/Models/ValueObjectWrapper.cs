@@ -1,4 +1,3 @@
-using System.ComponentModel;
 namespace Mari.Domain.Common.Models;
 
 public abstract record ValueObjectWrapper<TBase, TWrapper> :
@@ -18,11 +17,13 @@ public abstract record ValueObjectWrapper<TBase, TWrapper> :
     {
         var instance = new TWrapper();
         instance.OnCreate(ref value);
-        instance.Value = value;
+        instance.SetValue(value);
         return instance;
     }
 
-    public TBase Value { get; private set; } = default!;
+    private TBase _value = default!;
+    public TBase Value { get => _value; init => _value = value; }
+    private void SetValue(TBase value) => _value = value;
 
     public virtual void OnCreate(ref TBase value) { }
 

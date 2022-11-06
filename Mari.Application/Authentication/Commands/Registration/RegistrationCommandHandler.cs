@@ -28,11 +28,16 @@ internal class RegistrationCommandHandler : IRequestHandler<RegistrationCommand,
     {
         var user = await _userRepository.GetById(request.UserId, cancellationToken);
         if (user is not null) return Errors.User.UserAlreadyExists;
-        user = User.Create(
-            id: request.UserId,
-            username: request.Username);
+
+        var userCreateResult = User.Create(id: request.UserId, username: request.Username);
+        if (userCreateResult.IsError) return userCreateResult.Errors;
+
+        user = userCreateResult.Value;
         user = await _userRepository.Insert(user, cancellationToken);
-        user.UnblockUser();
+
+        var unblockResult = user.UnblockUser();
+        if (unblockResult.IsError) return unblockResult.Errors;
+
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         var token = _jwtTokenGenerator.GenerateToken(user);
         return new AuthenticationResult(token);

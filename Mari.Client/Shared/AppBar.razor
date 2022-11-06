@@ -1,0 +1,10 @@
+<MudIconButton Icon="@Icons.Outlined.ClearAll" OnClick="DrawerButtonOnClick"
+               Color="Color.Inherit"/>
+<MudSpacer/>
+<LoginDisplay/>
+
+@code
+{
+    [Parameter]
+    public Action DrawerButtonOnClick { get; set; } = () => { };
+}

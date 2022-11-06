@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Mari.Infrastructure.Persistence.Configurations;
-//TODO Доделать
+
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
@@ -15,7 +15,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.Username)
             .IsValueObjectWrapper<string, Username>()
-            .IsRequired();
+            .IsRequired()
+            .HasMaxLength(Username.MaxLength);
 
         builder.Property(u => u.IsActive)
             .IsRequired();

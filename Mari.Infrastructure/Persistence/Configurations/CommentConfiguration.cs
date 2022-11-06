@@ -17,7 +17,8 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
 
         builder.Property(c => c.Content)
             .IsValueObjectWrapper<string, CommentContent>()
-            .IsRequired();
+            .IsRequired()
+            .HasMaxLength(CommentContent.MaxLength);
 
         builder.HasOne<User>()
             .WithMany()

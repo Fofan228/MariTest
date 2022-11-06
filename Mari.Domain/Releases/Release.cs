@@ -1,3 +1,4 @@
+using ErrorOr;
 using Mari.Domain.Common.Models;
 using Mari.Domain.Releases.Entities;
 using Mari.Domain.Releases.Enums;
@@ -7,7 +8,7 @@ namespace Mari.Domain.Releases;
 
 public class Release : AggregateRoot<ReleaseId>
 {
-    public static Release Create(
+    public static ErrorOr<Release> Create(
         Platform platform,
         ReleaseCompleteDate completeDate,
         ReleaseVersion? version = null,
@@ -29,7 +30,7 @@ public class Release : AggregateRoot<ReleaseId>
     {
     }
 
-    public Release(
+    private Release(
         ReleaseId id,
         ReleaseVersion version,
         Platform platform,
@@ -55,34 +56,39 @@ public class Release : AggregateRoot<ReleaseId>
     private List<Issue> _issues = new();
     public virtual IReadOnlyList<Issue> Issues => _issues;
 
-    public void AddIssue(Issue issue, ReleaseUpdateDate currentDateTime)
+    public ErrorOr<Created> AddIssue(Issue issue, ReleaseUpdateDate currentDateTime)
     {
         _issues.Add(issue);
         ChangeUpdateDate(currentDateTime);
+        return Result.Created;
     }
 
-    public void RemoveIssue(Issue issue, ReleaseUpdateDate currentDateTime)
+    public ErrorOr<Deleted> RemoveIssue(Issue issue, ReleaseUpdateDate currentDateTime)
     {
         _issues.Remove(issue);
         ChangeUpdateDate(currentDateTime);
+        return Result.Deleted;
     }
 
-    public void ChangeVersion(ReleaseVersion version, ReleaseUpdateDate currentDateTime)
+    public ErrorOr<Updated> ChangeVersion(ReleaseVersion version, ReleaseUpdateDate currentDateTime)
     {
         Version = version;
         ChangeUpdateDate(currentDateTime);
+        return Result.Updated;
     }
 
-    public void ChangePlatform(Platform platform, ReleaseUpdateDate currentDateTime)
+    public ErrorOr<Updated> ChangePlatform(Platform platform, ReleaseUpdateDate currentDateTime)
     {
         Platform = platform;
         ChangeUpdateDate(currentDateTime);
+        return Result.Updated;
     }
 
-    public void ChangeStatus(ReleaseStatus status, ReleaseUpdateDate currentDateTime)
+    public ErrorOr<Updated> ChangeStatus(ReleaseStatus status, ReleaseUpdateDate currentDateTime)
     {
         Status = status;
         ChangeUpdateDate(currentDateTime);
+        return Result.Updated;
     }
 
     private void ChangeUpdateDate(ReleaseUpdateDate currentDateTime)

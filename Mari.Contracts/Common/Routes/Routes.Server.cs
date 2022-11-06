@@ -6,8 +6,8 @@ public static partial class Routes
     {
         public const string Prefix = "/api";
         public const string ErrorController = "/error";
-        public const string AuthorizationController = "/auth";
-        public const string TestController = $"{Server.Prefix}/test";
+        public const string AuthenticationController = $"{Prefix}/auth";
         public const string OAuthCallbackPath = "/authorization-code/callback";
+        public const string FallbackFile = "index.html";
     }
 }

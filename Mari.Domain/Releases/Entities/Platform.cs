@@ -1,3 +1,4 @@
+using ErrorOr;
 using Mari.Domain.Common.Models;
 using Mari.Domain.Releases.ValueObjects;
 
@@ -5,7 +6,7 @@ namespace Mari.Domain.Releases.Entities;
 
 public class Platform : Entity<PlatformId>
 {
-    public static Platform Create(PlatformName name, PlatformId? id = null)
+    public static ErrorOr<Platform> Create(PlatformName name, PlatformId? id = null)
     {
         return new Platform(
             id: id ?? PlatformId.Default,
@@ -24,8 +25,9 @@ public class Platform : Entity<PlatformId>
 
     public PlatformName Name { get; private set; } = null!;
 
-    public void ChangeName(PlatformName name)
+    public ErrorOr<Updated> ChangeName(PlatformName name)
     {
         Name = name;
+        return Result.Updated;
     }
 }

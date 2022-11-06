@@ -12,5 +12,5 @@ public record LoginQuery : IRequest<ErrorOr<AuthenticationResult>>
         UserId = UserId.Create(userId);
     }
 
-    public UserId UserId { get; init; }
+    public UserId UserId { get; }
 }

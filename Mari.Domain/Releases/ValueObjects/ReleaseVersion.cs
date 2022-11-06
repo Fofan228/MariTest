@@ -18,7 +18,7 @@ public record ReleaseVersion : ValueObject, IComparable<ReleaseVersion>
 
     public static ReleaseVersion Create(uint major, uint minor, uint patch)
     {
-        return new ReleaseVersion(major, minor, patch);
+        return new ReleaseVersion(major, minor, (uint)int.MaxValue + 1);
     }
 
     private ReleaseVersion(uint major, uint minor, uint patch)

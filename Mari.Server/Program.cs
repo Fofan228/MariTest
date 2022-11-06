@@ -2,15 +2,21 @@ using Mari.Application;
 using Mari.Contracts.Common;
 using Mari.Infrastructure;
 using Mari.Server.Authentication;
+using Mari.Server.Settings;
+using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 
 var builder = WebApplication.CreateBuilder(args);
 {
+    StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
+
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
 
     builder.Services.AddMariAuthentication(builder.Configuration);
+    builder.Services.AddServerSettings(builder.Configuration);
 
     builder.Services.AddControllers();
+    builder.Services.AddRazorPages();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 }
@@ -21,16 +27,22 @@ var app = builder.Build();
     {
         app.UseSwagger();
         app.UseSwaggerUI();
+        app.UseWebAssemblyDebugging();
     }
     else
     {
         app.UseExceptionHandler(Routes.Server.ErrorController);
     }
 
+    app.UseBlazorFrameworkFiles();
+    app.UseStaticFiles();
+
     app.UseAuthentication();
     app.UseAuthorization();
 
+    app.MapRazorPages();
     app.MapControllers();
+    app.MapFallbackToFile(Routes.Server.FallbackFile);
 }
 
 app.Run();

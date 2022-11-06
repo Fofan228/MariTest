@@ -5,9 +5,9 @@ namespace Mari.Application.Common.Extensions;
 
 public static class ValidationResultExtensions
 {
-    public static List<Error> ToDomainErrors(this ValidationResult validationResult)
+    public static List<Error> ToDomainErrors(this List<ValidationFailure> validationErrors)
     {
-        return validationResult.Errors
+        return validationErrors
             .Select(x => Error.Validation(x.PropertyName, x.ErrorMessage))
             .ToList();
     }

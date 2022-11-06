@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cwQfEgutfz6txwViZVIpRmawLYyC7JOwktEhQtpPHk2qRnI4sFNpHJqE65dlIqdRMs2RoH6eomLBqbqZ8H86/Q==",
+  "dgSpecHash": "HIM6G5TZCs9647LAktDbt6QndvRAe0QNpLqaoWvrg2yV0BGbG/R2X8P2zYThxjPSjyDfRGL9GM0KAkCSyklLWQ==",
   "success": true,
-  "projectFilePath": "/home/Nanoster/projects/MariDomainDevelop/MariTest/Mari.Contracts/Mari.Contracts.csproj",
+  "projectFilePath": "/home/nanoster/projects/MariTest/Mari.Contracts/Mari.Contracts.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

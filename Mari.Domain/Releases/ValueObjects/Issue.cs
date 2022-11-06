@@ -1,4 +1,5 @@
 using Mari.Domain.Common.Models;
+using Mari.Domain.Users.ValueObjects;
 
 namespace Mari.Domain.Releases.ValueObjects;
 
@@ -18,21 +19,11 @@ public record Issue : ValueObject
         Title = title;
     }
 
-    public string Link { get; private set; }
-    public string? Title { get; private set; }
-
-    public void ChangeLink(string link)
+    public string Link { get; init; }
+    public string? Title { get; init; }
+    public static void A()
     {
-        Link = link;
-    }
-
-    public void SetTitle(string title)
-    {
-        Title = title;
-    }
-
-    public void RemoveTitle()
-    {
-        Title = null;
+        var a = Username.Create("a");
+        var b = a with { Value = "b" };
     }
 }

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.10" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
@@ -15,6 +16,7 @@
     <ProjectReference Include="..\Mari.Contracts\Mari.Contracts.csproj" />
     <ProjectReference Include="..\Mari.Application\Mari.Application.csproj" />
     <ProjectReference Include="..\Mari.Infrastructure\Mari.Infrastructure.csproj" />
+    <ProjectReference Include="..\Mari.Client\Mari.Client.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,3 +1,5 @@
+using System;
+using ErrorOr;
 using Mari.Domain.Common.Models;
 using Mari.Domain.Users.Enums;
 using Mari.Domain.Users.ValueObjects;
@@ -6,7 +8,7 @@ namespace Mari.Domain.Users;
 
 public class User : AggregateRoot<UserId>
 {
-    public static User Create(Username username, UserRole role = UserRole.Guest, UserId? id = null)
+    public static ErrorOr<User> Create(Username username, UserRole role = UserRole.Guest, UserId? id = null)
     {
         return new User(
             id: id ?? UserId.Default,
@@ -30,23 +32,27 @@ public class User : AggregateRoot<UserId>
     public UserRole Role { get; private set; }
     public bool IsActive { get; private set; }
 
-    public void ChangeUsername(Username username)
+    public ErrorOr<Updated> ChangeUsername(Username username)
     {
         Username = username;
+        return Result.Updated;
     }
 
-    public void ChangeRole(UserRole role)
+    public ErrorOr<Updated> ChangeRole(UserRole role)
     {
         Role = role;
+        return Result.Updated;
     }
 
-    public void BlockUser()
+    public ErrorOr<Success> BlockUser()
     {
         IsActive = false;
+        return Result.Success;
     }
 
-    public void UnblockUser()
+    public ErrorOr<Success> UnblockUser()
     {
         IsActive = true;
+        return Result.Success;
     }
 }

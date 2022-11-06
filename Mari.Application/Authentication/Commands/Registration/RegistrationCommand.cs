@@ -13,6 +13,6 @@ public record RegistrationCommand : IRequest<ErrorOr<AuthenticationResult>>
         Username = Username.Create(username);
     }
 
-    public UserId UserId { get; init; }
-    public Username Username { get; init; }
+    public UserId UserId { get; }
+    public Username Username { get; }
 }
