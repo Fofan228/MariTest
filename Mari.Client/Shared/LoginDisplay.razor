@@ -1,21 +1,24 @@
-﻿@inject NavigationManager Navigation
-@inject SignOutSessionStateManager SignOutManager
+﻿@inject IAuthenticationService _authService
 
 <AuthorizeView>
     <Authorized>
         <MudText Typo="Typo.h1">Hello, @context.User.Identity?.Name!</MudText>
-        <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>
+        <button class="nav-link btn btn-link" @onclick="BeginLogout">Log out</button>
     </Authorized>
     <NotAuthorized>
-        <a href="@RemoteAuthenticationDefaults.LoginPath">Log in</a>
+        <button class="nav-link btn btn-link" @onclick="BeginLogin">Log in</button>
     </NotAuthorized>
 </AuthorizeView>
 
 @code
 {
-    private async Task BeginSignOut(MouseEventArgs args)
+    private async Task BeginLogout()
     {
-        await SignOutManager.SetSignOutState();
-        Navigation.NavigateTo(RemoteAuthenticationDefaults.LogoutPath);
+        await _authService.LogoutAsync();
+    }
+
+    private void BeginLogin()
+    {
+        _authService.Authenticate();
     }
 }

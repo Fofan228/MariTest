@@ -1,7 +1,7 @@
 using Blazored.LocalStorage;
 using Mari.Client;
-using Mari.Client.Services;
-using Microsoft.AspNetCore.Components.Authorization;
+using Mari.Client.Common.Constants;
+using Mari.Client.Common.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
@@ -15,14 +15,13 @@ var rootComponents = builder.RootComponents;
 rootComponents.Add<App>("#app");
 rootComponents.Add<HeadOutlet>("head::after");
 
-services.AddOptions();
+services.AddClientServices();
+
 services.AddAuthorizationCore();
 services.AddMudServices();
 services.AddBlazoredLocalStorage();
 
-services.AddHttpClient("Server", client => client.BaseAddress = new Uri(environment.BaseAddress));
-
-services.AddScoped(sp => sp.GetService<IHttpClientFactory>()!.CreateClient("Server"));
-services.AddScoped<AuthenticationStateProvider, MariAuthStateProvider>();
+services.AddHttpClient(HttpClientNames.Api, client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
+services.AddScoped(sp => sp.GetService<IHttpClientFactory>()!.CreateClient(HttpClientNames.Api));
 
 await builder.Build().RunAsync();

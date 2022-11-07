@@ -1,27 +1,16 @@
-@using Contracts.Authentication
 @attribute [Route(Routes.Client.TokenHandler)]
-@inject ILocalStorageService LocalStorage
 @inject NavigationManager NavigationManager
-
-<div>asd</div>
+@inject IAuthenticationService AuthenticationService
 
 @code
 {
     [Parameter]
     [SupplyParameterFromQuery]
-    public AuthenticationRequest Request { get; set; } = null!;
+    public string Token { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
-        if (Request is null)
-        {
-            Console.WriteLine("Request is null");
-            return;
-        }
-        else
-        {
-            await LocalStorage.SetItemAsync("authToken", Request.Token);
-            NavigationManager.NavigateTo(Routes.Client.Index);
-        }
+        await AuthenticationService.LoginAsync(Token);
+        NavigationManager.NavigateTo(Routes.Client.Index, true);
     }
 }

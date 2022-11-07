@@ -1,15 +1,10 @@
-﻿@inject NavigationManager NavigationManager
-
-<div>asd</div>
+﻿<!-- Saved -->
+@inject IAuthenticationService _authService
 
 @code
 {
     protected override void OnInitialized()
     {
-        var builder = new UriBuilder(NavigationManager.Uri)
-        {
-            Path = Routes.Server.AuthenticationController
-        };
-        NavigationManager.NavigateTo(builder.Uri.ToString());
+        _authService.Authenticate();
     }
 }

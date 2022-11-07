@@ -1,4 +1,3 @@
-using System.Reflection.Metadata;
 using Mari.Application.Common.Interfaces.Authentication;
 using Mari.Application.Common.Interfaces.CommonServices;
 using Mari.Application.Common.Interfaces.Persistence;
@@ -28,6 +27,7 @@ public static class DependencyInjection
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IReleaseRepository, ReleaseRepository>();
 
         return services;
     }

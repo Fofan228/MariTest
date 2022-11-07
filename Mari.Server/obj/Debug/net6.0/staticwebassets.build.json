@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "EiawMsTef4iWS85A+bs/REBm/iM6jb6omSz3WpSVApw=",
+  "Hash": "6cv5RRNqRSgb6yI570GAwdOKtjGWrMneWsPzgD7g6Vk=",
   "Source": "Mari.Server",
   "BasePath": "_content/Mari.Server",
   "Mode": "Default",
@@ -7286,6 +7286,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/appsettings.json"
+    },
+    {
+      "Identity": "/home/nanoster/projects/MariTest/Mari.Client/wwwroot/css/main.css",
+      "SourceId": "Mari.Client",
+      "SourceType": "Project",
+      "ContentRoot": "/home/nanoster/projects/MariTest/Mari.Client/wwwroot/",
+      "BasePath": "/",
+      "RelativePath": "css/main.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/main.css"
     },
     {
       "Identity": "/home/nanoster/projects/MariTest/Mari.Client/wwwroot/favicon.ico",

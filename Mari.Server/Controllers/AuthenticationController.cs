@@ -59,9 +59,13 @@ public class AuthorizationController : ApiController
         var request = new AuthenticationRequest(authResult.Value.Token);
         var builder = new UriBuilder
         {
-            Path = $"{_hostSettings.Host}{Routes.Client.TokenHandler}",
+            Scheme = _hostSettings.Scheme,
+            Host = _hostSettings.Host,
+            Port = _hostSettings.Port,
+            Path = Routes.Client.TokenHandler,
             Query = request.ToUrlEncodedQuery()
         };
+
         return Redirect(builder.Uri.ToString());
     }
 }
