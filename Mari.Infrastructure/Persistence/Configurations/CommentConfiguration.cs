@@ -15,10 +15,15 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
         builder.Property(c => c.Id)
             .IsValueObjectWrapper<Guid, CommentId>();
 
+        builder.Property(c => c.IsRedacted)
+            .IsRequired();
+
+        builder.Property(c => c.IsSystem)
+            .IsRequired();
+
         builder.Property(c => c.Content)
-            .IsValueObjectWrapper<string, CommentContent>()
-            .IsRequired()
-            .HasMaxLength(CommentContent.MaxLength);
+            .IsStringWrapper<CommentContent>()
+            .IsRequired();
 
         builder.HasOne<User>()
             .WithMany()

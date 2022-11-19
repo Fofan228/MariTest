@@ -3,26 +3,29 @@ using Mari.Domain.Common.Models;
 using Mari.Domain.Releases.Entities;
 using Mari.Domain.Releases.Enums;
 using Mari.Domain.Releases.ValueObjects;
+using Mari.Domain.Common.Errors;
 
 namespace Mari.Domain.Releases;
 
 public class Release : AggregateRoot<ReleaseId>
 {
     public static ErrorOr<Release> Create(
+        Issue mainIssue,
         Platform platform,
         ReleaseCompleteDate completeDate,
+        ReleaseDescription? description = null,
         ReleaseVersion? version = null,
-        List<Issue>? issues = null,
         ReleaseId? id = null)
     {
         return new Release(
             id: id ?? ReleaseId.Default,
+            mainIssue: mainIssue,
             platform: platform,
             completeDate: completeDate,
             updateDate: ReleaseUpdateDate.Create(completeDate.Value),
             status: ReleaseStatus.Planning,
-            version: version ?? ReleaseVersion.MinValue,
-            issues: issues ?? new List<Issue>()
+            description: description ?? ReleaseDescription.Default,
+            version: version ?? ReleaseVersion.MinValue
         );
     }
 
@@ -32,19 +35,21 @@ public class Release : AggregateRoot<ReleaseId>
 
     private Release(
         ReleaseId id,
+        Issue mainIssue,
         ReleaseVersion version,
         Platform platform,
         ReleaseCompleteDate completeDate,
         ReleaseUpdateDate updateDate,
         ReleaseStatus status,
-        List<Issue> issues) : base(id)
+        ReleaseDescription description) : base(id)
     {
         Version = version;
         Platform = platform;
         Status = status;
         CompleteDate = completeDate;
         UpdateDate = updateDate;
-        _issues = issues;
+        MainIssue = mainIssue;
+        Description = description;
     }
 
     public ReleaseVersion Version { get; private set; } = null!;
@@ -52,47 +57,57 @@ public class Release : AggregateRoot<ReleaseId>
     public ReleaseStatus Status { get; private set; }
     public ReleaseCompleteDate CompleteDate { get; private set; } = null!;
     public ReleaseUpdateDate UpdateDate { get; private set; } = null!;
+    public ReleaseDescription Description { get; private set; } = null!;
+    public Issue MainIssue { get; private set; } = null!;
 
-    private List<Issue> _issues = new();
-    public virtual IReadOnlyList<Issue> Issues => _issues;
-
-    public ErrorOr<Created> AddIssue(Issue issue, ReleaseUpdateDate currentDateTime)
+    public ErrorOr<Updated> ChangeMainIssue(Issue mainIssue, DateTime currentDateTime)
     {
-        _issues.Add(issue);
+        MainIssue = mainIssue;
         ChangeUpdateDate(currentDateTime);
-        return Result.Created;
+        return Result.Updated;
     }
 
-    public ErrorOr<Deleted> RemoveIssue(Issue issue, ReleaseUpdateDate currentDateTime)
+    public ErrorOr<Updated> ChangeDescription(ReleaseDescription description, DateTime currentDateTime)
     {
-        _issues.Remove(issue);
+        Description = description;
         ChangeUpdateDate(currentDateTime);
-        return Result.Deleted;
+        return Result.Updated;
     }
 
-    public ErrorOr<Updated> ChangeVersion(ReleaseVersion version, ReleaseUpdateDate currentDateTime)
+    public ErrorOr<Updated> ChangeVersion(ReleaseVersion version, DateTime currentDateTime)
     {
+        if (version <= Version)
+            return Errors.Release.VersionMustBeGreaterThanCurrent;
         Version = version;
         ChangeUpdateDate(currentDateTime);
         return Result.Updated;
     }
 
-    public ErrorOr<Updated> ChangePlatform(Platform platform, ReleaseUpdateDate currentDateTime)
+    public ErrorOr<Updated> ChangeCompleteDate(ReleaseCompleteDate completeDate, DateTime currentDateTime)
+    {
+        if (completeDate <= CompleteDate)
+            return Errors.Release.CompleteDateMustBeGreaterThanCurrent;
+        CompleteDate = completeDate;
+        ChangeUpdateDate(currentDateTime);
+        return Result.Updated;
+    }
+
+    public ErrorOr<Updated> ChangePlatform(Platform platform, DateTime currentDateTime)
     {
         Platform = platform;
         ChangeUpdateDate(currentDateTime);
         return Result.Updated;
     }
 
-    public ErrorOr<Updated> ChangeStatus(ReleaseStatus status, ReleaseUpdateDate currentDateTime)
+    public ErrorOr<Updated> ChangeStatus(ReleaseStatus status, DateTime currentDateTime)
     {
         Status = status;
         ChangeUpdateDate(currentDateTime);
         return Result.Updated;
     }
 
-    private void ChangeUpdateDate(ReleaseUpdateDate currentDateTime)
+    private void ChangeUpdateDate(DateTime currentDateTime)
     {
-        UpdateDate = currentDateTime;
+        UpdateDate = ReleaseUpdateDate.Create(currentDateTime);
     }
 }

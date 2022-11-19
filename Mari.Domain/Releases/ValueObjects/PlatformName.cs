@@ -1,15 +1,16 @@
-using System.Diagnostics.CodeAnalysis;
+using Mari.Domain.Common.Interfaces;
 using Mari.Domain.Common.Models;
 
 namespace Mari.Domain.Releases.ValueObjects;
 
-public record PlatformName : ValueObjectWrapper<string, PlatformName>
+public record PlatformName : ValueObjectWrapper<string, PlatformName>, IStringWrapper
 {
     [Obsolete(PublicConstructorObsoleteMessage, true)]
     public PlatformName() { }
 
-    //TODO Для валидации использовать сначала конфигурацию, если нет, то использовать внутренние регулярки
-    public const string Pattern = @"^[^\d\W]+.*";
-    public const int MaxLength = 100;
+    public static string Pattern => @"^[^\d\W]+.*";
+    public static uint? MaxLength => 100;
+    public static uint? MinLength => 3;
+
 }
 

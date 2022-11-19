@@ -5,7 +5,6 @@ namespace Mari.Domain.Users.Enums
         Guest,
         Commentator,
         QATester,
-        ReleaseManager,
-        Admin
+        ReleaseManager
     }
 }

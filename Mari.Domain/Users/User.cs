@@ -1,8 +1,8 @@
-using System;
 using ErrorOr;
 using Mari.Domain.Common.Models;
 using Mari.Domain.Users.Enums;
 using Mari.Domain.Users.ValueObjects;
+using Mari.Domain.Common.Errors;
 
 namespace Mari.Domain.Users;
 
@@ -25,7 +25,7 @@ public class User : AggregateRoot<UserId>
     {
         Username = name;
         Role = role;
-        IsActive = false;
+        IsActive = true;
     }
 
     public Username Username { get; private set; } = null!;
@@ -34,18 +34,23 @@ public class User : AggregateRoot<UserId>
 
     public ErrorOr<Updated> ChangeUsername(Username username)
     {
+        if (!IsActive) return Errors.User.UserIsBlocked;
         Username = username;
         return Result.Updated;
     }
 
     public ErrorOr<Updated> ChangeRole(UserRole role)
     {
+        //TODO Можно ли изменить роль релиз менеджера?
+        if (!IsActive) return Errors.User.UserIsBlocked;
         Role = role;
         return Result.Updated;
     }
 
     public ErrorOr<Success> BlockUser()
     {
+        //TODO Можно ли заблокировать релиз менеджера?
+        if (!IsActive) return Errors.User.UserIsBlocked;
         IsActive = false;
         return Result.Success;
     }

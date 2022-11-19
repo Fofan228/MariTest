@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {
+    "net7.0": {
       "EFCore.NamingConventions/6.0.0": {
         "type": "package",
         "dependencies": {
@@ -501,6 +501,15 @@
           }
         }
       },
+      "OneOf/3.0.216": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/OneOf.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/OneOf.dll": {}
+        }
+      },
       "System.Collections.Immutable/6.0.0": {
         "type": "package",
         "dependencies": {
@@ -627,9 +636,25 @@
           }
         }
       },
+      "Throw/1.3.1": {
+        "type": "package",
+        "dependencies": {
+          "OneOf": "3.0.216"
+        },
+        "compile": {
+          "lib/net6.0/Throw.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Throw.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Mari.Application/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
+        "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "FluentValidation": "11.2.2",
           "FluentValidation.DependencyInjectionExtensions": "11.2.2",
@@ -647,10 +672,11 @@
       },
       "Mari.Domain/1.0.0": {
         "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
+        "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "ErrorOr": "1.0.1",
-          "LinqSpecs": "3.1.1"
+          "LinqSpecs": "3.1.1",
+          "Throw": "1.3.1"
         },
         "compile": {
           "bin/placeholder/Mari.Domain.dll": {}
@@ -1328,6 +1354,21 @@
         "postgresql.png"
       ]
     },
+    "OneOf/3.0.216": {
+      "sha512": "hvSxx7O9Z50ZK/HZaqxcEiO1skihnHcsziy0cVRqSq7LrETM9swcRcMZuG+0irai7jq8FYYCHTrB/pSHSah6ug==",
+      "type": "package",
+      "path": "oneof/3.0.216",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/OneOf.dll",
+        "lib/net45/OneOf.dll",
+        "lib/netstandard1.3/OneOf.dll",
+        "lib/netstandard2.0/OneOf.dll",
+        "oneof.3.0.216.nupkg.sha512",
+        "oneof.nuspec"
+      ]
+    },
     "System.Collections.Immutable/6.0.0": {
       "sha512": "l4zZJ1WU2hqpQQHXz1rvC3etVZN+2DLmQMO79FhOTZHMn8tDRr+WU287sbomD0BETlmKDn0ygUgVy9k5xkkJdA==",
       "type": "package",
@@ -1667,6 +1708,20 @@
         "version.txt"
       ]
     },
+    "Throw/1.3.1": {
+      "sha512": "zFcXPEtZUShAu+PoF7lnUSzsIN4I/H7T3CqzzE1uyWgCp8u4NSzugPUIwdVIdz7wMU9B8We9iV2Jz1fyiiu48w==",
+      "type": "package",
+      "path": "throw/1.3.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon-square.png",
+        "lib/net6.0/Throw.dll",
+        "lib/net6.0/Throw.xml",
+        "throw.1.3.1.nupkg.sha512",
+        "throw.nuspec"
+      ]
+    },
     "Mari.Application/1.0.0": {
       "type": "project",
       "path": "../Mari.Application/Mari.Application.csproj",
@@ -1679,7 +1734,7 @@
     }
   },
   "projectFileDependencyGroups": {
-    "net6.0": [
+    "net7.0": [
       "EFCore.NamingConventions >= 6.0.0",
       "Mari.Application >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 6.0.10",
@@ -1707,14 +1762,14 @@
         "/home/nanoster/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
-        "net6.0"
+        "net7.0"
       ],
       "sources": {
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net7.0": {
+          "targetAlias": "net7.0",
           "projectReferences": {
             "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj": {
               "projectPath": "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj"
@@ -1729,8 +1784,8 @@
       }
     },
     "frameworks": {
-      "net6.0": {
-        "targetAlias": "net6.0",
+      "net7.0": {
+        "targetAlias": "net7.0",
         "dependencies": {
           "EFCore.NamingConventions": {
             "target": "Package",
@@ -1781,7 +1836,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }

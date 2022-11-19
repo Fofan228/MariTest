@@ -26,8 +26,6 @@ public class ReleaseConfiguration : IEntityTypeConfiguration<Release>
 
         builder.OwnsOne(r => r.Version);
 
-        builder.OwnsMany(r => r.Issues);
-
         builder.HasOne(r => r.Platform)
             .WithMany();
     }

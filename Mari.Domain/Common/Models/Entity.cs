@@ -1,10 +1,10 @@
+using Mari.Domain.Common.Interfaces;
+
 namespace Mari.Domain.Common.Models;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>>
     where TId : IEquatable<TId>
 {
-    public static EntityEqualityComparer<TId> EqualityComparer { get; } = new EntityEqualityComparer<TId>();
-
     public TId Id { get; protected set; }
 
     protected Entity(TId id)
@@ -14,17 +14,19 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
 
     public bool Equals(Entity<TId>? other)
     {
-        return EqualityComparer.Equals(this, other);
+        if (ReferenceEquals(other, this)) return true;
+        if (other is null) return false;
+        return Id.Equals(other.Id);
     }
 
     public override bool Equals(object? obj)
     {
-        return EqualityComparer.Equals(this, obj as Entity<TId>);
+        return Equals(obj as Entity<TId>);
     }
 
     public override int GetHashCode()
     {
-        return EqualityComparer.GetHashCode(this);
+        return Id.GetHashCode();
     }
 
     public override string ToString()
@@ -34,11 +36,12 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
 
     public static bool operator ==(Entity<TId>? left, Entity<TId>? right)
     {
-        return EqualityComparer.Equals(left, right);
+        if (ReferenceEquals(left, right)) return true;
+        return left?.Equals(right) ?? false;
     }
 
     public static bool operator !=(Entity<TId>? left, Entity<TId>? right)
     {
-        return !EqualityComparer.Equals(left, right);
+        return !(left == right);
     }
 }

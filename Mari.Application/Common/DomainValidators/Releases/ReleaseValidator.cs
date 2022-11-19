@@ -17,7 +17,6 @@ public class ReleaseValidator : AbstractValidator<Release>
         RuleFor(r => r.Id)
             .SetValidator(releaseIdValidator);
 
-        RuleFor(r => r.Issues);
 
         RuleFor(r => r.Platform)
             .SetValidator(platformValidator);

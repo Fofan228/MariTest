@@ -1,4 +1,4 @@
-using System.Reflection.Emit;
+using Mari.Domain.Common.Interfaces;
 using Mari.Domain.Common.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,6 +13,19 @@ public static class PropertyBuilderExtensions
         propertyBuilder.HasConversion(
             valueObject => valueObject.Value,
             value => ValueObjectWrapper<TBase, TWrapper>.Create(value));
+
+        return propertyBuilder;
+    }
+
+    public static PropertyBuilder<TWrapper> IsStringWrapper<TWrapper>(this PropertyBuilder<TWrapper> propertyBuilder)
+        where TWrapper : ValueObjectWrapper<string, TWrapper>, IStringWrapper, new()
+    {
+        propertyBuilder.IsValueObjectWrapper<string, TWrapper>();
+
+        if (TWrapper.MaxLength is not null)
+        {
+            propertyBuilder.HasMaxLength(((int)TWrapper.MaxLength.Value));
+        }
 
         return propertyBuilder;
     }

@@ -17,15 +17,19 @@
           "/home/nanoster/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net7.0"
         ],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
-            "projectReferences": {}
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "/home/nanoster/projects/MariTest/Mari.Http/Mari.Http.csproj": {
+                "projectPath": "/home/nanoster/projects/MariTest/Mari.Http/Mari.Http.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -35,8 +39,8 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net7.0": {
+          "targetAlias": "net7.0",
           "imports": [
             "net461",
             "net462",
@@ -53,7 +57,60 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/home/nanoster/projects/MariTest/Mari.Http/Mari.Http.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/nanoster/projects/MariTest/Mari.Http/Mari.Http.csproj",
+        "projectName": "Mari.Http",
+        "projectPath": "/home/nanoster/projects/MariTest/Mari.Http/Mari.Http.csproj",
+        "packagesPath": "/home/nanoster/.nuget/packages/",
+        "outputPath": "/home/nanoster/projects/MariTest/Mari.Http/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/nanoster/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
         }
       }
     }

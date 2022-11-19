@@ -1,18 +1,17 @@
-using System.Web;
-using Mari.Contracts.Common.Requests;
+using Mari.Http.Models;
+using Mari.Http.Requests;
+using static Mari.Contracts.Authentication.AuthenticationRequest;
 
 namespace Mari.Contracts.Authentication;
-public class AuthenticationRequest : GetRequest
+public class AuthenticationRequest : GetRequest<object, Query, VoidResponse>
 {
-    public AuthenticationRequest(string token)
+    public const string Route = Common.Routes.Server.AuthenticationController;
+
+    public AuthenticationRequest(string redirectUrl) : base(null, new(new(redirectUrl)))
     {
-        Token = token;
     }
 
-    public string Token { get; }
+    public override string GetRoute() => Route;
 
-    public override IEnumerable<KeyValuePair<string, string>> EnumerateParams()
-    {
-        yield return new(nameof(Token), Token);
-    }
+    public record Query(Uri RedirectUri);
 }

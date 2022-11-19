@@ -10,6 +10,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        Token.ThrowIfNull();
         await AuthenticationService.LoginAsync(Token);
         NavigationManager.NavigateTo(Routes.Client.Index, true);
     }

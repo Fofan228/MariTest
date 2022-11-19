@@ -1,4 +1,5 @@
 using Mari.Domain.Common.Models;
+using Throw;
 
 namespace Mari.Domain.Releases.ValueObjects;
 
@@ -18,7 +19,7 @@ public record ReleaseVersion : ValueObject, IComparable<ReleaseVersion>
 
     public static ReleaseVersion Create(uint major, uint minor, uint patch)
     {
-        return new ReleaseVersion(major, minor, (uint)int.MaxValue + 1);
+        return new ReleaseVersion(major, minor, patch);
     }
 
     private ReleaseVersion(uint major, uint minor, uint patch)
@@ -34,9 +35,7 @@ public record ReleaseVersion : ValueObject, IComparable<ReleaseVersion>
 
     public int CompareTo(ReleaseVersion? other)
     {
-        if (other is null)
-            throw new NullReferenceException(
-                message: $"{nameof(ReleaseVersion)}: {nameof(other)} is null");
+        other.ThrowIfNull();
 
         var firstPartCompareResult = Major.CompareTo(other.Minor);
         if (firstPartCompareResult != 0) return firstPartCompareResult;

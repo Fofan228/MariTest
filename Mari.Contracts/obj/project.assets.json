@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net6.0": {}
+    "net7.0": {
+      "Mari.Http/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Mari.Http.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Mari.Http.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Mari.Http/1.0.0": {
+      "type": "project",
+      "path": "../Mari.Http/Mari.Http.csproj",
+      "msbuildProject": "../Mari.Http/Mari.Http.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net6.0": []
+    "net7.0": [
+      "Mari.Http >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "/home/nanoster/.nuget/packages/": {}
@@ -23,15 +42,19 @@
         "/home/nanoster/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
-        "net6.0"
+        "net7.0"
       ],
       "sources": {
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
-          "projectReferences": {}
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "projectReferences": {
+            "/home/nanoster/projects/MariTest/Mari.Http/Mari.Http.csproj": {
+              "projectPath": "/home/nanoster/projects/MariTest/Mari.Http/Mari.Http.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -41,8 +64,8 @@
       }
     },
     "frameworks": {
-      "net6.0": {
-        "targetAlias": "net6.0",
+      "net7.0": {
+        "targetAlias": "net7.0",
         "imports": [
           "net461",
           "net462",
@@ -59,7 +82,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.402/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }

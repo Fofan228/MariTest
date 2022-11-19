@@ -15,8 +15,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.Property(u => u.Username)
             .IsValueObjectWrapper<string, Username>()
-            .IsRequired()
-            .HasMaxLength(Username.MaxLength);
+            .IsRequired();
 
         builder.Property(u => u.IsActive)
             .IsRequired();

@@ -28,9 +28,9 @@ public class AuthorizationController : ApiController
         _hostSettings = hostSettings.Value;
     }
 
-    [HttpGet]
+    [HttpGet(AuthenticationRequest.Route)]
     [Authorize(AuthenticationSchemes = $"{CookieConfig.AuthenticationScheme}, {OAuthConfig.AuthenticationScheme}")]
-    public async Task<IActionResult> GetToken()
+    public async Task<IActionResult> GetToken([FromQuery] AuthenticationRequest.Query query)
     {
         var userIdClaim = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
@@ -55,16 +55,7 @@ public class AuthorizationController : ApiController
             authResult = await _sender.Send(registrationCommand);
             if (authResult.IsError) return Problem(authResult.Errors);
         }
-
-        var request = new AuthenticationRequest(authResult.Value.Token);
-        var builder = new UriBuilder
-        {
-            Scheme = _hostSettings.Scheme,
-            Host = _hostSettings.Host,
-            Port = _hostSettings.Port,
-            Path = Routes.Client.TokenHandler,
-            Query = request.ToUrlEncodedQuery()
-        };
+        var builder = new UriBuilder(query.RedirectUri) { Query = $"token={authResult.Value.Token}" };
 
         return Redirect(builder.Uri.ToString());
     }
