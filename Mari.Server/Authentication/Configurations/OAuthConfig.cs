@@ -1,10 +1,10 @@
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
+using Mari.Contracts.Common.Routes.Server;
 using Mari.Infrastructure.Authentication.Settings;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
-using Mari.Contracts.Common;
 
 namespace Mari.Server.Authentication.Configurations;
 
@@ -21,7 +21,7 @@ public static class OAuthConfig
         options.CorrelationCookie.SameSite = SameSiteMode.Lax;
         options.AuthorizationEndpoint = oauthSettings.AuthorizationEndpoint;
         options.TokenEndpoint = oauthSettings.TokenEndpoint;
-        options.CallbackPath = new PathString(Routes.Server.OAuthCallbackPath);
+        options.CallbackPath = new PathString(ServerRoutes.OAuthCallbackPath);
         options.UserInformationEndpoint = oauthSettings.UserInformationEndpoint;
         options.SaveTokens = true;
         options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, oauthSettings.IdJsonKey);

@@ -13,10 +13,11 @@ using Mari.Application.Authentication.Results;
 using ErrorOr;
 using Mari.Server.Settings;
 using Microsoft.Extensions.Options;
+using Mari.Contracts.Common.Routes.Server;
 
 namespace Mari.Server.Controllers;
 
-[Route(Routes.Server.AuthenticationController)]
+[Route(ServerRoutes.Controllers.Authentication)]
 public class AuthorizationController : ApiController
 {
     private readonly ISender _sender;

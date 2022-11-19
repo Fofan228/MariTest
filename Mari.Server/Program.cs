@@ -1,5 +1,5 @@
 using Mari.Application;
-using Mari.Contracts.Common;
+using Mari.Contracts.Common.Routes.Server;
 using Mari.Infrastructure;
 using Mari.Server.Authentication;
 using Mari.Server.Settings;
@@ -31,7 +31,7 @@ var app = builder.Build();
     }
     else
     {
-        app.UseExceptionHandler(Routes.Server.ErrorController);
+        app.UseExceptionHandler(ServerRoutes.Controllers.Error);
     }
 
     app.UseBlazorFrameworkFiles();
@@ -42,7 +42,7 @@ var app = builder.Build();
 
     app.MapRazorPages();
     app.MapControllers();
-    app.MapFallbackToFile(Routes.Server.FallbackFile);
+    app.MapFallbackToFile(ServerRoutes.FallbackFile);
 }
 
 app.Run();

@@ -19,6 +19,7 @@ rootComponents.Add<HeadOutlet>("head::after");
 services.AddClientServices();
 services.AddHttpUtils();
 
+services.AddHttpClient();
 services.AddAuthorizationCore();
 services.AddMudServices();
 services.AddBlazoredLocalStorage();

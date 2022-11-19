@@ -1,4 +1,4 @@
-@attribute [Route(Routes.Client.TokenHandler)]
+@attribute [Route(ClientRoutes.Pages.TokenHandler)]
 @inject NavigationManager NavigationManager
 @inject IAuthenticationService AuthenticationService
 
@@ -12,6 +12,6 @@
     {
         Token.ThrowIfNull();
         await AuthenticationService.LoginAsync(Token);
-        NavigationManager.NavigateTo(Routes.Client.Index, true);
+        NavigationManager.NavigateTo(ClientRoutes.Pages.Index, true);
     }
 }

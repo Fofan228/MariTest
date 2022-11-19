@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Components;
-using Mari.Contracts.Common;
 using Blazored.LocalStorage;
 using Mari.Client.Common.Interfaces;
 using Microsoft.AspNetCore.Components.Authorization;
 using Mari.Contracts.Authentication;
+using Mari.Contracts.Common.Routes.Client;
 
 namespace Mari.Client.Common.Services;
 
@@ -25,8 +25,7 @@ public class AuthenticationService : IAuthenticationService
 
     public void Authenticate()
     {
-        var request = new AuthenticationRequest(_navigationManager.BaseUri + Routes.Client.TokenHandler);
-        Console.WriteLine(_navigationManager.BaseUri.TrimEnd('/'));
+        var request = new AuthenticationRequest(_navigationManager.BaseUri.TrimEnd('/') + ClientRoutes.Pages.TokenHandler);
         var builder = new UriBuilder(_navigationManager.BaseUri)
         {
             Path = request.GetRoute(),
