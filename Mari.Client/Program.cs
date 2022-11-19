@@ -1,6 +1,7 @@
 using Blazored.LocalStorage;
 using Mari.Client;
 using Mari.Client.Common.Constants;
+using Mari.Client.Common.HttpUtils;
 using Mari.Client.Common.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -16,6 +17,7 @@ rootComponents.Add<App>("#app");
 rootComponents.Add<HeadOutlet>("head::after");
 
 services.AddClientServices();
+services.AddHttpUtils();
 
 services.AddAuthorizationCore();
 services.AddMudServices();
