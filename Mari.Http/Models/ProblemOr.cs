@@ -13,11 +13,9 @@ public class ProblemOr<TResponse>
 
         if (Problem is null && Response is null)
             throw new ArgumentException("Either response or problem must be non-null.");
-
-        IsSuccess = Problem is null;
     }
 
-    public bool IsSuccess { get; }
+    public bool IsSuccess => Problem is null && Response is not null;
     public TResponse? Response { get; }
     public ProblemDetails? Problem { get; }
     public HttpResponseMessage HttpResponse { get; }

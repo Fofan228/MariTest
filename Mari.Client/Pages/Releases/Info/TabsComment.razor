@@ -1,0 +1,70 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using Mari.Contracts.Comment
+@using Mari.Contracts.Common.Interfaces
+@inject ICommentManager CommentManager
+
+    <MudPaper Elevation="0" Class="py-6 mb-10">
+        <MudStack > <!--TODO убрать дублирование кода-->
+            @foreach (var comment in Comments)
+                {
+                    <MudPaper Class="border-b pl-4 pb-4" Elevation="0">
+                            
+                        <MudPaper Class=" d-flex" Elevation="0">
+                            <MudAvatar Color="Color.Primary">M</MudAvatar>
+                            <MudPaper Class="d-flex align-center pl-4" Elevation="0">
+                                <MudText>@comment.UserName</MudText>
+                            </MudPaper>
+                        </MudPaper>
+
+                        <MudPaper Class="pt-2" Elevation="0">
+                            <MudText>@comment.CreateDate</MudText>
+                        </MudPaper>
+
+                        <MudPaper Class="pt-2" Elevation="0">
+                            <MudText>@comment.Information</MudText>
+                        </MudPaper>
+                    </MudPaper>
+                }
+        </MudStack>
+    </MudPaper>
+
+    <!-- /* TODO добавить формы создания */ -->
+<MudPaper Elevation="3" Square="true" Class="border-b px-4 py-4 d-flex flex-column sticky" Style="bottom: 0">
+        <MudPaper Class="d-flex" Elevation="0">
+            <MudAvatar Color="Color.Primary">M</MudAvatar>
+            <MudPaper Class="d-flex align-center pl-4" Elevation="0">
+                <MudText>@Name</MudText>
+            </MudPaper>
+        </MudPaper>
+        <MudForm>
+            <MudTextField @bind-Value="@Text" Lines="3" Label="Введите текст" Variant="Variant.Filled" Clearable="true"/>
+            <MudButton Class="mt-2" OnClick="AddEl" Variant="Variant.Filled" Color="Color.Primary">Отправить</MudButton>
+        </MudForm>
+    
+</MudPaper>
+
+
+@code {
+
+    
+    private List<CommentAnswer> Comments { get; set; }
+
+    private CommentPostRequest newCommnet { get; set; } = new CommentPostRequest(); 
+
+    protected override async Task OnInitializedAsync()
+    {
+     Comments = await CommentManager.GetAll(null);
+    /*var commnets = await Client.GetFromJsonAsync<IEnumerable<CommentAnswer>>(Routes.Server.CommentController + "all");
+        Comments = commnets.ToList();*/
+    }
+
+    string Name { get; set; } = "Ахимат";
+    string Text { get; set; }
+
+    private void AddEl()
+    {
+      CommentManager.Post(newCommnet); 
+    }
+
+
+}

@@ -29,9 +29,9 @@ public class AuthorizationController : ApiController
         _hostSettings = hostSettings.Value;
     }
 
-    [HttpGet(AuthenticationRequest.Route)]
+    [HttpGet(AuthenticationRequest.RouteTemplate)]
     [Authorize(AuthenticationSchemes = $"{CookieConfig.AuthenticationScheme}, {OAuthConfig.AuthenticationScheme}")]
-    public async Task<IActionResult> GetToken([FromQuery] AuthenticationRequest.Query query)
+    public async Task<ActionResult> GetToken([FromQuery] AuthenticationRequest.Query query)
     {
         var userIdClaim = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 

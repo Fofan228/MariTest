@@ -1404,6 +1404,7 @@
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
           "Blazored.LocalStorage": "4.3.0",
+          "Mapster": "7.3.0",
           "Mari.Contracts": "1.0.0",
           "Microsoft.AspNetCore.Components.WebAssembly": "7.0.0",
           "Microsoft.AspNetCore.Components.WebAssembly.Authentication": "7.0.0",

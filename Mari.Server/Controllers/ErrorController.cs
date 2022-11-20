@@ -10,7 +10,7 @@ namespace Mari.Server.Controllers;
 [Route(ServerRoutes.Controllers.Error)]
 public class ErrorController : ApiController
 {
-    public IActionResult Error()
+    public ActionResult Error()
     {
         return Problem(Domain.Common.Errors.Errors.User.UserNotFound);
     }

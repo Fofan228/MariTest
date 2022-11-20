@@ -1,0 +1,71 @@
+﻿@using Contracts.Releases
+@using Models.Releases
+<MudPaper Class="" Elevation="0">
+    <MudCard Class="border card-create-release">
+
+        <MudForm Model="@RequestForm">
+            <MudCardActions Class="pb-0">
+                <!-- TODO доделать OnClick -->
+                <MudIconButton Class="ml-auto" OnClick="SwitchDimming" Icon="@Icons.Filled.Close" />
+            </MudCardActions>
+
+            <MudCardContent Class="pt-0">
+
+                <MudDatePicker @bind-Value="RequestForm.CompleteDate" @ref="DatePicker" Label="Дата Завершения">
+                    <PickerActions>
+                        <MudButton Class="mr-auto align-self-start" OnClick="@(() => DatePicker.Clear())">Clear
+                        </MudButton>
+                        <MudButton OnClick="@(() => DatePicker.Close(false))">Cancel</MudButton>
+                        <MudButton Color="Color.Primary" OnClick="@(() => DatePicker.Close())">Ok</MudButton>
+                    </PickerActions>
+                </MudDatePicker>
+
+                <MudTextField @bind-Value="RequestForm.PlatformName" Immediate="true" Label="Платформа" />
+
+                <MudTextField @bind-Value="RequestForm.Version" Immediate="true" Label="Версия" />
+
+                <MudTextField @bind-Value="RequestForm.MainIssue" Immediate="true" Label="Ссылка на релиз задачу" />
+
+                <MudTextField @bind-Value="RequestForm.Description" Immediate="true" Variant="Variant.Filled" Lines="5"
+                    Label="Информация" />
+
+            </MudCardContent>
+
+            <MudCardActions>
+                <!-- TODO доделать OnClick -->
+            </MudCardActions>
+        </MudForm>
+        <MudButton OnClick="ClickOnCreateRelease" Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto">
+            Добавить</MudButton>
+    </MudCard>
+</MudPaper>
+
+
+
+@code {
+    [Inject] public IReleaseManager ReleaseManager { get; set; } = null!;
+
+    // Пикер для даты
+    private MudDatePicker DatePicker = null!;
+
+    [Parameter]
+    public Action OnAddRelease { get; set; }
+
+    [Parameter]
+    public Action SwitchDimming { get; set; } = () => { };
+
+    public NewReleaseFormModel RequestForm { get; set; } = new();
+
+    public async Task ClickOnCreateRelease()
+    {
+        var request = new ReleaseCreateRequest(
+        mainIssue: new Uri(RequestForm.MainIssue),
+        completeDate: RequestForm.CompleteDate,
+        platformName: RequestForm.PlatformName,
+        version: RequestForm.Version,
+        description: RequestForm.Description
+        );
+        await ReleaseManager.Create(request, default);
+        SwitchDimming();
+    }
+}

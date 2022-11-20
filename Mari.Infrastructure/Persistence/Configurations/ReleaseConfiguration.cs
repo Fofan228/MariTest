@@ -42,9 +42,6 @@ public class ReleaseConfiguration : IEntityTypeConfiguration<Release>
 
         var mainIssue = builder.OwnsOne(r => r.MainIssue);
         {
-            mainIssue.Property(mi => mi.Title)
-                .IsRequired();
-
             mainIssue.Property(mi => mi.Link)
                 .IsRequired();
         }

@@ -1,0 +1,38 @@
+﻿<MudTabs Class="tabs" Elevation="4" Rounded="true" Centered="true">
+    <MudTabPanel Class="tabsItem" Text="Текущий релиз">
+        <MudMainContent Class="main-content ml-0">
+            <CurrentReleases />
+        </MudMainContent>
+    </MudTabPanel>
+
+    <MudTabPanel Class="tabsItem" Text="Релиз в работе">
+        <MudMainContent Class="main-content ml-0">
+            <InProgressReleases />
+        </MudMainContent>
+    </MudTabPanel>
+
+    <MudTabPanel Class="tabsItem" Text="Запланированный релиз">
+        <MudMainContent Class="main-content ml-0">
+            <PlannedReleases SwitchDimming="SwitchDimming" />
+        </MudMainContent>
+        @if (IsDimming)
+        {
+            <MudPaper Class="paper-create-release" Elevation="0">
+                <CreateReleaseCard SwitchDimming="SwitchDimming" />
+            </MudPaper>
+        }
+
+    </MudTabPanel>
+</MudTabs>
+
+@code {
+    private bool openCreateRelease { get; set; }
+    private bool IsDimming { get; set; }
+
+    private void SwitchDimming()
+    {
+        openCreateRelease = !openCreateRelease;
+        IsDimming = !IsDimming;
+    }
+
+}

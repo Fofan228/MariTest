@@ -91,12 +91,14 @@ public class HttpSender
                 httpResponse: httpResponse,
                 response: response);
         }
-
-        var problem = await httpResponse.Content.ReadFromJsonAsync<ProblemDetails>(cancellationToken: cancellationToken);
-        problem.ThrowIfNull();
-        result = new(
-            httpResponse: httpResponse,
-            problem: problem);
+        else
+        {
+            var problem = await httpResponse.Content.ReadFromJsonAsync<ProblemDetails>(cancellationToken: cancellationToken);
+            problem.ThrowIfNull();
+            result = new(
+                httpResponse: httpResponse,
+                problem: problem);
+        }
 
         return result;
     }
