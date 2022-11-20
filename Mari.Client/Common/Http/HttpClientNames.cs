@@ -1,4 +1,4 @@
-namespace Mari.Client.Common.Constants;
+namespace Mari.Client.Common.Http;
 
 public static class HttpClientNames
 {

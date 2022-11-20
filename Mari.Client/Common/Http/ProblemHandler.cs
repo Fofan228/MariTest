@@ -1,6 +1,6 @@
 using Mari.Http.Models;
 
-namespace Mari.Client.Common.HttpUtils;
+namespace Mari.Client.Common.Http;
 
 public class ProblemHandler
 {

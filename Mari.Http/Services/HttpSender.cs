@@ -1,30 +1,30 @@
 using System.Net.Http.Json;
-using Mari.Client.Common.Constants;
 using Mari.Http.Common;
 using Mari.Http.Models;
 using Mari.Http.Requests;
 using Throw;
 
-namespace Mari.Client.Common.Utils.HttpUtils;
+namespace Mari.Http.Services;
 
 public class HttpSender
 {
     private readonly IHttpClientFactory _httpClientFactory;
 
-    private string clientName = null!;
+    private string? clientName;
 
     public HttpSender(IHttpClientFactory httpClientFactory)
     {
         _httpClientFactory = httpClientFactory;
-        HttpClientName = HttpClientNames.Api;
     }
 
     public HttpClient Client { get; set; } = null!;
 
-    public string HttpClientName
+    public string? HttpClientName
     {
         get => clientName;
-        set => Client = _httpClientFactory.CreateClient(clientName = value);
+        set => Client = string.IsNullOrWhiteSpace(clientName = value)
+            ? _httpClientFactory.CreateClient()
+            : _httpClientFactory.CreateClient(clientName);
     }
 
     public async Task<ProblemOr<TResponse>> GetAsync<TRoute, TQuery, TResponse>(

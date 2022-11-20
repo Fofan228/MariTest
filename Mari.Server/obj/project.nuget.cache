@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "eBU7cUr/1F3BzIr4/yHEwKtchnkM90C0ie2s/5p4uMidbKmu0vdOu1WBbcQ90us8WTc43XwZYQujq1oKf96/WQ==",
+  "dgSpecHash": "VUAkCVehBlwvRDsE0A6PokMKBSqwpgaT203Xq30QOzld+CP+O0fo+xOVstG17K34o0glNe874bjLZU2+7SvCJA==",
   "success": true,
   "projectFilePath": "/home/nanoster/projects/MariTest/Mari.Server/Mari.Server.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,9 @@
     "/home/nanoster/.nuget/packages/fluentvalidation/11.2.2/fluentvalidation.11.2.2.nupkg.sha512",
     "/home/nanoster/.nuget/packages/fluentvalidation.dependencyinjectionextensions/11.2.2/fluentvalidation.dependencyinjectionextensions.11.2.2.nupkg.sha512",
     "/home/nanoster/.nuget/packages/linqspecs/3.1.1/linqspecs.3.1.1.nupkg.sha512",
+    "/home/nanoster/.nuget/packages/mapster/7.3.0/mapster.7.3.0.nupkg.sha512",
+    "/home/nanoster/.nuget/packages/mapster.core/1.2.0/mapster.core.1.2.0.nupkg.sha512",
+    "/home/nanoster/.nuget/packages/mapster.dependencyinjection/1.0.0/mapster.dependencyinjection.1.0.0.nupkg.sha512",
     "/home/nanoster/.nuget/packages/mediatr/11.0.0/mediatr.11.0.0.nupkg.sha512",
     "/home/nanoster/.nuget/packages/mediatr.contracts/1.0.1/mediatr.contracts.1.0.1.nupkg.sha512",
     "/home/nanoster/.nuget/packages/mediatr.extensions.microsoft.dependencyinjection/11.0.0/mediatr.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
@@ -72,13 +75,19 @@
     "/home/nanoster/.nuget/packages/system.collections.immutable/6.0.0/system.collections.immutable.6.0.0.nupkg.sha512",
     "/home/nanoster/.nuget/packages/system.diagnostics.diagnosticsource/6.0.0/system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",
     "/home/nanoster/.nuget/packages/system.identitymodel.tokens.jwt/6.24.0/system.identitymodel.tokens.jwt.6.24.0.nupkg.sha512",
+    "/home/nanoster/.nuget/packages/system.io/4.3.0/system.io.4.3.0.nupkg.sha512",
     "/home/nanoster/.nuget/packages/system.io.pipelines/7.0.0/system.io.pipelines.7.0.0.nupkg.sha512",
+    "/home/nanoster/.nuget/packages/system.reflection/4.3.0/system.reflection.4.3.0.nupkg.sha512",
+    "/home/nanoster/.nuget/packages/system.reflection.emit/4.3.0/system.reflection.emit.4.3.0.nupkg.sha512",
+    "/home/nanoster/.nuget/packages/system.reflection.emit.ilgeneration/4.3.0/system.reflection.emit.ilgeneration.4.3.0.nupkg.sha512",
+    "/home/nanoster/.nuget/packages/system.reflection.primitives/4.3.0/system.reflection.primitives.4.3.0.nupkg.sha512",
     "/home/nanoster/.nuget/packages/system.runtime/4.3.0/system.runtime.4.3.0.nupkg.sha512",
     "/home/nanoster/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "/home/nanoster/.nuget/packages/system.security.cryptography.cng/4.5.0/system.security.cryptography.cng.4.5.0.nupkg.sha512",
     "/home/nanoster/.nuget/packages/system.text.encoding/4.3.0/system.text.encoding.4.3.0.nupkg.sha512",
     "/home/nanoster/.nuget/packages/system.text.encodings.web/7.0.0/system.text.encodings.web.7.0.0.nupkg.sha512",
     "/home/nanoster/.nuget/packages/system.text.json/7.0.0/system.text.json.7.0.0.nupkg.sha512",
+    "/home/nanoster/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512",
     "/home/nanoster/.nuget/packages/throw/1.3.1/throw.1.3.1.nupkg.sha512"
   ],
   "logs": []

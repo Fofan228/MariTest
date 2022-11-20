@@ -1,7 +1,6 @@
 using Blazored.LocalStorage;
 using Mari.Client;
-using Mari.Client.Common.Constants;
-using Mari.Client.Common.HttpUtils;
+using Mari.Client.Common.Http;
 using Mari.Client.Common.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

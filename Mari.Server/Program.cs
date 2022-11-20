@@ -2,6 +2,7 @@ using Mari.Application;
 using Mari.Contracts.Common.Routes.Server;
 using Mari.Infrastructure;
 using Mari.Server.Authentication;
+using Mari.Server.Mapping;
 using Mari.Server.Settings;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 
@@ -14,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddMariAuthentication(builder.Configuration);
     builder.Services.AddServerSettings(builder.Configuration);
+    builder.Services.AddMapping();
 
     builder.Services.AddControllers();
     builder.Services.AddRazorPages();
