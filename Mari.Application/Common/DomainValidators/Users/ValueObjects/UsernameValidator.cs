@@ -1,17 +1,10 @@
 using System.Text.RegularExpressions;
 using FluentValidation;
+using Mari.Application.Common.DomainValidators.Shared;
 using Mari.Domain.Users.ValueObjects;
 
 namespace Mari.Application.Common.DomainValidators.Users.ValueObjects;
 
-public class UsernameValidator : AbstractValidator<Username>
+public class UsernameValidator : StringAbstractValidator<Username>
 {
-    public static Regex RegexPattern = new Regex(Username.Pattern, RegexOptions.Compiled);
-
-    public UsernameValidator()
-    {
-        RuleFor(un => un.Value)
-            .NotEmpty()
-            .Must(x => RegexPattern.IsMatch(x));
-    }
 }

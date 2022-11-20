@@ -9,6 +9,9 @@ public abstract class StringAbstractValidator<T> : AbstractValidator<T>
 {
     protected StringAbstractValidator()
     {
+        RuleFor(s => s.Value)
+            .NotEmpty();
+
         if (T.MaxLength != null)
             RuleFor(x => x.Value)
                 .MaximumLength((int)T.MaxLength.Value);

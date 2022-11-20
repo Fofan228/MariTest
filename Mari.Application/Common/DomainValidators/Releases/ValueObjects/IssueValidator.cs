@@ -1,3 +1,4 @@
+using System.Data;
 using System.Text.RegularExpressions;
 using FluentValidation;
 using Mari.Domain.Releases.ValueObjects;
@@ -16,6 +17,6 @@ public class IssueValidator : AbstractValidator<Issue>
             .Must(il => RegexLinkPattern.IsMatch(il));
 
         RuleFor(i => i.Title)
-            .Must(it => it is null ? true : RegexTitlePattern.IsMatch(it));
+            .Must(it => it is null || RegexTitlePattern.IsMatch(it));
     }
 }

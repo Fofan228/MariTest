@@ -1,4 +1,5 @@
 using FluentValidation;
+using Mari.Application.Common.Interfaces.Persistence;
 using Mari.Domain.Releases;
 using Mari.Domain.Releases.Entities;
 using Mari.Domain.Releases.ValueObjects;
@@ -12,11 +13,14 @@ public class ReleaseValidator : AbstractValidator<Release>
         IValidator<Platform> platformValidator,
         IValidator<ReleaseVersion> releaseVersionValidator,
         IValidator<ReleaseUpdateDate> releaseUpdateDateValidator,
-        IValidator<ReleaseCompleteDate> releaseCompleteDateValidator)
+        IValidator<ReleaseCompleteDate> releaseCompleteDateValidator,
+        IValidator<ReleaseDescription> releaseDescriptionValidator,
+        IValidator<Issue> releaseMainIssueValidator,
+        IReleaseRepository releaseRepository)
     {
         RuleFor(r => r.Id)
-            .SetValidator(releaseIdValidator);
-
+            .SetValidator(releaseIdValidator)
+            .MustAsync(async (releaseId, token) => await releaseRepository.Exists(releaseId, token));
 
         RuleFor(r => r.Platform)
             .SetValidator(platformValidator);
@@ -32,5 +36,11 @@ public class ReleaseValidator : AbstractValidator<Release>
 
         RuleFor(r => r.CompleteDate)
             .SetValidator(releaseCompleteDateValidator);
+
+        RuleFor(r => r.Description)
+            .SetValidator(releaseDescriptionValidator);
+
+        RuleFor(r => r.MainIssue)
+            .SetValidator(releaseMainIssueValidator);
     }
 }
