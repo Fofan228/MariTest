@@ -10,8 +10,6 @@ public class ReleaseCreateRequest : PostRequest<object, object, Body, VoidRespon
     public const string RouteTemplate = $"{ServerRoutes.Controllers.Release}";
     public override string GetRoute() => RouteTemplate;
 
-    public ReleaseCreateRequest() : base(null, null, null) { }
-
     public ReleaseCreateRequest(
         Uri mainIssue,
         DateTime completeDate,
