@@ -25,6 +25,10 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
             .IsStringWrapper<CommentContent>()
             .IsRequired();
 
+        builder.Property(c => c.CreateDate)
+            .IsValueObjectWrapper<DateTime, CommentCreateDate>()
+            .IsRequired();
+
         builder.HasOne<User>()
             .WithMany()
             .HasForeignKey(c => c.UserId);

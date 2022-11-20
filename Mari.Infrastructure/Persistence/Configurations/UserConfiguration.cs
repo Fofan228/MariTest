@@ -14,7 +14,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsValueObjectWrapper<int, UserId>();
 
         builder.Property(u => u.Username)
-            .IsValueObjectWrapper<string, Username>()
+            .IsStringWrapper()
             .IsRequired();
 
         builder.Property(u => u.IsActive)
