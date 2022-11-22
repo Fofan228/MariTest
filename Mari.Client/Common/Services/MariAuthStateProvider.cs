@@ -10,7 +10,6 @@ public class MariAuthStateProvider : AuthenticationStateProvider
 {
     private readonly ILocalStorageService _localStorage;
     private readonly HttpClient _httpClient;
-    private readonly IHttpClientFactory _httpClientFactory;
 
     public MariAuthStateProvider(
         ILocalStorageService localStorage,

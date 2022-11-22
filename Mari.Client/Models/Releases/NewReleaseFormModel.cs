@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Mari.Client.Models.Releases;
 
 public class NewReleaseFormModel
