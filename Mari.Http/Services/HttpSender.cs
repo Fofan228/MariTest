@@ -49,7 +49,7 @@ public class HttpSender
         where TResponse : notnull
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
-        var response = await Client.PostAsJsonAsync(absoluteRoute, request, cancellationToken);
+        var response = await Client.PostAsJsonAsync(absoluteRoute, request.BodyContent, cancellationToken);
         return await HandleHttpResponse<TResponse>(response, cancellationToken);
     }
 
@@ -61,7 +61,7 @@ public class HttpSender
         where TBody : IRequestBody
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
-        var response = await Client.PutAsJsonAsync(absoluteRoute, cancellationToken);
+        var response = await Client.PutAsJsonAsync(absoluteRoute, request.BodyContent, cancellationToken);
         return await HandleHttpResponse<VoidResponse>(response, cancellationToken);
     }
 
@@ -86,7 +86,7 @@ public class HttpSender
         where TResponse : notnull
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
-        var response = await Client.PatchAsJsonAsync(absoluteRoute, request, cancellationToken);
+        var response = await Client.PatchAsJsonAsync(absoluteRoute, request.BodyContent, cancellationToken);
         return await HandleHttpResponse<TResponse>(response, cancellationToken);
     }
 
@@ -95,13 +95,18 @@ public class HttpSender
         CancellationToken cancellationToken)
         where TResponse : notnull
     {
-        ProblemOr<TResponse> result;
-
         if (httpResponse.IsSuccessStatusCode)
         {
+            if (typeof(TResponse) == typeof(VoidResponse))
+            {
+                return new(
+                    httpResponse: httpResponse
+                );
+            }
+
             var response = await httpResponse.Content.ReadFromJsonAsync<TResponse>(cancellationToken: cancellationToken);
             response.ThrowIfNull();
-            result = new(
+            return new(
                 httpResponse: httpResponse,
                 response: response);
         }
@@ -109,12 +114,10 @@ public class HttpSender
         {
             var problem = await httpResponse.Content.ReadFromJsonAsync<ProblemDetails>(cancellationToken: cancellationToken);
             problem.ThrowIfNull();
-            result = new(
+            return new(
                 httpResponse: httpResponse,
                 problem: problem);
         }
-
-        return result;
     }
 
     private Uri CreateUri<TResponse>(IRequest<TResponse> request, Uri? baseAddress = null)

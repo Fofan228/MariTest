@@ -10,6 +10,7 @@ namespace Mari.Server.Controllers;
 [Route(ServerRoutes.Controllers.Error)]
 public class ErrorController : ApiController
 {
+    [NonAction]
     public ActionResult Error()
     {
         return Problem();

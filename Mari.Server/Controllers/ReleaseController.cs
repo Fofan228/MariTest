@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using MapsterMapper;
 using Mari.Contracts.Common.Routes.Server;
 using Mari.Contracts.Releases;
+using Mari.Http.Models;
 using Mari.Server.Controllers.Common;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mari.Server.Controllers;
@@ -20,7 +23,7 @@ public class ReleaseController : ApiController
     }
 
     [HttpPost(ReleaseCreateRequest.ConstRouteTemplate)]
-    public ActionResult Create([FromBody] ReleaseCreateRequest.Body body)
+    public ActionResult Create(ReleaseCreateRequest.Body body)
     {
         return Ok();
     }

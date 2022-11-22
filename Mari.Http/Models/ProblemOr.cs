@@ -10,12 +10,9 @@ public class ProblemOr<TResponse>
         HttpResponse = httpResponse;
         Response = response;
         Problem = problem;
-
-        if (Problem is null && Response is null)
-            throw new ArgumentException("Either response or problem must be non-null.");
     }
 
-    public bool IsSuccess => Problem is null && Response is not null;
+    public bool IsSuccess => Problem is null;
     public TResponse? Response { get; }
     public ProblemDetails? Problem { get; }
     public HttpResponseMessage HttpResponse { get; }
