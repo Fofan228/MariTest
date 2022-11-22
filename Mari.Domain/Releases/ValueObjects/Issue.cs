@@ -1,21 +1,16 @@
+using ErrorOr;
+using Mari.Domain.Common.Interfaces;
 using Mari.Domain.Common.Models;
-using Mari.Domain.Users.ValueObjects;
+using Mari.Domain.Common;
 
 namespace Mari.Domain.Releases.ValueObjects;
 
-public record Issue : ValueObject
+public record Issue : ValueObjectWrapper<string, Issue>, IStringWrapper
 {
-    public const string LinkPattern = @"(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])";
+    [Obsolete(PublicConstructorObsoleteMessage, true)]
+    public Issue() { }
 
-    public static Issue Create(string link)
-    {
-        return new Issue(link);
-    }
-
-    private Issue(string link)
-    {
-        Link = link;
-    }
-
-    public string Link { get; init; }
+    public static string Pattern => @"(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])";
+    public static uint? MaxLength => null;
+    public static uint? MinLength => 10;
 }

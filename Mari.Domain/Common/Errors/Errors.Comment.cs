@@ -1,6 +1,6 @@
 using ErrorOr;
 
-namespace Mari.Domain.Common.Errors;
+namespace Mari.Domain.Common;
 
 public partial class Errors
 {

@@ -1,10 +1,10 @@
-using Mari.Contracts.Releases;
+using Mari.Client.Models.Releases;
 
 namespace Mari.Client.Common.Interfaces.Managers;
 
 public interface IReleaseManager
 {
-    Task Create(ReleaseCreateRequest request, CancellationToken token);
+    Task Create(NewReleaseFormModel request, CancellationToken token);
     void Get(Guid id);
     void GetCurrentReleases();
     void GetPlannedReleases();

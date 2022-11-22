@@ -3,7 +3,7 @@ using Mari.Domain.Common.Models;
 using Mari.Domain.Releases.Entities;
 using Mari.Domain.Releases.Enums;
 using Mari.Domain.Releases.ValueObjects;
-using Mari.Domain.Common.Errors;
+using Mari.Domain.Common;
 
 namespace Mari.Domain.Releases;
 
@@ -18,11 +18,11 @@ public class Release : AggregateRoot<ReleaseId>
         ReleaseId? id = null)
     {
         return new Release(
-            id: id ?? ReleaseId.Default,
+            id: id,
             mainIssue: mainIssue,
             platform: platform,
             completeDate: completeDate,
-            updateDate: ReleaseUpdateDate.Create(completeDate.Value),
+            updateDate: ReleaseUpdateDate.Default,
             status: ReleaseStatus.Planning,
             description: description ?? ReleaseDescription.Default,
             version: version ?? ReleaseVersion.MinValue
@@ -34,7 +34,7 @@ public class Release : AggregateRoot<ReleaseId>
     }
 
     private Release(
-        ReleaseId id,
+        ReleaseId? id,
         Issue mainIssue,
         ReleaseVersion version,
         Platform platform,
@@ -63,15 +63,13 @@ public class Release : AggregateRoot<ReleaseId>
     public ErrorOr<Updated> ChangeMainIssue(Issue mainIssue, DateTime currentDateTime)
     {
         MainIssue = mainIssue;
-        ChangeUpdateDate(currentDateTime);
-        return Result.Updated;
+        return ChangeUpdateDate(currentDateTime);
     }
 
     public ErrorOr<Updated> ChangeDescription(ReleaseDescription description, DateTime currentDateTime)
     {
         Description = description;
-        ChangeUpdateDate(currentDateTime);
-        return Result.Updated;
+        return ChangeUpdateDate(currentDateTime);
     }
 
     public ErrorOr<Updated> ChangeVersion(ReleaseVersion version, DateTime currentDateTime)
@@ -79,8 +77,7 @@ public class Release : AggregateRoot<ReleaseId>
         if (version <= Version)
             return Errors.Release.VersionMustBeGreaterThanCurrent;
         Version = version;
-        ChangeUpdateDate(currentDateTime);
-        return Result.Updated;
+        return ChangeUpdateDate(currentDateTime);
     }
 
     public ErrorOr<Updated> ChangeCompleteDate(ReleaseCompleteDate completeDate, DateTime currentDateTime)
@@ -88,26 +85,24 @@ public class Release : AggregateRoot<ReleaseId>
         if (completeDate <= CompleteDate)
             return Errors.Release.CompleteDateMustBeGreaterThanCurrent;
         CompleteDate = completeDate;
-        ChangeUpdateDate(currentDateTime);
-        return Result.Updated;
+        return ChangeUpdateDate(currentDateTime);
     }
 
     public ErrorOr<Updated> ChangePlatform(Platform platform, DateTime currentDateTime)
     {
         Platform = platform;
-        ChangeUpdateDate(currentDateTime);
-        return Result.Updated;
+        return ChangeUpdateDate(currentDateTime);
     }
 
     public ErrorOr<Updated> ChangeStatus(ReleaseStatus status, DateTime currentDateTime)
     {
         Status = status;
-        ChangeUpdateDate(currentDateTime);
-        return Result.Updated;
+        return ChangeUpdateDate(currentDateTime);
     }
 
-    private void ChangeUpdateDate(DateTime currentDateTime)
+    private ErrorOr<Updated> ChangeUpdateDate(DateTime currentDateTime)
     {
         UpdateDate = ReleaseUpdateDate.Create(currentDateTime);
+        return Result.Updated;
     }
 }

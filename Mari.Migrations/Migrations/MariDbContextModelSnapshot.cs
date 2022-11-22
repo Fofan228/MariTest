@@ -100,6 +100,11 @@ namespace Mari.Migrations.Migrations
                         .HasColumnType("character varying(1000)")
                         .HasColumnName("description");
 
+                    b.Property<string>("MainIssue")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("main_issue");
+
                     b.Property<int>("PlatformId")
                         .HasColumnType("integer")
                         .HasColumnName("platform_id");
@@ -173,31 +178,6 @@ namespace Mari.Migrations.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_releases_platforms_platform_temp_id");
 
-                    b.OwnsOne("Mari.Domain.Releases.ValueObjects.Issue", "MainIssue", b1 =>
-                        {
-                            b1.Property<Guid>("ReleaseId")
-                                .HasColumnType("uuid")
-                                .HasColumnName("id");
-
-                            b1.Property<string>("Link")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("main_issue_link");
-
-                            b1.Property<string>("Title")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("main_issue_title");
-
-                            b1.HasKey("ReleaseId");
-
-                            b1.ToTable("releases");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ReleaseId")
-                                .HasConstraintName("fk_releases_releases_id");
-                        });
-
                     b.OwnsOne("Mari.Domain.Releases.ValueObjects.ReleaseVersion", "Version", b1 =>
                         {
                             b1.Property<Guid>("ReleaseId")
@@ -224,9 +204,6 @@ namespace Mari.Migrations.Migrations
                                 .HasForeignKey("ReleaseId")
                                 .HasConstraintName("fk_releases_releases_id");
                         });
-
-                    b.Navigation("MainIssue")
-                        .IsRequired();
 
                     b.Navigation("Platform");
 

@@ -3,13 +3,13 @@ using Mari.Domain.Common.Interfaces;
 namespace Mari.Domain.Common.Models;
 
 public abstract class Entity<TId> : IEquatable<Entity<TId>>
-    where TId : IEquatable<TId>
+    where TId : IEquatable<TId>, IHasDefaultValue<TId>
 {
     public TId Id { get; protected set; }
 
-    protected Entity(TId id)
+    protected Entity(TId? id)
     {
-        Id = id;
+        Id = id ?? TId.Default;
     }
 
     public bool Equals(Entity<TId>? other)

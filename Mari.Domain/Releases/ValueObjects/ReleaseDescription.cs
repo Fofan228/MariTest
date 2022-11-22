@@ -3,7 +3,10 @@ using Mari.Domain.Common.Models;
 
 namespace Mari.Domain.Releases.ValueObjects;
 
-public record ReleaseDescription : ValueObjectWrapper<string, ReleaseDescription>, IStringWrapper
+public record ReleaseDescription :
+    ValueObjectWrapper<string, ReleaseDescription>,
+    IStringWrapper,
+    IHasDefaultValue<ReleaseDescription>
 {
     [Obsolete(PublicConstructorObsoleteMessage)]
     public ReleaseDescription() { }

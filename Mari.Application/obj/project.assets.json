@@ -343,32 +343,33 @@
     ]
   },
   "packageFolders": {
-    "/home/nanoster/.nuget/packages/": {}
+    "/home/Nanoster/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj",
+      "projectUniqueName": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Application/Mari.Application.csproj",
       "projectName": "Mari.Application",
-      "projectPath": "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj",
-      "packagesPath": "/home/nanoster/.nuget/packages/",
-      "outputPath": "/home/nanoster/projects/MariTest/Mari.Application/obj/",
+      "projectPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Application/Mari.Application.csproj",
+      "packagesPath": "/home/Nanoster/.nuget/packages/",
+      "outputPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Application/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/nanoster/.nuget/NuGet/NuGet.Config"
+        "/home/Nanoster/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://nuget.pkg.jetbrains.space/maboys/p/mari/nuget/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj": {
-              "projectPath": "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj"
+            "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Domain/Mari.Domain.csproj": {
+              "projectPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Domain/Mari.Domain.csproj"
             }
           }
         }
@@ -420,7 +421,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }

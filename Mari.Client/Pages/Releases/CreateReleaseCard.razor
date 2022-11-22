@@ -44,6 +44,7 @@
 
 @code {
     [Inject] public IReleaseManager ReleaseManager { get; set; } = null!;
+    [Inject] public IMapper Mapper { get; set; } = null!;
 
     // Пикер для даты
     private MudDatePicker DatePicker = null!;
@@ -58,14 +59,7 @@
 
     public async Task ClickOnCreateRelease()
     {
-        var request = new ReleaseCreateRequest(
-        mainIssue: new Uri(RequestForm.MainIssue),
-        completeDate: RequestForm.CompleteDate,
-        platformName: RequestForm.PlatformName,
-        version: RequestForm.Version,
-        description: RequestForm.Description
-        );
-        await ReleaseManager.Create(request, default);
+        await ReleaseManager.Create(RequestForm, default);
         SwitchDimming();
     }
 }

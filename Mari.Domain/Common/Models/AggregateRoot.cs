@@ -1,9 +1,11 @@
+using Mari.Domain.Common.Interfaces;
+
 namespace Mari.Domain.Common.Models;
 
 public abstract class AggregateRoot<TId> : Entity<TId>
-    where TId : IEquatable<TId>
+    where TId : IEquatable<TId>, IHasDefaultValue<TId>
 {
-    protected AggregateRoot(TId id) : base(id)
+    protected AggregateRoot(TId? id) : base(id)
     {
     }
 }

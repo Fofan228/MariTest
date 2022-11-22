@@ -1,11 +1,12 @@
 using LinqSpecs;
+using Mari.Domain.Common.Interfaces;
 using Mari.Domain.Common.Models;
 
 namespace Mari.Application.Common.Interfaces.Persistence.Shared;
 
 public interface IRepository<TAggregateRoot, TId>
     where TAggregateRoot : AggregateRoot<TId>
-    where TId : IEquatable<TId>
+    where TId : IEquatable<TId>, IHasDefaultValue<TId>
 {
     Task<TAggregateRoot?> GetById(TId id, CancellationToken token = default);
     Task<IList<TAggregateRoot>> GetById(IEnumerable<TId> ids, CancellationToken token = default);

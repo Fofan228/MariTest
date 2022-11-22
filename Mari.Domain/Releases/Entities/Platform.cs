@@ -9,7 +9,7 @@ public class Platform : Entity<PlatformId>
     public static ErrorOr<Platform> Create(PlatformName name, PlatformId? id = null)
     {
         return new Platform(
-            id: id ?? PlatformId.Default,
+            id: id,
             name: name
         );
     }
@@ -18,7 +18,7 @@ public class Platform : Entity<PlatformId>
     {
     }
 
-    private Platform(PlatformId id, PlatformName name) : base(id)
+    private Platform(PlatformId? id, PlatformName name) : base(id)
     {
         Name = name;
     }

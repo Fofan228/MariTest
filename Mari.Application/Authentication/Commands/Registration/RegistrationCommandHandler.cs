@@ -2,7 +2,7 @@ using ErrorOr;
 using Mari.Application.Authentication.Results;
 using Mari.Application.Common.Interfaces.Persistence;
 using MediatR;
-using Mari.Domain.Common.Errors;
+using Mari.Domain.Common;
 using Mari.Domain.Users;
 using Mari.Application.Common.Interfaces.Authentication;
 

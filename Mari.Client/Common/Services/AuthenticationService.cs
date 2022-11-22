@@ -25,7 +25,8 @@ public class AuthenticationService : IAuthenticationService
 
     public void Authenticate()
     {
-        var request = new AuthenticationRequest(_navigationManager.BaseUri.TrimEnd('/') + ClientRoutes.Pages.TokenHandler);
+        var query = new AuthenticationRequest.Query(_navigationManager.BaseUri.TrimEnd('/') + ClientRoutes.Pages.TokenHandler);
+        var request = new AuthenticationRequest(query);
         var builder = new UriBuilder(_navigationManager.BaseUri)
         {
             Path = request.GetRoute(),

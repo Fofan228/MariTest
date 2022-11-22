@@ -29,7 +29,7 @@ public class AuthorizationController : ApiController
         _hostSettings = hostSettings.Value;
     }
 
-    [HttpGet(AuthenticationRequest.RouteTemplate)]
+    [HttpGet(AuthenticationRequest.ConstRouteTemplate)]
     [Authorize(AuthenticationSchemes = $"{CookieConfig.AuthenticationScheme}, {OAuthConfig.AuthenticationScheme}")]
     public async Task<ActionResult> GetToken([FromQuery] AuthenticationRequest.Query query)
     {

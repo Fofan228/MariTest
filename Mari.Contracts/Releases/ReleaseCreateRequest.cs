@@ -1,29 +1,25 @@
 using Mari.Contracts.Common.Routes.Server;
+using Mari.Http.Common.Classes;
 using Mari.Http.Models;
 using Mari.Http.Requests;
 using static Mari.Contracts.Releases.ReleaseCreateRequest;
 
 namespace Mari.Contracts.Releases;
 
-public class ReleaseCreateRequest : PostRequest<object, object, Body, VoidResponse>
+public class ReleaseCreateRequest : PostRequest<EmptyRoute, EmptyQuery, Body, VoidResponse>
 {
-    public const string RouteTemplate = $"{ServerRoutes.Controllers.Release}";
-    public override string GetRoute() => RouteTemplate;
+    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}";
+    public override string RouteTemplate => ConstRouteTemplate;
 
-    public ReleaseCreateRequest(
-        Uri mainIssue,
-        DateTime completeDate,
-        string platformName,
-        string version,
-        string description)
-        : base(null, null, new(mainIssue, completeDate, platformName, version, description))
+    public ReleaseCreateRequest(Body body) : base(new(), new(), body)
     {
     }
 
     public record Body(
-        Uri MainIssue,
+        string MainIssue,
         DateTime CompleteDate,
         string PlatformName,
         string Version,
-        string Description);
+        string Description)
+        : RequestBody;
 }

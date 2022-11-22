@@ -1,18 +1,16 @@
 using System.Data;
 using System.Text.RegularExpressions;
 using FluentValidation;
+using Mari.Application.Common.DomainValidators.Shared;
 using Mari.Domain.Releases.ValueObjects;
 
 namespace Mari.Application.Common.DomainValidators.Releases.ValueObjects;
 
-public class IssueValidator : AbstractValidator<Issue>
+public class IssueValidator : StringAbstractValidator<Issue>
 {
-    public static Regex RegexLinkPattern = new Regex(Issue.LinkPattern, RegexOptions.Compiled);
-
-    public IssueValidator()
+    public IssueValidator() : base()
     {
-        RuleFor(i => i.Link)
-            .NotEmpty()
-            .Must(il => RegexLinkPattern.IsMatch(il));
+        RuleFor(i => i.Value)
+            .Must(i => Uri.IsWellFormedUriString(i, UriKind.Absolute));
     }
 }

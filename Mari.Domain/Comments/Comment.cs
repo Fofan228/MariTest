@@ -3,8 +3,8 @@ using Mari.Domain.Comments.ValueObjects;
 using Mari.Domain.Common.Models;
 using Mari.Domain.Releases.ValueObjects;
 using Mari.Domain.Users.ValueObjects;
-using Mari.Domain.Common.Errors;
 using Mari.Domain.Comments.Enums;
+using Mari.Domain.Common;
 
 namespace Mari.Domain.Comments;
 
@@ -19,7 +19,7 @@ public class Comment : AggregateRoot<CommentId>
         CommentId? id = null)
     {
         return new Comment(
-            id: id ?? CommentId.Default,
+            id: id,
             userId: userId,
             releaseId: releaseId,
             content: content,
@@ -32,7 +32,7 @@ public class Comment : AggregateRoot<CommentId>
     }
 
     private Comment(
-        CommentId id,
+        CommentId? id,
         UserId userId,
         ReleaseId releaseId,
         CommentContent content,
@@ -47,7 +47,7 @@ public class Comment : AggregateRoot<CommentId>
         IsRedacted = false;
     }
 
-    public static Comment CreateSystemComment(
+    public static ErrorOr<Comment> CreateSystemComment(
         UserId userId,
         ReleaseId releaseId,
         SystemAction action,
@@ -59,13 +59,15 @@ public class Comment : AggregateRoot<CommentId>
             ? string.Empty
             : $"\n{additionalInfo}";
 
-        return new Comment(
-            id: id ?? CommentId.Default,
+        var contentCreateResult = CommentContent.Create($"Действие: {action}{additionalInfo}");
+
+        return Create(
             userId: userId,
             releaseId: releaseId,
-            content: CommentContent.Create($"Действие: {action}{additionalInfo}"),
+            content: contentCreateResult,
             createDate: createDate,
-            isSystem: true);
+            isSystem: true,
+            id: id);
     }
 
     public CommentContent Content { get; private set; } = null!;

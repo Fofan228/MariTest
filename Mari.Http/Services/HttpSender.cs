@@ -1,5 +1,6 @@
 using System.Net.Http.Json;
 using Mari.Http.Common;
+using Mari.Http.Common.Interfaces;
 using Mari.Http.Models;
 using Mari.Http.Requests;
 using Throw;
@@ -30,6 +31,8 @@ public class HttpSender
     public async Task<ProblemOr<TResponse>> GetAsync<TRoute, TQuery, TResponse>(
         GetRequest<TRoute, TQuery, TResponse> request,
         CancellationToken cancellationToken = default)
+        where TRoute : IRequestRoute
+        where TQuery : IRequestQuery
         where TResponse : notnull
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
@@ -40,6 +43,9 @@ public class HttpSender
     public async Task<ProblemOr<TResponse>> PostAsync<TRoute, TQuery, TBody, TResponse>(
         PostRequest<TRoute, TQuery, TBody, TResponse> request,
         CancellationToken cancellationToken = default)
+        where TRoute : IRequestRoute
+        where TQuery : IRequestQuery
+        where TBody : IRequestBody
         where TResponse : notnull
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
@@ -50,6 +56,9 @@ public class HttpSender
     public async Task<ProblemOr<VoidResponse>> PutAsync<TRoute, TQuery, TBody>(
         PutRequest<TRoute, TQuery, TBody> request,
         CancellationToken cancellationToken = default)
+        where TRoute : IRequestRoute
+        where TQuery : IRequestQuery
+        where TBody : IRequestBody
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
         var response = await Client.PutAsJsonAsync(absoluteRoute, cancellationToken);
@@ -59,6 +68,8 @@ public class HttpSender
     public async Task<ProblemOr<TResponse>> DeleteAsync<TRoute, TQuery, TResponse>(
         DeleteRequest<TRoute, TQuery, TResponse> request,
         CancellationToken cancellationToken = default)
+        where TRoute : IRequestRoute
+        where TQuery : IRequestQuery
         where TResponse : notnull
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
@@ -69,6 +80,9 @@ public class HttpSender
     public async Task<ProblemOr<TResponse>> PatchAsync<TRoute, TQuery, TBody, TResponse>(
         PatchRequest<TRoute, TQuery, TBody, TResponse> request,
         CancellationToken cancellationToken = default)
+        where TRoute : IRequestRoute
+        where TQuery : IRequestQuery
+        where TBody : IRequestBody
         where TResponse : notnull
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);

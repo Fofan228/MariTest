@@ -1,5 +1,6 @@
 using LinqSpecs;
 using Mari.Application.Common.Interfaces.Persistence.Shared;
+using Mari.Domain.Common.Interfaces;
 using Mari.Domain.Common.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,7 +8,7 @@ namespace Mari.Infrastructure.Persistence.Shared;
 
 public abstract class Repository<TAggregateRoot, TId> : IRepository<TAggregateRoot, TId>
     where TAggregateRoot : AggregateRoot<TId>
-    where TId : IEquatable<TId>
+    where TId : IEquatable<TId>, IHasDefaultValue<TId>
 {
     protected readonly DbContext Context;
     protected readonly DbSet<TAggregateRoot> Set;

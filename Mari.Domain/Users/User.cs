@@ -2,7 +2,7 @@ using ErrorOr;
 using Mari.Domain.Common.Models;
 using Mari.Domain.Users.Enums;
 using Mari.Domain.Users.ValueObjects;
-using Mari.Domain.Common.Errors;
+using Mari.Domain.Common;
 
 namespace Mari.Domain.Users;
 
@@ -11,7 +11,7 @@ public class User : AggregateRoot<UserId>
     public static ErrorOr<User> Create(Username username, UserRole role = UserRole.Guest, UserId? id = null)
     {
         return new User(
-            id: id ?? UserId.Default,
+            id: id,
             name: username,
             role: role
         );
@@ -21,7 +21,7 @@ public class User : AggregateRoot<UserId>
     {
     }
 
-    private User(UserId id, Username name, UserRole role) : base(id)
+    private User(UserId? id, Username name, UserRole role) : base(id)
     {
         Username = name;
         Role = role;

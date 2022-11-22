@@ -1405,6 +1405,7 @@
         "dependencies": {
           "Blazored.LocalStorage": "4.3.0",
           "Mapster": "7.3.0",
+          "Mapster.DependencyInjection": "1.0.0",
           "Mari.Contracts": "1.0.0",
           "Microsoft.AspNetCore.Components.WebAssembly": "7.0.0",
           "Microsoft.AspNetCore.Components.WebAssembly.Authentication": "7.0.0",
@@ -3783,41 +3784,42 @@
     ]
   },
   "packageFolders": {
-    "/home/nanoster/.nuget/packages/": {}
+    "/home/Nanoster/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/nanoster/projects/MariTest/Mari.Server/Mari.Server.csproj",
+      "projectUniqueName": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Server/Mari.Server.csproj",
       "projectName": "Mari.Server",
-      "projectPath": "/home/nanoster/projects/MariTest/Mari.Server/Mari.Server.csproj",
-      "packagesPath": "/home/nanoster/.nuget/packages/",
-      "outputPath": "/home/nanoster/projects/MariTest/Mari.Server/obj/",
+      "projectPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Server/Mari.Server.csproj",
+      "packagesPath": "/home/Nanoster/.nuget/packages/",
+      "outputPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Server/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/nanoster/.nuget/NuGet/NuGet.Config"
+        "/home/Nanoster/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {},
+        "https://nuget.pkg.jetbrains.space/maboys/p/mari/nuget/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj": {
-              "projectPath": "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj"
+            "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Application/Mari.Application.csproj": {
+              "projectPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Application/Mari.Application.csproj"
             },
-            "/home/nanoster/projects/MariTest/Mari.Client/Mari.Client.csproj": {
-              "projectPath": "/home/nanoster/projects/MariTest/Mari.Client/Mari.Client.csproj"
+            "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Client/Mari.Client.csproj": {
+              "projectPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Client/Mari.Client.csproj"
             },
-            "/home/nanoster/projects/MariTest/Mari.Contracts/Mari.Contracts.csproj": {
-              "projectPath": "/home/nanoster/projects/MariTest/Mari.Contracts/Mari.Contracts.csproj"
+            "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Contracts/Mari.Contracts.csproj": {
+              "projectPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Contracts/Mari.Contracts.csproj"
             },
-            "/home/nanoster/projects/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj": {
-              "projectPath": "/home/nanoster/projects/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj"
+            "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj": {
+              "projectPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj"
             }
           }
         }
@@ -3872,7 +3874,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }

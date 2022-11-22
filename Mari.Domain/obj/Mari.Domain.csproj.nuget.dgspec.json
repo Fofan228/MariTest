@@ -1,26 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj": {}
+    "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Domain/Mari.Domain.csproj": {}
   },
   "projects": {
-    "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj": {
+    "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Domain/Mari.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj",
+        "projectUniqueName": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Domain/Mari.Domain.csproj",
         "projectName": "Mari.Domain",
-        "projectPath": "/home/nanoster/projects/MariTest/Mari.Domain/Mari.Domain.csproj",
-        "packagesPath": "/home/nanoster/.nuget/packages/",
-        "outputPath": "/home/nanoster/projects/MariTest/Mari.Domain/obj/",
+        "projectPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Domain/Mari.Domain.csproj",
+        "packagesPath": "/home/Nanoster/.nuget/packages/",
+        "outputPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Domain/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/nanoster/.nuget/NuGet/NuGet.Config"
+          "/home/Nanoster/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.pkg.jetbrains.space/maboys/p/mari/nuget/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
@@ -67,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
         }
       }
     }

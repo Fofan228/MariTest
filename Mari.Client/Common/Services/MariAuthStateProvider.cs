@@ -1,10 +1,8 @@
 using System.Net.Http.Headers;
 using System.Security.Claims;
 using Blazored.LocalStorage;
-using Mari.Client.Common.Interfaces;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.IdentityModel.JsonWebTokens;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Mari.Client.Common.Services;
 
@@ -12,6 +10,7 @@ public class MariAuthStateProvider : AuthenticationStateProvider
 {
     private readonly ILocalStorageService _localStorage;
     private readonly HttpClient _httpClient;
+    private readonly IHttpClientFactory _httpClientFactory;
 
     public MariAuthStateProvider(
         ILocalStorageService localStorage,

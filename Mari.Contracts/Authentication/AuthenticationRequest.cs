@@ -1,17 +1,18 @@
 using Mari.Contracts.Common.Routes.Server;
+using Mari.Http.Common.Classes;
 using Mari.Http.Models;
 using Mari.Http.Requests;
 using static Mari.Contracts.Authentication.AuthenticationRequest;
 
 namespace Mari.Contracts.Authentication;
-public class AuthenticationRequest : GetRequest<object, Query, VoidResponse>
+public class AuthenticationRequest : GetRequest<EmptyRoute, Query, VoidResponse>
 {
-    public const string RouteTemplate = ServerRoutes.Controllers.Authentication;
-    public override string GetRoute() => RouteTemplate;
+    public const string ConstRouteTemplate = ServerRoutes.Controllers.Authentication;
+    public override string RouteTemplate => ConstRouteTemplate;
 
-    public AuthenticationRequest(string redirectUrl) : base(null, new(new(redirectUrl)))
+    public AuthenticationRequest(Query query) : base(new(), query)
     {
     }
 
-    public record Query(Uri RedirectUri);
+    public record Query(string RedirectUri) : RequestQuery;
 }

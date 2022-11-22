@@ -12,6 +12,6 @@ public class ErrorController : ApiController
 {
     public ActionResult Error()
     {
-        return Problem(Domain.Common.Errors.Errors.User.UserNotFound);
+        return Problem();
     }
 }

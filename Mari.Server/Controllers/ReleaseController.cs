@@ -19,7 +19,7 @@ public class ReleaseController : ApiController
         _mapper = mapper;
     }
 
-    [HttpPost(ReleaseCreateRequest.RouteTemplate)]
+    [HttpPost(ReleaseCreateRequest.ConstRouteTemplate)]
     public ActionResult Create([FromBody] ReleaseCreateRequest.Body body)
     {
         return Ok();

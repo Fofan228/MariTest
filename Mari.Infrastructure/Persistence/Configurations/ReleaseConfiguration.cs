@@ -17,6 +17,10 @@ public class ReleaseConfiguration : IEntityTypeConfiguration<Release>
             .IsStringWrapper()
             .IsRequired();
 
+        builder.Property(r => r.MainIssue)
+            .IsStringWrapper()
+            .IsRequired();
+
         builder.Property(r => r.CompleteDate)
             .IsValueObjectWrapper<DateTime, ReleaseCompleteDate>()
             .IsRequired();
@@ -37,12 +41,6 @@ public class ReleaseConfiguration : IEntityTypeConfiguration<Release>
                 .IsRequired();
 
             version.Property(v => v.Patch)
-                .IsRequired();
-        }
-
-        var mainIssue = builder.OwnsOne(r => r.MainIssue);
-        {
-            mainIssue.Property(mi => mi.Link)
                 .IsRequired();
         }
 
