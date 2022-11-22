@@ -15,5 +15,11 @@ public class ProblemHandler
 
     public void HandleProblem(ProblemDetails problem)
     {
+        DefaultProblemEvent(problem);
+        switch (problem.Status)
+        {
+            case 400:
+                break;
+        }
     }
 }
