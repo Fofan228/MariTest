@@ -1,0 +1,43 @@
+﻿@*@using Mari.Contracts.Releases
+@inject IReleaseManager ReleaseManager
+@inject NavigationManager NavigationManager
+
+<MudTable Class="mt-8" Items="@Releases" Hover="true" T="ReleaseAnswer" OnRowClick="RowClicked">
+    <HeaderContent>
+        <MudTh>Платформа</MudTh>
+        <MudTh>Версия</MudTh>
+        <MudTh>Релизная задача</MudTh>
+        <MudTh>Статус релиза</MudTh>
+        <MudTh>Дата изменения</MudTh>
+        <MudTh>Дата завершения</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+
+        <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
+
+        <MudTd DataLabel="Version">@context.Version</MudTd>
+
+        <MudTd DataLabel="ReleaseTask">@context.ReleaseTask</MudTd>
+
+        <MudTd DataLabel="ReleaseStatus">@context.Status</MudTd>
+
+        <MudTd DataLabel="UpdateDate">@context.UpdateDate</MudTd>
+
+        <MudTd DataLabel="CompleteDate">@context.CompleteDate</MudTd>
+
+    </RowTemplate>
+</MudTable>
+
+@code {
+    private List<ReleaseAnswer> Releases { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Releases = await ReleaseManager.GetAll();
+    }
+
+    private void RowClicked(TableRowClickEventArgs<ReleaseAnswer> _)
+    {
+        NavigationManager.NavigateTo("/info");
+    }
+}*@

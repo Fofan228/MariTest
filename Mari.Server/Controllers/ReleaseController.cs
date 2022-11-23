@@ -2,6 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using MapsterMapper;
 using Mari.Contracts.Common.Routes.Server;
 using Mari.Contracts.Releases;
+using Mari.Contracts.Releases.PostRequests;
 using Mari.Server.Controllers.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

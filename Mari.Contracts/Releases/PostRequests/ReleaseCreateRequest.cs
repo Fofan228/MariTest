@@ -2,9 +2,9 @@ using Mari.Contracts.Common.Routes.Server;
 using Mari.Http.Common.Classes;
 using Mari.Http.Models;
 using Mari.Http.Requests;
-using static Mari.Contracts.Releases.ReleaseCreateRequest;
+using static Mari.Contracts.Releases.PostRequests.ReleaseCreateRequest;
 
-namespace Mari.Contracts.Releases;
+namespace Mari.Contracts.Releases.PostRequests;
 
 public class ReleaseCreateRequest : PostRequest<EmptyRoute, EmptyQuery, Body, VoidResponse>
 {

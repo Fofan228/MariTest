@@ -1,0 +1,133 @@
+﻿@*@using Contracts.Releases
+@using Mari.Client.Models.Releases
+@using Microsoft.AspNetCore.Components
+@inject IReleaseManager ReleaseManager
+@inject NavigationManager NavigationManager
+@inject IPlatformManager PlatformManager
+@inject IStatusManager StatusManager
+@inject ISnackbar Snackbar
+
+<MudTable Class="mt-8" CanCancelEdit="true" RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues"
+    RowEditCommit="ItemHasBeenCommitted" CommitEditTooltip="Сохранить"
+    OnCommitEditClick="@(() => Snackbar.Add("Изменения сохранены"))" EditTrigger="@editTrigger" Items="@Releases"
+    Hover="true" T="NewReleaseModel" OnRowClick="RowClicked">
+    <HeaderContent>
+        <MudTh>Платформа</MudTh>
+        <MudTh>Версия</MudTh>
+        <MudTh>Релизная задача</MudTh>
+        <MudTh>Статус релиза</MudTh>
+        <MudTh>Дата изменения</MudTh>
+        <MudTh>Дата завершения</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
+        <MudTd DataLabel="Version">@context.Version</MudTd>
+        <MudTd DataLabel="ReleaseTask">@context.ReleaseTask</MudTd>
+        <MudTd DataLabel="Status">@context.Status</MudTd>
+        <MudTd DataLabel="UpdateDate">@context.UpdateDate</MudTd>
+        <MudTd DataLabel="CompleteDate">@context.CompleteDate</MudTd>
+    </RowTemplate>
+    <RowEditingTemplate>
+        <MudTd DataLabel="PlatformName">
+            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
+                <MudSelect @bind-Value="@context.PlatformName" Required>
+                    @foreach (PlatformAnswer item in Platforms)
+                    {
+                        <MudSelectItem Value="@item.PlatformName">@item.PlatformName</MudSelectItem>
+                    }
+                </MudSelect>
+            </div>
+        </MudTd>
+        <MudTd DataLabel="Version">
+            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
+                <MudSelect @bind-Value="@context.Version" Required>
+                    @foreach (PlatformAnswer item in Platforms)
+                    {
+                        <MudSelectItem Value="@item.Version">@item.Version</MudSelectItem>
+                    }
+                </MudSelect>
+            </div>
+        </MudTd>
+        <MudTd DataLabel="ReleaseTask">
+            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
+                <MudTextField @bind-Value="@context.ReleaseTask" Required />
+            </div>
+        </MudTd>
+        <MudTd DataLabel="Status">
+            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
+                <MudSelect @bind-Value="@context.Status" Required>
+                    @foreach (var item in Statuses)
+                    {
+                        <MudSelectItem Value="@item">@item</MudSelectItem>
+                    }
+                </MudSelect>
+            </div>
+        </MudTd>
+        <MudTd DataLabel="UpdateDate">
+            @context.UpdateDate
+        </MudTd>
+        <MudTd DataLabel="CompleteDate">
+            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
+                <MudDatePicker Class="date-picker" @bind-Date="@context.CompleteDate" ErrorText="Неверная дата"
+                    Editable="true" Mask="@(new DateMask("dd/MM/yyyy"))" DateFormat="dd/MM/yyyy">
+                </MudDatePicker>
+            </div>
+        </MudTd>
+    </RowEditingTemplate>
+    <EditButtonContent Context="button">
+        <MudIconButton Size="@Size.Small" Icon="@Icons.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction"
+            Disabled="@button.ButtonDisabled" />
+    </EditButtonContent>
+</MudTable>
+
+@code
+{
+    private TableEditTrigger editTrigger = TableEditTrigger.EditButton;
+    private NewReleaseModel elementBeforeEdit;
+
+    private List<NewReleaseModel> Releases { get; set; }
+    private List<PlatformAnswer> Platforms { get; set; }
+    private string[] Statuses { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Releases = await ReleaseManager.GetAll();
+        Platforms = await PlatformManager.GetAll();
+    }
+
+    private void RowClicked(TableRowClickEventArgs<NewReleaseFormModel> _)
+    {
+        NavigationManager.NavigateTo("/info");
+    }
+
+    private void BackupItem(object release)
+    {
+        elementBeforeEdit = new NewReleaseModel
+        {
+            ReleaseId = ((NewReleaseModel)release).ReleaseId,
+            Version = ((NewReleaseModel)release).Version,
+            PlatformName = ((NewReleaseModel)release).PlatformName,
+            Status = ((NewReleaseModel)release).Status,
+            ReleaseTask = ((NewReleaseModel)release).ReleaseTask,
+            CompleteDate = ((NewReleaseModel)release).CompleteDate,
+            UpdateDate = ((NewReleaseModel)release).UpdateDate,
+            Information = ((NewReleaseModel)release).Information,
+        };
+        StateHasChanged();
+    }
+
+    private void ResetItemToOriginalValues(object release)
+    {
+        ((NewReleaseModel)release).Version = elementBeforeEdit.Version;
+        ((NewReleaseModel)release).PlatformName = elementBeforeEdit.PlatformName;
+        ((NewReleaseModel)release).Status = elementBeforeEdit.Status;
+        ((NewReleaseModel)release).ReleaseTask = elementBeforeEdit.ReleaseTask;
+        ((NewReleaseModel)release).CompleteDate = elementBeforeEdit.CompleteDate;
+        StateHasChanged();
+    }
+
+    private void ItemHasBeenCommitted(object release)
+    {
+        StateHasChanged();
+    }
+}*@

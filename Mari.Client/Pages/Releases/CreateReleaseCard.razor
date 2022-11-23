@@ -1,65 +1,68 @@
 ﻿@using Contracts.Releases
-@using Models.Releases
+@using Mari.Client.Models.Releases
+@using Mari.Contracts.Releases.Responce
+@inject IReleaseManager ReleaseManager
+
 <MudPaper Class="" Elevation="0">
     <MudCard Class="border card-create-release">
-
-        <MudForm Model="@RequestForm">
+              
+        <MudForm Model="@ReleaseCreate">
             <MudCardActions Class="pb-0">
                 <!-- TODO доделать OnClick -->
                 <MudIconButton Class="ml-auto" OnClick="SwitchDimming" Icon="@Icons.Filled.Close" />
             </MudCardActions>
 
             <MudCardContent Class="pt-0">
-
-                <MudDatePicker @bind-Value="RequestForm.CompleteDate" @ref="DatePicker" Label="Дата Завершения">
+                
+                <MudDatePicker @bind-Date="ReleaseCreate.CompleteDate" @ref="DatePicker"  Label="Дата Завершения">
                     <PickerActions>
-                        <MudButton Class="mr-auto align-self-start" OnClick="@(() => DatePicker.Clear())">Clear
-                        </MudButton>
+                        <MudButton Class="mr-auto align-self-start" OnClick="@(() => DatePicker.Clear())">Clear</MudButton>
                         <MudButton OnClick="@(() => DatePicker.Close(false))">Cancel</MudButton>
                         <MudButton Color="Color.Primary" OnClick="@(() => DatePicker.Close())">Ok</MudButton>
                     </PickerActions>
                 </MudDatePicker>
+                
+                <MudTextField @bind-Value="ReleaseCreate.PlatformName"  Immediate="true" Label="Платформа" />
 
-                <MudTextField @bind-Value="RequestForm.PlatformName" Immediate="true" Label="Платформа" />
+                <MudTextField @bind-Value="ReleaseCreate.Version"  Immediate="true" Label="Версия" />
 
-                <MudTextField @bind-Value="RequestForm.Version" Immediate="true" Label="Версия" />
+                <MudTextField @bind-Value="ReleaseCreate.MainIssue"  Immediate="true"
+                    Label="Ссылка на релиз задачу" />
 
-                <MudTextField @bind-Value="RequestForm.MainIssue" Immediate="true" Label="Ссылка на релиз задачу" />
-
-                <MudTextField @bind-Value="RequestForm.Description" Immediate="true" Variant="Variant.Filled" Lines="5"
-                    Label="Информация" />
+                <MudTextField @bind-Value="ReleaseCreate.Description" Immediate="true"
+                    Variant="Variant.Filled" Lines="5" Label="Информация" />
 
             </MudCardContent>
 
             <MudCardActions>
                 <!-- TODO доделать OnClick -->
+                <MudButton OnClick="ClickOnCreateRelease" Variant="Variant.Filled" Color="Color.Primary"
+                           Class="mx-auto">Добавить</MudButton>
             </MudCardActions>
         </MudForm>
-        <MudButton OnClick="ClickOnCreateRelease" Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto">
-            Добавить</MudButton>
     </MudCard>
 </MudPaper>
 
 
 
 @code {
-    [Inject] public IReleaseManager ReleaseManager { get; set; } = null!;
-    [Inject] public IMapper Mapper { get; set; } = null!;
-
-    // Пикер для даты
-    private MudDatePicker DatePicker = null!;
-
+    // Пикер для даты 
+    private MudDatePicker DatePicker;
+    
     [Parameter]
-    public Action OnAddRelease { get; set; }
-
+    public Action OnAddRelease { get; set;  } 
+    
     [Parameter]
     public Action SwitchDimming { get; set; } = () => { };
 
-    public NewReleaseFormModel RequestForm { get; set; } = new();
+    private ReleaseFormModel ReleaseCreate { get; set; } = new ReleaseFormModel();
 
+    
+    List<ReleaseResponse> list = new List<ReleaseResponse>();
     public async Task ClickOnCreateRelease()
-    {
-        await ReleaseManager.Create(RequestForm, default);
-        SwitchDimming();
+    { 
+
     }
+
+    
 }

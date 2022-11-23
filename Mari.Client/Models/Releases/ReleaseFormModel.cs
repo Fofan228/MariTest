@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Mari.Client.Models.Releases;
 
-public class NewReleaseFormModel
+public class ReleaseFormModel
 {
     public string MainIssue { get; set; } = null!;
     public string PlatformName { get; set; } = null!;

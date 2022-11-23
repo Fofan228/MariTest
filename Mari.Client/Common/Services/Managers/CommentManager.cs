@@ -1,33 +1,48 @@
-﻿// namespace Mari.Client.Common.Services.Managers;
+﻿using MapsterMapper;
+using Mari.Client.Common.Interfaces.Managers;
+using Mari.Contracts.Comments.PostRequests;
+using Mari.Contracts.Comments.Responce;
+using Mari.Http.Services;
 
-// public class CommentManager : ICommentManager
-// {
-//     private static List<CommentAnswer> Comments = new List<CommentAnswer>()
-//     {
-//         new CommentAnswer("0000-0000-0000-0000","1" , "Араб", "GG", "15.11.2022",false),
-//         new CommentAnswer("0000-0000-0000-0000","1" , "Араб", "GG", "15.11.2022",false),
-//         new CommentAnswer("0000-0000-0000-0000","1" , "Араб", "GG", "15.11.2022",false),
-//         new CommentAnswer("0000-0000-0000-0000","1" , "Араб","GG", "15.11.2022",false),
-//         new CommentAnswer("0000-0000-0\0" +
-//                           "00-0000","1" , "Араб", "GG", "15.11.2022",false)
-//     };
+namespace Mari.Client.Common.Services.Managers;
 
+public class CommentManager : ICommentManager
+ {
+     private readonly HttpSender _httpSender;
+     private readonly IMapper _mapper;
 
-//     public void Post(CommentPostRequest request)
-//     {
-//         Comments.Add(new CommentAnswer(
-//             request.ReleaseId,
-//             request.UserId,
-//             request.UserName,
-//             request.Information,
-//             "15.11.2022 0:34",   //Todo время 
-//             false
-//         ));
-//     }
+     public CommentManager(HttpSender httpSender, IMapper mapper)
+     {
+         _httpSender = httpSender;
+         _mapper = mapper;
+     }
+     
+     public async Task Create(CommentResponse comment, CancellationToken token)
+     {
+         var body = _mapper.Map<CommentCreateRequest.Body>(comment);
+         var request = new CommentCreateRequest(body);
+         var response = await _httpSender.PostAsync(request, token);
+         if (!response.IsSuccess) throw new NotImplementedException();
+     }
 
-//     public async Task<List<CommentAnswer>> GetAll(CommentRequest request)
-//     {
-//         return Comments;
-//     }
+     public void Get(Guid id)
+     {
+         throw new NotImplementedException();
+     }
 
-// }
+     public void GetAll()
+     {
+         throw new NotImplementedException();
+     }
+
+     public void UpdateComments()
+     {
+         throw new NotImplementedException();
+     }
+
+     public void DeleteComments(string releaseId)
+     {
+         throw new NotImplementedException();
+     }
+ }
+

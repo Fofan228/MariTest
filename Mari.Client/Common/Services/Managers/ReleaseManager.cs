@@ -2,6 +2,8 @@
 using Mari.Client.Common.Interfaces.Managers;
 using Mari.Client.Models.Releases;
 using Mari.Contracts.Releases;
+using Mari.Contracts.Releases.PostRequests;
+using Mari.Contracts.Releases.Responce;
 using Mari.Http.Services;
 
 namespace Mari.Client.Common.Services.Managers;
@@ -17,7 +19,7 @@ public class ReleaseManager : IReleaseManager
         _mapper = mapper;
     }
 
-    public async Task Create(NewReleaseFormModel model, CancellationToken token)
+    public async Task Create(ReleaseResponse model, CancellationToken token)
     {
         var body = _mapper.Map<ReleaseCreateRequest.Body>(model);
         var request = new ReleaseCreateRequest(body);
