@@ -17,7 +17,6 @@ public class CommentUpdateRequest : PostRequest<EmptyRoute, EmptyQuery, Body, Vo
     
     public record Body(
         Guid commentId,
-        string userName,
         string message
     ):RequestBody;
 }

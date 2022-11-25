@@ -1,8 +1,8 @@
 ﻿namespace Mari.Contracts.Comments.Responce;
 
-public class CommentsResponse
+public class CommentAllResponse
 {
-    public CommentsResponse(IEnumerable<CommentResponse> comments)
+    public CommentAllResponse(IEnumerable<CommentResponse> comments)
     {
         Comments = comments.ToArray();
     }

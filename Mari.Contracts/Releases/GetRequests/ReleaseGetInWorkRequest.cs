@@ -5,15 +5,14 @@ using Mari.Http.Requests;
 
 namespace Mari.Contracts.Releases.GetRequests;
 
-public class ReleasePlannedGetRequest : GetRequest<EmptyRoute, EmptyQuery, ReleasesForTabsResponse>
+public class ReleaseGetInWorkRequest : GetRequest<EmptyRoute, EmptyQuery, ReleasesForTabsResponse>
 {
-    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/planned";
+    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/inwork";
     public override string RouteTemplate => $"{ServerRoutes.Controllers.Release}";
 
-    public ReleasePlannedGetRequest()
+    public ReleaseGetInWorkRequest()
         : base(null, null)
     {
     }
-
 
 }

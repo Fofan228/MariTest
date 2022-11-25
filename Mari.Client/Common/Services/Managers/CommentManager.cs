@@ -25,24 +25,20 @@ public class CommentManager : ICommentManager
          if (!response.IsSuccess) throw new NotImplementedException();
      }
 
-     public void Get(Guid id)
+     public void GetAll(Guid releaseId)
      {
          throw new NotImplementedException();
      }
 
-     public void GetAll()
+     public void UpdateComments(Guid commnetId)
      {
          throw new NotImplementedException();
      }
 
-     public void UpdateComments()
+     public void DeleteComments(Guid commnetId)
      {
          throw new NotImplementedException();
      }
-
-     public void DeleteComments(string releaseId)
-     {
-         throw new NotImplementedException();
-     }
+     
  }
 

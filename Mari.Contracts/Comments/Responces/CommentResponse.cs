@@ -12,11 +12,11 @@ public class CommentResponse
         IsEdit = isEdit;
     }
 
-    public string CommentId { get; private set; } = null!;
-    public string UserId { get; private set; } = null!;
-    public string UserName { get;private set; } = null!;
-    public string Message { get;private set; } = null!;
-    public string CreateDate { get; private set; } = null!;
-    public bool IsEdit { get; private set; } = false; 
+    public string CommentId { get;  set; } = null!;
+    public string UserId { get;  set; } = null!;
+    public string UserName { get; set; } = null!;
+    public string Message { get; set; } = null!;
+    public string CreateDate { get;  set; } = null!;
+    public bool IsEdit { get;  set; } = false; 
 
 }
