@@ -1,8 +1,9 @@
-﻿@*@using Mari.Contracts.Releases
+﻿@using Mari.Contracts.Releases
+@using Mari.Contracts.Releases.Responce
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
 
-<MudTable Class="mt-8" Items="@Releases" Hover="true" T="ReleaseAnswer" OnRowClick="RowClicked">
+<MudTable Class="mt-8" Items="@Releases" Hover="true" T="ReleaseResponse" OnRowClick="RowClicked">
     <HeaderContent>
         <MudTh>Платформа</MudTh>
         <MudTh>Версия</MudTh>
@@ -17,27 +18,28 @@
 
         <MudTd DataLabel="Version">@context.Version</MudTd>
 
-        <MudTd DataLabel="ReleaseTask">@context.ReleaseTask</MudTd>
+        <MudTd DataLabel="ReleaseTask">@context.MainIssue</MudTd>
 
         <MudTd DataLabel="ReleaseStatus">@context.Status</MudTd>
 
-        <MudTd DataLabel="UpdateDate">@context.UpdateDate</MudTd>
+        <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
 
-        <MudTd DataLabel="CompleteDate">@context.CompleteDate</MudTd>
+        <MudTd DataLabel="CompleteDate">@context.CompleteDate.ToString()</MudTd>
 
     </RowTemplate>
 </MudTable>
 
 @code {
-    private List<ReleaseAnswer> Releases { get; set; }
+    private List<ReleaseResponse> Releases { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Releases = await ReleaseManager.GetAll();
+        Releases = new List<ReleaseResponse>(await ReleaseManager.Test()) ;
+      //  Releases = new List<ReleaseResponse>(await ReleaseManager.GetCurrentReleases()) ;
     }
 
-    private void RowClicked(TableRowClickEventArgs<ReleaseAnswer> _)
+    private void RowClicked(TableRowClickEventArgs<ReleaseResponse> _)
     {
         NavigationManager.NavigateTo("/info");
     }
-}*@
+}

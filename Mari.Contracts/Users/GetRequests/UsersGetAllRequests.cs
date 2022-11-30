@@ -5,7 +5,7 @@ using Mari.Http.Requests;
 
 namespace Mari.Contracts.Users.GetRequests;
 
-public class UsersGetAllRequests: GetRequest<EmptyRoute, EmptyQuery, UserAllResponce>
+public class UsersGetAllRequests: GetRequest<EmptyRoute, EmptyQuery, IEnumerable<UserResponce>>
 {
 
     public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.User}";

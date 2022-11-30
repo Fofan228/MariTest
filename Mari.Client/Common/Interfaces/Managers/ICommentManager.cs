@@ -11,6 +11,7 @@ namespace Mari.Client.Common.Interfaces.Managers;
 public interface ICommentManager
 {
     Task Create(CommentResponse comment, CancellationToken token);
-    void GetAll(Guid releaseId);
-    void UpdateComments(Guid commnetId);
+    Task<IEnumerable<CommentResponse>> GetAll(Guid releaseId,CancellationToken token);
+    Task UpdateComments(CommentResponse comment,CancellationToken token);
+    Task DeleteComments(Guid commmentId, CancellationToken token);
 }

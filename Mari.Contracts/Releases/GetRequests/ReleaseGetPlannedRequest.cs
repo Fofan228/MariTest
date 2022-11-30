@@ -5,7 +5,7 @@ using Mari.Http.Requests;
 
 namespace Mari.Contracts.Releases.GetRequests;
 
-public class ReleaseGetPlannedRequest : GetRequest<EmptyRoute, EmptyQuery, ReleasesForTabsResponse>
+public class ReleaseGetPlannedRequest : GetRequest<EmptyRoute, EmptyQuery, IEnumerable<ReleaseResponse>>
 {
     public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/planned";
     public override string RouteTemplate => $"{ServerRoutes.Controllers.Release}";

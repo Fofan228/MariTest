@@ -13,15 +13,15 @@ using static Mari.Contracts.Comments.GetRequests.CommentGetAllRequest;
 
 namespace Mari.Contracts.Comments.GetRequests;
 
-public class CommentGetAllRequest : GetRequest<Route, EmptyQuery, CommentAllResponse>
+public class CommentGetAllRequest : GetRequest<Route, EmptyQuery, IEnumerable<CommentResponse>>
 {
 
     public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Comment}/{{{nameof(Route.id)}}}";
     public override string RouteTemplate => $"{ServerRoutes.Controllers.Comment}/{RouteParams!.id}";
     
     public CommentGetAllRequest(
-        Guid releaseId)
-        : base(new Route(releaseId), null)
+        Route route)
+        : base(route, null)
     {
     }
     

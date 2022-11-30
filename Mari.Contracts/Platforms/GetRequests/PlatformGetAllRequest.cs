@@ -8,7 +8,7 @@ using static Mari.Contracts.Platforms.GetRequests.PlatformGetAllRequest;
 
 namespace Mari.Contracts.Platforms.GetRequests;
 
-public class PlatformGetAllRequest : GetRequest<EmptyRoute, EmptyQuery, PlatformResponce>
+public class PlatformGetAllRequest : GetRequest<EmptyRoute, EmptyQuery, IEnumerable<PlatformResponce>>
 {
 
     public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Platform}";

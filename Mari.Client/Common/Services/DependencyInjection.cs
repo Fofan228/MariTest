@@ -12,6 +12,8 @@ public static class DependencyInjection
         services.AddScoped<AuthenticationStateProvider, MariAuthStateProvider>();
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IReleaseManager, ReleaseManager>();
+        services.AddScoped<IPlatformManager, PlatformManager>();
+        services.AddScoped<IUserManager, UserManager>();
         return services;
     }
 }

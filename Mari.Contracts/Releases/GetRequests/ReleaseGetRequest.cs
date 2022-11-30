@@ -14,8 +14,8 @@ public class ReleaseGetRequest : GetRequest<Route, EmptyQuery, ReleaseResponse>
     public override string RouteTemplate => $"{ServerRoutes.Controllers.Release}/{RouteParams!.id}";
     
     public ReleaseGetRequest(
-        Guid id)
-        : base(new Route(id), null)
+        Route route)
+        : base(route, null)
     {
     }
     

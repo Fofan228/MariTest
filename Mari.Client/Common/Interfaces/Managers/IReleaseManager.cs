@@ -5,11 +5,13 @@ namespace Mari.Client.Common.Interfaces.Managers;
 
 public interface IReleaseManager
 {
-    Task Create(ReleaseResponse release, CancellationToken token);
-    void Get(Guid id);
-    void GetCurrentReleases();
-    void GetPlannedReleases();
-    void GetInWorkReleases();
-    void UpdateRelease();
-    void DeleteRelease(string releaseId);
+    Task Create(ReleaseFormModel release, CancellationToken token);
+    Task<ReleaseResponse> Get(Guid id,CancellationToken token);
+    Task<IEnumerable<ReleaseResponse>> GetCurrentReleases(CancellationToken token);
+    Task<IEnumerable<ReleaseResponse>> GetPlannedReleases(CancellationToken token);
+    Task<IEnumerable<ReleaseResponse>> GetInWorkReleases(CancellationToken token);
+    Task UpdateRelease(ReleaseResponse model,CancellationToken token);
+    Task DeleteRelease(Guid id,CancellationToken token);
+    
+    Task<IEnumerable<ReleaseResponse>> Test();
 }

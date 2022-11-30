@@ -1,4 +1,4 @@
-namespace Mari.Client.Models.Users;
+namespace Mari.Client.Common.Enums;
 
 public enum UserRole
 {

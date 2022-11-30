@@ -1,70 +1,72 @@
-﻿@*@using Contracts.Releases
+﻿@using Contracts.Releases
+@using Mari.Client.Common.Enums
 @using Mari.Client.Models.Releases
+@using Mari.Contracts.Platforms.Responces
+@using Mari.Contracts.Releases.Responce
 @using Microsoft.AspNetCore.Components
+@inject IPlatformManager PlatformManager
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
-@inject IPlatformManager PlatformManager
-@inject IStatusManager StatusManager
 @inject ISnackbar Snackbar
 
 <MudTable Class="mt-8" CanCancelEdit="true" RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues"
     RowEditCommit="ItemHasBeenCommitted" CommitEditTooltip="Сохранить"
     OnCommitEditClick="@(() => Snackbar.Add("Изменения сохранены"))" EditTrigger="@editTrigger" Items="@Releases"
-    Hover="true" T="NewReleaseModel" OnRowClick="RowClicked">
+    Hover="true" T="ReleaseResponse" OnRowClick="RowClicked">
     <HeaderContent>
         <MudTh>Платформа</MudTh>
         <MudTh>Версия</MudTh>
         <MudTh>Релизная задача</MudTh>
         <MudTh>Статус релиза</MudTh>
         <MudTh>Дата изменения</MudTh>
-        <MudTh>Дата завершения</MudTh>
+        <MudTh>Дата завершения</MudTh>a
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
         <MudTd DataLabel="Version">@context.Version</MudTd>
-        <MudTd DataLabel="ReleaseTask">@context.ReleaseTask</MudTd>
+        <MudTd DataLabel="ReleaseTask">@context.MainIssue</MudTd>
         <MudTd DataLabel="Status">@context.Status</MudTd>
-        <MudTd DataLabel="UpdateDate">@context.UpdateDate</MudTd>
-        <MudTd DataLabel="CompleteDate">@context.CompleteDate</MudTd>
+        <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
+        <MudTd DataLabel="CompleteDate">@context.CompleteDate.ToString()</MudTd>
     </RowTemplate>
     <RowEditingTemplate>
         <MudTd DataLabel="PlatformName">
-            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
-                <MudSelect @bind-Value="@context.PlatformName" Required>
-                    @foreach (PlatformAnswer item in Platforms)
-                    {
-                        <MudSelectItem Value="@item.PlatformName">@item.PlatformName</MudSelectItem>
-                    }
-                </MudSelect>
-            </div>
+           <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
+               <MudSelect @bind-Value="@context.PlatformName" Required>
+                   @foreach (PlatformResponce item in Platforms)
+                   {
+                       <MudSelectItem Value="@item.PlatformName">@item.PlatformName</MudSelectItem>
+                   }
+               </MudSelect>
+           </div>
         </MudTd>
         <MudTd DataLabel="Version">
-            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
+            @*<div @onclick:stopPropagation="true" @onclick:preventDefault="true">
                 <MudSelect @bind-Value="@context.Version" Required>
-                    @foreach (PlatformAnswer item in Platforms)
+                    @foreach (PlatformResponce item in Platforms)
                     {
                         <MudSelectItem Value="@item.Version">@item.Version</MudSelectItem>
                     }
                 </MudSelect>
-            </div>
+            </div>*@
         </MudTd>
         <MudTd DataLabel="ReleaseTask">
             <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
-                <MudTextField @bind-Value="@context.ReleaseTask" Required />
+                <MudTextField @bind-Value="@context.MainIssue" Required />
             </div>
         </MudTd>
         <MudTd DataLabel="Status">
-            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
-                <MudSelect @bind-Value="@context.Status" Required>
-                    @foreach (var item in Statuses)
-                    {
-                        <MudSelectItem Value="@item">@item</MudSelectItem>
-                    }
-                </MudSelect>
-            </div>
+           <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
+              <MudSelect @bind-Value="@context.Status" Required>
+                  @foreach (var item in Enum.GetValues(typeof(ReleaseStatus)))
+                  {
+                      <MudSelectItem Value="@Convert.ToString(item)">@item</MudSelectItem>
+                  }
+              </MudSelect>
+          </div>
         </MudTd>
         <MudTd DataLabel="UpdateDate">
-            @context.UpdateDate
+            @context.UpdateDate.ToString()
         </MudTd>
         <MudTd DataLabel="CompleteDate">
             <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
@@ -83,46 +85,50 @@
 @code
 {
     private TableEditTrigger editTrigger = TableEditTrigger.EditButton;
-    private NewReleaseModel elementBeforeEdit;
+    private ReleaseResponse elementBeforeEdit;
 
-    private List<NewReleaseModel> Releases { get; set; }
-    private List<PlatformAnswer> Platforms { get; set; }
+    private List<ReleaseResponse> Releases { get; set; }
+    
+    private List<PlatformResponce> Platforms { get; set; }
     private string[] Statuses { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Releases = await ReleaseManager.GetAll();
-        Platforms = await PlatformManager.GetAll();
+        Releases = new List<ReleaseResponse>(await ReleaseManager.Test()) ;
+     //   Releases = new List<ReleaseResponse>(await ReleaseManager.GetPlannedReleases()) ;
+        
+        // Platforms = await PlatformManager.GetAll();
     }
 
-    private void RowClicked(TableRowClickEventArgs<NewReleaseFormModel> _)
+
+    private void RowClicked(TableRowClickEventArgs<ReleaseResponse> _)
     {
         NavigationManager.NavigateTo("/info");
     }
 
     private void BackupItem(object release)
     {
-        elementBeforeEdit = new NewReleaseModel
-        {
-            ReleaseId = ((NewReleaseModel)release).ReleaseId,
-            Version = ((NewReleaseModel)release).Version,
-            PlatformName = ((NewReleaseModel)release).PlatformName,
-            Status = ((NewReleaseModel)release).Status,
-            ReleaseTask = ((NewReleaseModel)release).ReleaseTask,
-            CompleteDate = ((NewReleaseModel)release).CompleteDate,
-            UpdateDate = ((NewReleaseModel)release).UpdateDate,
-            Information = ((NewReleaseModel)release).Information,
-        };
+        elementBeforeEdit = new ReleaseResponse
+            (
+            ((ReleaseResponse)release).ReleaseId,
+            ((ReleaseResponse)release).Version,
+            ((ReleaseResponse)release).PlatformName,
+            ((ReleaseResponse)release).Status,
+            ((ReleaseResponse)release).MainIssue,
+            ((ReleaseResponse)release).CompleteDate,
+            ((ReleaseResponse)release).UpdateDate,
+            ((ReleaseResponse)release).Description
+            );
         StateHasChanged();
     }
 
     private void ResetItemToOriginalValues(object release)
     {
-        ((NewReleaseModel)release).Version = elementBeforeEdit.Version;
-        ((NewReleaseModel)release).PlatformName = elementBeforeEdit.PlatformName;
-        ((NewReleaseModel)release).Status = elementBeforeEdit.Status;
-        ((NewReleaseModel)release).ReleaseTask = elementBeforeEdit.ReleaseTask;
-        ((NewReleaseModel)release).CompleteDate = elementBeforeEdit.CompleteDate;
+        ((ReleaseResponse)release).Version = elementBeforeEdit.Version;
+        ((ReleaseResponse)release).PlatformName = elementBeforeEdit.PlatformName;
+        ((ReleaseResponse)release).Status = elementBeforeEdit.Status;
+        ((ReleaseResponse)release).MainIssue = elementBeforeEdit.MainIssue;
+        ((ReleaseResponse)release).CompleteDate = elementBeforeEdit.CompleteDate;
         StateHasChanged();
     }
 
@@ -130,4 +136,4 @@
     {
         StateHasChanged();
     }
-}*@
+}
