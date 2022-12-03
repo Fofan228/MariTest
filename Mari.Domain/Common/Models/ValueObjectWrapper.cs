@@ -49,9 +49,8 @@ public abstract record ValueObjectWrapper<TBase, TWrapper> :
         return Value.CompareTo(other);
     }
 
-    public static implicit operator TBase(ValueObjectWrapper<TBase, TWrapper> value) => value.Value;
-
     #region Operators
+    public static implicit operator TBase(ValueObjectWrapper<TBase, TWrapper> value) => value.Value;
     public static bool operator <(ValueObjectWrapper<TBase, TWrapper> left, ValueObjectWrapper<TBase, TWrapper> right) => left.CompareTo(right) < 0;
     public static bool operator >(ValueObjectWrapper<TBase, TWrapper> left, ValueObjectWrapper<TBase, TWrapper> right) => left.CompareTo(right) > 0;
     public static bool operator <=(ValueObjectWrapper<TBase, TWrapper> left, ValueObjectWrapper<TBase, TWrapper> right) => left.CompareTo(right) <= 0;

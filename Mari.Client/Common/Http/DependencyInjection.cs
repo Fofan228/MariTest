@@ -1,4 +1,5 @@
 using Mari.Client.Common.Http.DelegatingHandlers;
+using Mari.Client.Common.Http.ProblemsHandling;
 using Mari.Http.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -13,7 +14,14 @@ public static class DependencyInjection
             HttpClientName = HttpClientNames.Api
         });
 
-        services.AddScoped<ProblemHandler>();
+        services.AddProblemHandler(new()
+        {
+            DefaultProblemEvent = problem => Console.WriteLine(problem.Title),
+            ValidationProblemEvent = problem => Console.WriteLine(problem.Title),
+            UnauthorizedProblemEvent = problem => Console.WriteLine(problem.Title),
+            NotFoundProblemEvent = problem => Console.WriteLine(problem.Title),
+            ErrorProblemEvent = problem => Console.WriteLine(problem.Title)
+        });
 
         services.AddTransient<ApiAuthorizationHeaderHandler>();
 
@@ -26,6 +34,12 @@ public static class DependencyInjection
         services.AddScoped(sp =>
             sp.GetService<IHttpClientFactory>()!
             .CreateClient(HttpClientNames.Api));
+        return services;
+    }
+
+    public static IServiceCollection AddProblemHandler(this IServiceCollection services, ProblemHandlerOptions options)
+    {
+        services.AddSingleton<ProblemHandler>(sp => new ProblemHandler(options));
         return services;
     }
 }

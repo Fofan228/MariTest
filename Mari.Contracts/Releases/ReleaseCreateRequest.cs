@@ -16,10 +16,10 @@ public class ReleaseCreateRequest : PostRequest<EmptyRoute, EmptyQuery, Body, Vo
     }
 
     public record Body(
-        string MainIssue,
-        DateTime CompleteDate,
-        string PlatformName,
-        string Version,
-        string Description)
+        string? MainIssue,
+        DateTime? CompleteDate,
+        string? PlatformName,
+        string? Version,
+        string? Description)
         : RequestBody;
 }

@@ -10,23 +10,31 @@ namespace Mari.Domain.Releases;
 public class Release : AggregateRoot<ReleaseId>
 {
     public static ErrorOr<Release> Create(
-        Issue mainIssue,
-        Platform platform,
-        ReleaseCompleteDate completeDate,
+        Issue? mainIssue,
+        Platform? platform,
+        ReleaseCompleteDate? completeDate,
+        ReleaseStatus? status = null,
         ReleaseDescription? description = null,
         ReleaseVersion? version = null,
         ReleaseId? id = null)
     {
-        return new Release(
+        if (status is not ReleaseStatus.Draft and not ReleaseStatus.Planning)
+            return Errors.Release.NewReleaseStatusMustBeDraftOrPlanning;
+
+        var release = new Release(
             id: id,
             mainIssue: mainIssue,
             platform: platform,
             completeDate: completeDate,
             updateDate: ReleaseUpdateDate.Default,
-            status: ReleaseStatus.Planning,
+            status: status ?? ReleaseStatus.Draft,
             description: description ?? ReleaseDescription.Default,
             version: version ?? ReleaseVersion.MinValue
         );
+
+        var result = release.CheckDraftStatus();
+        if (result.IsError) return result.Errors;
+        return release;
     }
 
     private Release() : base(default!)
@@ -35,20 +43,20 @@ public class Release : AggregateRoot<ReleaseId>
 
     private Release(
         ReleaseId? id,
-        Issue mainIssue,
+        Issue? mainIssue,
         ReleaseVersion version,
-        Platform platform,
-        ReleaseCompleteDate completeDate,
+        Platform? platform,
+        ReleaseCompleteDate? completeDate,
         ReleaseUpdateDate updateDate,
         ReleaseStatus status,
         ReleaseDescription description) : base(id)
     {
         Version = version;
-        Platform = platform;
+        Platform = platform!;
         Status = status;
-        CompleteDate = completeDate;
+        CompleteDate = completeDate!;
         UpdateDate = updateDate;
-        MainIssue = mainIssue;
+        MainIssue = mainIssue!;
         Description = description;
     }
 
@@ -60,20 +68,25 @@ public class Release : AggregateRoot<ReleaseId>
     public ReleaseDescription Description { get; private set; } = null!;
     public Issue MainIssue { get; private set; } = null!;
 
+    public bool IsReadOnly => Status is ReleaseStatus.Complete;
+
     public ErrorOr<Updated> ChangeMainIssue(Issue mainIssue, DateTime currentDateTime)
     {
+        if (IsReadOnly) return Errors.Release.ReleaseIsReadOnly;
         MainIssue = mainIssue;
         return ChangeUpdateDate(currentDateTime);
     }
 
     public ErrorOr<Updated> ChangeDescription(ReleaseDescription description, DateTime currentDateTime)
     {
+        if (IsReadOnly) return Errors.Release.ReleaseIsReadOnly;
         Description = description;
         return ChangeUpdateDate(currentDateTime);
     }
 
     public ErrorOr<Updated> ChangeVersion(ReleaseVersion version, DateTime currentDateTime)
     {
+        if (IsReadOnly) return Errors.Release.ReleaseIsReadOnly;
         if (version <= Version)
             return Errors.Release.VersionMustBeGreaterThanCurrent;
         Version = version;
@@ -82,7 +95,8 @@ public class Release : AggregateRoot<ReleaseId>
 
     public ErrorOr<Updated> ChangeCompleteDate(ReleaseCompleteDate completeDate, DateTime currentDateTime)
     {
-        if (completeDate <= CompleteDate)
+        if (IsReadOnly) return Errors.Release.ReleaseIsReadOnly;
+        if ((DateTime)completeDate <= (DateTime)CompleteDate)
             return Errors.Release.CompleteDateMustBeGreaterThanCurrent;
         CompleteDate = completeDate;
         return ChangeUpdateDate(currentDateTime);
@@ -90,19 +104,45 @@ public class Release : AggregateRoot<ReleaseId>
 
     public ErrorOr<Updated> ChangePlatform(Platform platform, DateTime currentDateTime)
     {
+        if (IsReadOnly) return Errors.Release.ReleaseIsReadOnly;
         Platform = platform;
         return ChangeUpdateDate(currentDateTime);
     }
 
     public ErrorOr<Updated> ChangeStatus(ReleaseStatus status, DateTime currentDateTime)
     {
+        if (IsReadOnly) return Errors.Release.ReleaseIsReadOnly;
+        var prevStatus = Status;
         Status = status;
+        var result = CheckDraftStatus();
+        if (result.IsError)
+        {
+            Status = prevStatus;
+            return result.Errors;
+        }
         return ChangeUpdateDate(currentDateTime);
+    }
+
+    public ErrorOr<Success> CreateFromDraft()
+    {
+        if (Status != ReleaseStatus.Draft)
+            return Errors.Release.ReleaseMustBeDraft;
+
+        Status = ReleaseStatus.Planning;
+        return Result.Success;
     }
 
     private ErrorOr<Updated> ChangeUpdateDate(DateTime currentDateTime)
     {
         UpdateDate = ReleaseUpdateDate.Create(currentDateTime);
         return Result.Updated;
+    }
+
+    private ErrorOr<Success> CheckDraftStatus()
+    {
+        if (Status == ReleaseStatus.Draft) return Result.Success;
+        if (Platform is null || CompleteDate is null || MainIssue is null)
+            return Errors.Release.NonDraftReleaseFieldsCannotBeNull;
+        return Result.Success;
     }
 }

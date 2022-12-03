@@ -9,11 +9,9 @@ public interface IRepository<TAggregateRoot, TId>
     where TId : IEquatable<TId>, IHasDefaultValue<TId>
 {
     Task<TAggregateRoot?> GetById(TId id, CancellationToken token = default);
-    Task<IList<TAggregateRoot>> GetById(IEnumerable<TId> ids, CancellationToken token = default);
+    IAsyncEnumerable<TAggregateRoot> GetById(IEnumerable<TId> ids, CancellationToken token = default);
     Task<TAggregateRoot?> Find(Specification<TAggregateRoot> specification, CancellationToken token = default);
-    Task<IList<TAggregateRoot>> FindMany(Specification<TAggregateRoot>? specification = null, Range range = default, CancellationToken token = default);
-    IAsyncEnumerable<TAggregateRoot> List(Specification<TAggregateRoot>? specification = null);
-    IAsyncEnumerable<TAggregateRoot> ListById(IEnumerable<TId> ids);
+    IAsyncEnumerable<TAggregateRoot> FindMany(Specification<TAggregateRoot>? specification = null, Range range = default);
     Task<TAggregateRoot> Insert(TAggregateRoot aggregateRoot, CancellationToken token = default);
     Task<TAggregateRoot> Update(TAggregateRoot aggregateRoot, CancellationToken token = default);
     Task Delete(TAggregateRoot aggregateRoot, CancellationToken token = default);

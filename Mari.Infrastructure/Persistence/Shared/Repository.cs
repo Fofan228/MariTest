@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using LinqSpecs;
 using Mari.Application.Common.Interfaces.Persistence.Shared;
 using Mari.Domain.Common.Interfaces;
@@ -21,37 +22,31 @@ public abstract class Repository<TAggregateRoot, TId> : IRepository<TAggregateRo
 
     public virtual async Task<TAggregateRoot?> GetById(TId id, CancellationToken token = default)
     {
-        return await Set.FirstOrDefaultAsync(x => x.Id.Equals(id), token);
+        return await Set.AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id.Equals(id), token);
     }
 
-    public async Task<IList<TAggregateRoot>> GetById(IEnumerable<TId> ids, CancellationToken token = default)
+    public IAsyncEnumerable<TAggregateRoot> GetById(IEnumerable<TId> ids, CancellationToken token = default)
     {
         ids = ids.ToList();
-        return await Set.Where(x => ids.Contains(x.Id)).ToListAsync(token);
+        return Set.Where(x => ids.Contains(x.Id))
+            .AsNoTracking()
+            .AsAsyncEnumerable();
     }
 
     public virtual async Task<TAggregateRoot?> Find(Specification<TAggregateRoot> specification, CancellationToken token = default)
     {
-        return await Set.FirstOrDefaultAsync(specification, token);
+        return await Set.AsNoTracking()
+            .FirstOrDefaultAsync(specification, token);
     }
 
-    public virtual async Task<IList<TAggregateRoot>> FindMany(Specification<TAggregateRoot>? specification = null, Range range = default, CancellationToken token = default)
+    public virtual IAsyncEnumerable<TAggregateRoot> FindMany(
+        Specification<TAggregateRoot>? specification = null,
+        Range range = default)
     {
         var query = Set.Where(specification ?? new TrueSpecification<TAggregateRoot>());
-        query = await AddRange(query, range, token, specification);
-        return await query.ToListAsync(token);
-    }
-
-    public virtual IAsyncEnumerable<TAggregateRoot> List(Specification<TAggregateRoot>? specification = null)
-    {
-        var query = Set.Where(specification ?? new TrueSpecification<TAggregateRoot>());
-        return query.AsAsyncEnumerable();
-    }
-
-    public virtual IAsyncEnumerable<TAggregateRoot> ListById(IEnumerable<TId> ids)
-    {
-        ids = ids.ToList();
-        return Set.Where(x => ids.Contains(x.Id)).AsAsyncEnumerable();
+        query = AddRange(query, range);
+        return query.AsNoTracking().AsAsyncEnumerable();
     }
 
     public virtual Task<TAggregateRoot> Insert(TAggregateRoot aggregateRoot, CancellationToken token = default)
@@ -95,11 +90,7 @@ public abstract class Repository<TAggregateRoot, TId> : IRepository<TAggregateRo
         return await Set.CountAsync(specification ?? new TrueSpecification<TAggregateRoot>(), token);
     }
 
-    protected async Task<IQueryable<TAggregateRoot>> AddRange(
-        IQueryable<TAggregateRoot> query,
-        Range range,
-        CancellationToken token,
-        Specification<TAggregateRoot>? specification = null)
+    protected IQueryable<TAggregateRoot> AddRange(IQueryable<TAggregateRoot> query, Range range)
     {
         if (range.Start.Value > range.End.Value)
         {
@@ -108,16 +99,16 @@ public abstract class Repository<TAggregateRoot, TId> : IRepository<TAggregateRo
                 $"{nameof(range.Start)} must be less than or equal to {nameof(range.End)}.");
         }
 
+        if (range.Start.IsFromEnd || range.End.IsFromEnd)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(range),
+                $"{nameof(range.Start)} and {nameof(range.End)} must not be from end.");
+        }
+
         if (range.Equals(default))
         {
             return query;
-        }
-
-        if (range.Start.IsFromEnd || range.End.IsFromEnd)
-        {
-            var count = await Set.CountAsync(specification ?? new TrueSpecification<TAggregateRoot>(), token);
-            (var offset, var length) = range.GetOffsetAndLength(count);
-            return query.Skip(offset).Take(length);
         }
 
         return query.Skip(range.Start.Value)

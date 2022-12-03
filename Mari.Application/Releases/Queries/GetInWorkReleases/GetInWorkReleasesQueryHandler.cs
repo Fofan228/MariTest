@@ -1,0 +1,33 @@
+using ErrorOr;
+using Mari.Application.Common.Interfaces.Persistence;
+using Mari.Application.Common.Specifications;
+using Mari.Application.Releases.Results;
+using Mari.Domain.Releases.Enums;
+using MediatR;
+
+namespace Mari.Application.Releases.Queries.GetInWorkReleases;
+
+internal class GetInWorkReleasesQueryHandler : IRequestHandler<GetInWorkReleasesQuery, ErrorOr<IEnumerable<ReleaseResult>>>
+{
+    private readonly IReleaseRepository _releaseRepository;
+
+    public GetInWorkReleasesQueryHandler(IReleaseRepository releaseRepository)
+    {
+        _releaseRepository = releaseRepository;
+    }
+
+    public async Task<ErrorOr<IEnumerable<ReleaseResult>>> Handle(GetInWorkReleasesQuery request, CancellationToken cancellationToken)
+    {
+        var spec = ReleaseSpecs.StatusIn(
+            ReleaseStatus.Developing,
+            ReleaseStatus.Testing,
+            ReleaseStatus.MarketModeration,
+            ReleaseStatus.InPublicationProcess,
+            ReleaseStatus.Paused,
+            ReleaseStatus.PlannedDocumentApproval);
+
+        return await _releaseRepository.FindMany(spec, request.Range)
+            .Select(release => ReleaseResult.FromRelease(release))
+            .ToListAsync(cancellationToken);
+    }
+}

@@ -126,26 +126,25 @@
     ]
   },
   "packageFolders": {
-    "/home/Nanoster/.nuget/packages/": {}
+    "/var/home/nanoster/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Domain/Mari.Domain.csproj",
+      "projectUniqueName": "/var/home/nanoster/Projects/MariTest/Mari.Domain/Mari.Domain.csproj",
       "projectName": "Mari.Domain",
-      "projectPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Domain/Mari.Domain.csproj",
-      "packagesPath": "/home/Nanoster/.nuget/packages/",
-      "outputPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Domain/obj/",
+      "projectPath": "/var/home/nanoster/Projects/MariTest/Mari.Domain/Mari.Domain.csproj",
+      "packagesPath": "/var/home/nanoster/.nuget/packages/",
+      "outputPath": "/var/home/nanoster/Projects/MariTest/Mari.Domain/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/Nanoster/.nuget/NuGet/NuGet.Config"
+        "/var/home/nanoster/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {},
-        "https://nuget.pkg.jetbrains.space/maboys/p/mari/nuget/v3/index.json": {}
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
@@ -192,7 +191,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/var/lib/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }

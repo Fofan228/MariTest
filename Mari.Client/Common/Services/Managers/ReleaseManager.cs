@@ -1,4 +1,5 @@
 ﻿using MapsterMapper;
+using Mari.Client.Common.Http.ProblemsHandling;
 using Mari.Client.Common.Interfaces.Managers;
 using Mari.Client.Models.Releases;
 using Mari.Contracts.Releases;
@@ -10,11 +11,13 @@ public class ReleaseManager : IReleaseManager
 {
     private readonly HttpSender _httpSender;
     private readonly IMapper _mapper;
+    private readonly ProblemHandler _problemHandler;
 
-    public ReleaseManager(HttpSender httpSender, IMapper mapper)
+    public ReleaseManager(HttpSender httpSender, IMapper mapper, ProblemHandler problemHandler)
     {
         _httpSender = httpSender;
         _mapper = mapper;
+        _problemHandler = problemHandler;
     }
 
     public async Task Create(NewReleaseFormModel model, CancellationToken token)
@@ -22,7 +25,7 @@ public class ReleaseManager : IReleaseManager
         var body = _mapper.Map<ReleaseCreateRequest.Body>(model);
         var request = new ReleaseCreateRequest(body);
         var response = await _httpSender.PostAsync(request, token);
-        if (!response.IsSuccess) throw new NotImplementedException();
+        if (!response.IsSuccess) _problemHandler.HandleProblem(response.Problem!);
     }
 
     public void DeleteRelease(string releaseId)

@@ -1,34 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Contracts/Mari.Contracts.csproj": {}
+    "/var/home/nanoster/Projects/MariTest/Mari.Contracts/Mari.Contracts.csproj": {}
   },
   "projects": {
-    "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Contracts/Mari.Contracts.csproj": {
+    "/var/home/nanoster/Projects/MariTest/Mari.Contracts/Mari.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Contracts/Mari.Contracts.csproj",
+        "projectUniqueName": "/var/home/nanoster/Projects/MariTest/Mari.Contracts/Mari.Contracts.csproj",
         "projectName": "Mari.Contracts",
-        "projectPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Contracts/Mari.Contracts.csproj",
-        "packagesPath": "/home/Nanoster/.nuget/packages/",
-        "outputPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Contracts/obj/",
+        "projectPath": "/var/home/nanoster/Projects/MariTest/Mari.Contracts/Mari.Contracts.csproj",
+        "packagesPath": "/var/home/nanoster/.nuget/packages/",
+        "outputPath": "/var/home/nanoster/Projects/MariTest/Mari.Contracts/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/Nanoster/.nuget/NuGet/NuGet.Config"
+          "/var/home/nanoster/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.pkg.jetbrains.space/maboys/p/mari/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Http/Mari.Http.csproj": {
-                "projectPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Http/Mari.Http.csproj"
+              "/var/home/nanoster/Projects/MariTest/Mari.Http/Mari.Http.csproj": {
+                "projectPath": "/var/home/nanoster/Projects/MariTest/Mari.Http/Mari.Http.csproj"
               }
             }
           }
@@ -58,28 +57,27 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/var/lib/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Http/Mari.Http.csproj": {
+    "/var/home/nanoster/Projects/MariTest/Mari.Http/Mari.Http.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Http/Mari.Http.csproj",
+        "projectUniqueName": "/var/home/nanoster/Projects/MariTest/Mari.Http/Mari.Http.csproj",
         "projectName": "Mari.Http",
-        "projectPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Http/Mari.Http.csproj",
-        "packagesPath": "/home/Nanoster/.nuget/packages/",
-        "outputPath": "/home/Nanoster/Загрузки/Telegram Desktop/MariTest/Mari.Http/obj/",
+        "projectPath": "/var/home/nanoster/Projects/MariTest/Mari.Http/Mari.Http.csproj",
+        "packagesPath": "/var/home/nanoster/.nuget/packages/",
+        "outputPath": "/var/home/nanoster/Projects/MariTest/Mari.Http/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/Nanoster/.nuget/NuGet/NuGet.Config"
+          "/var/home/nanoster/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.pkg.jetbrains.space/maboys/p/mari/nuget/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
@@ -122,7 +120,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/var/lib/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
         }
       }
     }
