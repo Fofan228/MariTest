@@ -22,7 +22,7 @@ public abstract class Request<TRoute, TQuery, TBody, TResponse> : IRequest<TResp
 
     public abstract string RouteTemplate { get; }
 
-    public string GetRoute() => RouteParams.GetRoute(RouteTemplate);
+    public string GetRouteWithParams() => RouteParams.GetRoute(RouteTemplate);
     public string GetQueryString() => QueryParams.GetQueryString();
     public JsonContent? GetBodyContent() => BodyContent.GetBody();
 }

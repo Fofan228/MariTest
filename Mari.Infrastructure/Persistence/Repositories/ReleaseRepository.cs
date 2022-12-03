@@ -18,9 +18,18 @@ public class ReleaseRepository : Repository<Release, ReleaseId>, IReleaseReposit
     public IAsyncEnumerable<Platform> GetAllPlatforms()
     {
         return Set.AsNoTracking()
+            .DistinctBy(r => r.Platform)
             .Select(r => r.Platform)
-            .Distinct()
             .AsAsyncEnumerable();
+    }
+
+    public Task<ReleaseVersion> GetMaxVersion(
+        Specification<Release> specification,
+        CancellationToken token)
+    {
+        return Set.AsNoTracking()
+            .Where(specification)
+            .MaxAsync(r => r.Version, token);
     }
 
     public IAsyncEnumerable<Release> GetCurrentReleases(Range range)

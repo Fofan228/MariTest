@@ -123,7 +123,7 @@ public class HttpSender
     private Uri CreateUri<TResponse>(IRequest<TResponse> request, Uri? baseAddress = null)
         where TResponse : notnull
     {
-        var routeUri = new Uri(request.GetRoute(), UriKind.RelativeOrAbsolute);
+        var routeUri = new Uri(request.GetRouteWithParams(), UriKind.RelativeOrAbsolute);
         var builderUri = routeUri.IsAbsoluteUri ? routeUri : new Uri(baseAddress!, routeUri);
         var builder = new UriBuilder(builderUri);
         builder.Query = request.GetQueryString();

@@ -29,7 +29,7 @@ public class AuthenticationService : IAuthenticationService
         var request = new AuthenticationRequest(query);
         var builder = new UriBuilder(_navigationManager.BaseUri)
         {
-            Path = request.GetRoute(),
+            Path = request.GetRouteWithParams(),
             Query = request.GetQueryString()
         };
         _navigationManager.NavigateTo(builder.Uri.ToString(), true);
