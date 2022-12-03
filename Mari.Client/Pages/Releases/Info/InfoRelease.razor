@@ -1,0 +1,99 @@
+@using Mari.Contracts.Releases
+@using Mari.Contracts.Releases.Responce
+@attribute [Route(ClientRoutes.Pages.ReleasesInfo)]
+@inject IReleaseManager ReleaseManager
+
+<MudPaper Elevation="3" Height="100vh">
+
+    <MudContainer Class="my-auto" MaxWidth="MaxWidth.Medium" Style="display: flex; flex-direction: row;">
+     
+        <MudContainer MaxWidth="MaxWidth.Medium" Style="display: flex; flex-direction: column;">
+            
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" 
+                       OnClick="BackButtonClick" Href="@ClientRoutes.Pages.Index">Вернуться</MudButton>
+   
+
+            <MudContainer MaxWidth="MaxWidth.Medium" Class="mt-5 d-flex justify-space-between">
+                <MudContainer> 
+                    <MudText Typo="Typo.h5">Платформа: @Release.PlatformName</MudText>
+                </MudContainer>
+                <MudContainer Class=" d-flex flex-row-reverse">
+                     <MudButton  Variant="Variant.Filled" Color="Color.Primary" OnClick="RightDrawerButtonOnClick">Дополнительно</MudButton>
+                   <MudIconButton Title="Редактировать" Class="mr-4" Icon="@Icons.Filled.Edit" OnClick="ClickOnEditingRelease" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" />
+                </MudContainer>
+
+            </MudContainer>
+
+            <MudContainer MaxWidth="MaxWidth.Medium" Class="my-5" Style="display: flex; flex-direction: row;">
+
+                <MudContainer Class="px-0" MaxWidth="MaxWidth.Medium" Style="display: flex; flex-direction: column;">
+                    <MudText>Версия: @($"{Release.Major.ToString()}.{Release.Minor.ToString()}.{Release.Patch.ToString()}")</MudText>
+                    <MudText>Релиз задача: url</MudText>
+                    <MudText>Статус: @Release.Status</MudText>
+                </MudContainer>
+
+                <MudContainer MaxWidth="MaxWidth.Medium" Style="display: flex; flex-direction: column; justify-content: space-between">
+                    <MudText>Дата изменения: @Release.UpdateDate.ToString()</MudText>
+                    <MudText>Дата завершения: @Release.CompleteDate.ToString()</MudText>
+                </MudContainer>
+            </MudContainer>
+
+            <MudContainer MaxWidth="MaxWidth.Medium">
+                <MudText Typo="Typo.h5">Информация о релизе при его создании (Фио создателя релиза)</MudText>
+            </MudContainer>
+
+            <MudContainer MaxWidth="MaxWidth.Medium" Style="display: flex; flex-direction: column;" Class="my-3">
+                <MudText>@Release.Description </MudText>
+            </MudContainer>
+            
+            
+            <MudDrawer @bind-Open="IsRightDrawerOpened" Width="400px" Height="100%" Anchor="Anchor.Right">
+                <MenuRelease ReleaseStatus="@Release.Status" ClickOnEditingRelease="ClickOnEditingRelease"/>
+            </MudDrawer>
+        </MudContainer>
+        
+    </MudContainer>
+</MudPaper>
+
+@if (openEditingRelease)
+{
+    <CardEditRelease Release="Release"  ClickOnEditingRelease="ClickOnEditingRelease" />
+}
+
+@code {
+
+    
+    [Parameter] 
+    public string ReleaseId { get; set; } 
+
+    private bool IsRightDrawerOpened { get; set; } = false;
+    private bool openEditingRelease { get; set; } = false;
+
+   // private ReleaseResponse Release { get; set; }
+
+    private ReleaseResponse Release { get; set; } =   new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+        new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG");
+
+    public void ClickOnEditingRelease()
+    {
+        IsRightDrawerOpened = false;
+        openEditingRelease = !openEditingRelease;
+    }
+    
+    private void BackButtonClick()
+    {
+        IsRightDrawerOpened = false;
+    }
+    
+    private void RightDrawerButtonOnClick()
+    {
+        IsRightDrawerOpened = !IsRightDrawerOpened;
+    }
+    
+    
+    protected override async Task OnInitializedAsync()
+    {
+    //    Release = await ReleaseManager.Get();
+    }
+    
+}

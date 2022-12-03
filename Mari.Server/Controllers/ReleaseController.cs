@@ -6,6 +6,7 @@ using Mari.Application.Releases.Queries.GetAllPlatforms;
 using Mari.Application.Releases.Queries.GetCurrentReleases;
 using Mari.Contracts.Common.Routes.Server;
 using Mari.Contracts.Releases;
+using Mari.Contracts.Releases.PostRequests;
 using Mari.Server.Controllers.Common;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

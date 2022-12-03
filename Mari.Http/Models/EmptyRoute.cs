@@ -4,5 +4,5 @@ namespace Mari.Http.Models;
 
 public record EmptyRoute : RequestRoute
 {
-    public override string GetRoute(string RouteTemplate) => RouteTemplate;
+    public override string GetRoute(string routeTemplate) => routeTemplate;
 }

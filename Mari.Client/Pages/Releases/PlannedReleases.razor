@@ -9,81 +9,12 @@
 </MudPaper>
 
 
-
-@*
-    <!-- карта создания релиза -->
-    @if(openCreateRelease) {
-    <!-- TODO: Кликабельный фон -->
-    <MudPaper Class="" Elevation="0" >
-    <MudCard Class="border card-create-release" >
-
-    <MudForm>
-    <MudCardActions Class="pb-0"> <!-- TODO доделать OnClick -->
-    <MudIconButton Class="ml-auto" OnClick="ClickOnCreareRelease" Icon="@Icons.Filled.Close" />
-    </MudCardActions>
-
-    <MudCardContent Class="pt-0">
-    <!-- TODO: оповщение ? Затемнение? -->
-    <MudDatePicker @ref="DatePicker" For="@(() => Model.Date)"
-    Label="Дата Завершения">
-    <PickerActions>
-    <MudButton Class="mr-auto align-self-start" OnClick="@(() => DatePicker.Clear())">Clear</MudButton>
-    <MudButton OnClick="@(() => DatePicker.Close(false))">Cancel</MudButton>
-    <MudButton Color="Color.Primary" OnClick="@(() => DatePicker.Close())">Ok</MudButton>
-    </PickerActions>
-    </MudDatePicker>
-
-    <MudTextField @bind-Value="Model.Name"
-    For="@(() => Model.Name)"
-    Immediate="true"
-    Label="Платформа"/>
-
-    <MudTextField @bind-Value="Model.Email"
-    For="@(() => Model.Email)"
-    Immediate="true"
-    Label="Версия"/>
-
-    <MudTextField @bind-Value="Model.CCNumber"
-    For="@(() => Model.CCNumber)"
-    Immediate="true"
-    Label="Ссылка на релиз задачу"/>
-
-    <MudTextField @bind-Value="Model.Information"
-    For="@(() => Model.Information)"
-    Immediate="true"
-    Variant="Variant.Filled"
-    Lines="5"
-    Label="Информация"/>
-
-    </MudCardContent>
-
-    <MudCardActions> <!-- TODO доделать OnClick -->
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-auto">Добавить</MudButton>
-    </MudCardActions>
-    </MudForm>
-
-    </MudCard>
-    </MudPaper>
-    }
-*@
-
-
 @code {
-
-        /*
-        private bool openCreateRelease { get; set; } = false;
-        */
 
     [Parameter]
     public Action SwitchDimming { get; set; } = () => { };
 
-    /*
-    public void ClickOnCreareRelease()
-    {
-    openCreateRelease = !openCreateRelease;
-    SwitchDimming();
-    }
-    */
+ 
 
     MudDatePicker DatePicker;
     OrderModel Model = new OrderModel();
@@ -99,42 +30,3 @@
 
     }
 }
-
-@* <MudTable Items="@Elements"> *@
-@* <HeaderContent> *@
-@* <MudTh>Платформа</MudTh> *@
-@* <MudTh>Версия</MudTh> *@
-@* <MudTh>Релизная задача</MudTh> *@
-@* <MudTh>Статус релиза</MudTh> *@
-@* <MudTh>Дата изменения</MudTh> *@
-@* <MudTh>Дата завершения</MudTh> *@
-@* </HeaderContent> *@
-@* <RowTemplate> *@
-@* <MudTd DataLabel="Platform">@context.platform</MudTd> *@
-@* <MudTd DataLabel="Version">@context.version</MudTd> *@
-@* <MudTd DataLabel="releaseTask">@context.reliseTask</MudTd> *@
-@* <MudTd DataLabel="releaseStatus">@context.releaseStatus</MudTd> *@
-@* <MudTd DataLabel="DateOfChange">@context.dateOfChange</MudTd> *@
-@* <MudTd DataLabel="DateOfCompletion">@context.dateOfCompletion</MudTd> *@
-@* </RowTemplate> *@
-@* </MudTable> *@
-@* *@
-@* @code { *@
-@* static readonly List<Element> Elements = new() *@
-@* { *@
-@* new( *@
-@* Element.Platforms.Android, *@
-@* "11.12.02", *@
-@* "planA", *@
-@* Element.ReleaseStatuses.Planned, *@
-@* DateTime.Now, *@
-@* DateTime.Today), *@
-@* new Element( *@
-@* Element.Platforms.Ios, *@
-@* "11.12.02", *@
-@* "planA", *@
-@* Element.ReleaseStatuses.Planned, *@
-@* DateTime.Now, *@
-@* DateTime.Today) *@
-@* }; *@
-@* } *@

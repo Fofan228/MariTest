@@ -1,0 +1,60 @@
+﻿@using Mari.Contracts.Releases
+@using Mari.Contracts.Releases.Responce
+@inject IReleaseManager ReleaseManager
+@inject NavigationManager NavigationManager
+
+<MudTable Class="mt-8" Items="@Releases" Hover="true" T="ReleaseResponse" 
+          OnRowClick="RowClicked" Filter="new Func<ReleaseResponse, bool>(FilterFunc)">
+    <HeaderContent>
+        <MudTh>Платформа</MudTh>
+        <MudTh>Версия</MudTh>
+        <MudTh>Релизная задача</MudTh>
+        <MudTh>Статус релиза</MudTh>
+        <MudTh>Дата изменения</MudTh>
+        <MudTh>Дата завершения</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+
+        <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
+
+        <MudTd DataLabel="Version">@($"{context.Major.ToString()}.{context.Minor.ToString()}.{context.Patch.ToString()}")</MudTd>
+
+        <MudTd DataLabel="ReleaseTask">@context.MainIssue</MudTd>
+
+        <MudTd DataLabel="ReleaseStatus">@context.Status</MudTd>
+
+        <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
+
+        <MudTd DataLabel="CompleteDate">@context.CompleteDate.ToString()</MudTd>
+
+    </RowTemplate>
+</MudTable>
+
+@code {
+    private string _searchString = "";
+    private List<ReleaseResponse> Releases { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+       // Releases = new List<ReleaseResponse>(await ReleaseManager.Test()) ;
+      //  Releases = new List<ReleaseResponse>(await ReleaseManager.()) ;
+    }
+
+    private void RowClicked(TableRowClickEventArgs<ReleaseResponse> _)
+    {
+        NavigationManager.NavigateTo("/info");
+    }
+    
+    private bool FilterFunc(ReleaseResponse answer)
+    {
+        if (string.IsNullOrEmpty(_searchString))
+            return true;
+        if (answer.PlatformName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (answer.MainIssue.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (answer.Status.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(_searchString);
+    }
+}
