@@ -1,11 +1,7 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-using MapsterMapper;
+﻿using MapsterMapper;
 using Mari.Client.Common.Interfaces.Managers;
 using Mari.Contracts.Users.GetRequests;
-using Mari.Contracts.Users.PostRequests;
+using Mari.Contracts.Users.PutRequests;
 using Mari.Contracts.Users.Responce;
 using Mari.Http.Services;
 
@@ -34,7 +30,7 @@ public class UserManager : IUserManager
     
     public async Task<IList<UserResponce>> GetAll(CancellationToken token = default)
     {
-        var request = new UsersGetAllRequests();
+        var request = new UsersGetAllRequest();
         var response = await _httpSender.GetAsync(request, token);
         if (!response.IsSuccess) throw new NotImplementedException();
         return null;
@@ -44,7 +40,7 @@ public class UserManager : IUserManager
     {
         var body = _mapper.Map<UserUpdateRequest.Body>(model);
         var request = new UserUpdateRequest(body);
-        var response = await _httpSender.PostAsync(request, token);
+        var response = await _httpSender.PutAsync(request, token);
         if (!response.IsSuccess) throw new NotImplementedException();
     }
 }

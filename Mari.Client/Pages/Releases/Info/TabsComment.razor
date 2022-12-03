@@ -5,7 +5,7 @@
 
 <MudPaper Elevation="0" Class="pt-2"> 
     <MudStack > <!--TODO убрать дублирование кода-->
-        @foreach (var comment in Comments)
+        @foreach (var comment in UserComments)
             {
                 <MudPaper Class="border-b pl-4 pb-4" Elevation="0" Height="20vh">
                         
@@ -45,13 +45,23 @@
 @code {
 
 
-    private List<CommentResponse> Comments { get; set; } = new List<CommentResponse>();
+    private List<CommentResponse> UserComments { get; set; } = new List<CommentResponse>();
 
     private CommentCreateModel newCommnet { get; set; } = new CommentCreateModel();
 
     protected override async Task OnInitializedAsync()
     {
        // Comments = await CommentManager.GetAllUserComment();
+        
+    // TODO Тестовые данные
+     UserComments = new List<CommentResponse>()
+        {
+            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
+            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
+            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
+            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
+
+        };
     }
 
     string Name { get; set; } = "Ахимат";

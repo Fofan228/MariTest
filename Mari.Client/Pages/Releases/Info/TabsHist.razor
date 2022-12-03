@@ -1,5 +1,7 @@
 ﻿@using Mari.Contracts.Comments.Responce
 @using Mari.Client.Models.Comments
+@inject ICommentManager CommentManager
+
 <MudPaper Elevation="0" Class="pt-2">
     <MudStack > <!--TODO убрать дублирование кода-->
         @foreach (var item in SystemComments)
@@ -26,17 +28,21 @@
 
 
     
-    List<CommentResponse> SystemComments = new List<CommentResponse>()
-    {
-        
-    };
+    List<CommentResponse> SystemComments { get; set; }
 
-    private List<CommentResponse> Comments { get; set; } = new List<CommentResponse>();
-
-    private CommentCreateModel newCommnet { get; set; } = new CommentCreateModel();
 
     protected override async Task OnInitializedAsync()
     {
-    // Comments = await CommentManager.GetAllUserComment();
+        //SystemComments = await CommentManager.GetAllSystemComment();
+        
+    // TODO Тестовые данные
+        SystemComments = new List<CommentResponse>()
+        {
+            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
+            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
+            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
+            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
+
+        };
     }
 }

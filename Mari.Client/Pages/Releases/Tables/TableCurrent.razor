@@ -47,7 +47,20 @@
 
     protected override async Task OnInitializedAsync()
     {
-       Releases = await ReleaseManager.GetCurrentReleases();
+      // Releases = await ReleaseManager.GetCurrentReleases();
+        
+        
+    // TODO Тестовые данные
+        Releases = new List<ReleaseResponse>()
+        {
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG")
+        };
+    // конец
     }
     
     private void RowClicked(TableRowClickEventArgs<ReleaseResponse> _)

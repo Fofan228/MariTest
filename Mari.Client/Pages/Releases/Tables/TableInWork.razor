@@ -29,6 +29,7 @@
         <col style="width: 17%;"/>
         <col style="width: 15%;"/>
         <col style="width: 15%;"/>
+        <col >
     </ColGroup>
     <HeaderContent>
         <MudTh>Платформа</MudTh>
@@ -37,6 +38,7 @@
         <MudTh>Статус релиза</MudTh>
         <MudTh>Дата изменения</MudTh>
         <MudTh>Дата завершения</MudTh>
+        <MudTh></MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
@@ -49,6 +51,14 @@
         <MudTd DataLabel="Status">@context.Status</MudTd>
         <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
         <MudTd DataLabel="CompleteDate">@context.CompleteDate.ToString()</MudTd>
+        <MudTd>
+            <div @onclick:stopPropagation="true">
+                <MudTooltip Text="Завершить">
+                   <MudIconButton Class="pa-0" Icon="@Icons.Filled.CancelScheduleSend"
+                                  Size="@Size.Medium" Color="Color.Primary"/>
+                </MudTooltip>
+            </div>
+        </MudTd>
     </RowTemplate>
     <RowEditingTemplate>
         <MudTd DataLabel="PlatformName">
@@ -72,9 +82,15 @@
         <MudTd>
             <MudDatePicker @bind-Date="@context.CompleteDate" PickerVariant="PickerVariant.Dialog" />
         </MudTd>
+        <MudTd>
+            <MudIconButton Class="pa-0" Icon="@Icons.Filled.CancelScheduleSend"
+                           Disabled="true" Size="@Size.Medium" Color="Color.Primary"/>
+        </MudTd>
     </RowEditingTemplate>
     <EditButtonContent Context="button">
-        <MudIconButton Size="@Size.Medium" Icon="@Icons.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled"/>
+        <MudTooltip Text="Изменить">
+            <MudIconButton Size="@Size.Medium" Icon="@Icons.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled"/>
+        </MudTooltip>
     </EditButtonContent>
 </MudTable>
 
@@ -90,9 +106,20 @@
 
     protected override async Task OnInitializedAsync()
     {
-        Releases = await ReleaseManager.GetInWorkReleases();
-        Platforms = await PlatformManager.GetAll();
+        //Releases = await ReleaseManager.GetInWorkReleases();
+       // Platforms = await PlatformManager.GetAll();
        
+    // TODO Тестовые данные
+        Releases = new List<ReleaseResponse>()
+        {
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG")
+        };
+    // конец
     }
 
     private void RowClicked(TableRowClickEventArgs<ReleaseResponse> _)

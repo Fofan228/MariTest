@@ -10,6 +10,7 @@ public interface IReleaseManager
     Task<IList<ReleaseResponse>> GetCurrentReleases(CancellationToken token = default);
     Task<IList<ReleaseResponse>> GetPlannedReleases(CancellationToken token = default);
     Task<IList<ReleaseResponse>> GetInWorkReleases(CancellationToken token = default);
+    Task<IList<ReleaseResponse>> GetArchive(CancellationToken token = default);
     Task UpdateRelease(ReleaseResponse model,CancellationToken token = default);
     Task DeleteRelease(Guid id,CancellationToken token = default);
     

@@ -75,15 +75,29 @@
     private string[] AllNamePlatforms { get; set; } 
     
     public async Task ClickOnCreateRelease()
-    { 
-        Platforms = await PlatformManager.GetAll();
-        AllNamePlatforms = Platforms.Select(x => x.PlatformName).ToArray();
+    {
+       // ReleaseManager.Create(ReleaseCreate);
     }
     
     private async Task<IEnumerable<string>> SearchPlatform(string value)
     {
         return  string.IsNullOrEmpty(value) ? AllNamePlatforms
             : AllNamePlatforms.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Platforms = await PlatformManager.GetAll();
+        
+        // TODO Тестовые данные
+            Platforms = new List<PlatformResponce>()
+            {
+                new PlatformResponce("Android", 1, 1, 1),
+                new PlatformResponce("Ios", 1, 1, 1)
+            };
+        // конец
+
+            AllNamePlatforms = Platforms.Select(x => x.PlatformName).ToArray();
     }
 
 }

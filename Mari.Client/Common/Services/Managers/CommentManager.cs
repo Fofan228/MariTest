@@ -1,7 +1,9 @@
 ﻿using MapsterMapper;
 using Mari.Client.Common.Interfaces.Managers;
+using Mari.Contracts.Comments.DeleteRequests;
 using Mari.Contracts.Comments.GetRequests;
 using Mari.Contracts.Comments.PostRequests;
+using Mari.Contracts.Comments.PutRequests;
 using Mari.Contracts.Comments.Responce;
 using Mari.Http.Services;
 
@@ -56,14 +58,14 @@ public class CommentManager : ICommentManager
      {
          var body = _mapper.Map<CommentUpdateRequest.Body>(comment);
          var request = new CommentUpdateRequest(body);
-         var response = await _httpSender.PostAsync(request, token);
+         var response = await _httpSender.PutAsync(request, token);
          if (!response.IsSuccess) throw new NotImplementedException();
      }
      
      public async Task DeleteComments(Guid commnetId,CancellationToken token = default)
      {
          var request = new CommentDeleteRequest(new(commnetId));
-         var response = await _httpSender.PostAsync(request, token);
+         var response = await _httpSender.DeleteAsync(request, token);
          if (!response.IsSuccess) throw new NotImplementedException();
      }
      

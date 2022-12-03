@@ -135,8 +135,27 @@
     
     protected override async Task OnInitializedAsync()
     {
-        Users = await UserManager.GetAll();
-       Platforms = await PlatformManager.GetAll();
+    // Users = await UserManager.GetAll();
+    //   Platforms = await PlatformManager.GetAll();
+        
+        
+    // TODO Тестовые данные
+     Users = new List<UserResponce>()
+        {
+            new UserResponce(0,"Putin","ReleaseManager",new List<string>(){
+                "Android","IOS"},true),
+            
+            new UserResponce(0,"Ахимат","ReleaseManager",new List<string>(){
+                "Android"} ,true)
+        };
+        
+        Platforms = new List<PlatformResponce>()
+        {
+            new PlatformResponce("Android",1,1,1),
+            new PlatformResponce("IOS",1,1,1)
+        };
+    // конец
+
     }
     
     private string GetMultiSelectionText(IList<string> selectedValues)

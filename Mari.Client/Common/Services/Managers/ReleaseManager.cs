@@ -3,8 +3,10 @@ using MapsterMapper;
 using Mari.Client.Common.Interfaces.Managers;
 using Mari.Client.Models.Releases;
 using Mari.Contracts.Releases;
+using Mari.Contracts.Releases.DeleteRequests;
 using Mari.Contracts.Releases.GetRequests;
 using Mari.Contracts.Releases.PostRequests;
+using Mari.Contracts.Releases.PutRequests;
 using Mari.Contracts.Releases.Responce;
 using Mari.Http.Services;
 
@@ -22,7 +24,7 @@ public class ReleaseManager : IReleaseManager
     }
     
     // TODO Тестовые данные
-    private static List<ReleaseResponse> Comments = new List<ReleaseResponse>()
+    private static List<ReleaseResponse> Release = new List<ReleaseResponse>()
     {
         new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
             new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
@@ -80,18 +82,26 @@ public class ReleaseManager : IReleaseManager
         return null;
     }
 
+    public async Task<IList<ReleaseResponse>> GetArchive(CancellationToken token = default)
+    {
+        var request = new ReleaseGetArchive();
+        var response = await _httpSender.GetAsync(request, token);
+        if (!response.IsSuccess) throw new NotImplementedException();
+        return null;
+    }
+
     public async Task UpdateRelease(ReleaseResponse model,CancellationToken token = default)
     {
         var body = _mapper.Map<ReleaseUpdateRequest.Body>(model);
         var request = new ReleaseUpdateRequest(body);
-        var response = await _httpSender.PostAsync(request, token);
+        var response = await _httpSender.PutAsync(request, token);
         if (!response.IsSuccess) throw new NotImplementedException();
     }
 
     public async Task DeleteRelease(Guid id,CancellationToken token = default)
     {
         var request = new ReleaseDeleteRequest(new(id));
-        var response = await _httpSender.PostAsync(request, token);
+        var response = await _httpSender.DeleteAsync(request, token);
         if (!response.IsSuccess) throw new NotImplementedException(); 
     }
 

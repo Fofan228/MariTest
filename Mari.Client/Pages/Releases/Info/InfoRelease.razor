@@ -68,11 +68,8 @@
 
     private bool IsRightDrawerOpened { get; set; } = false;
     private bool openEditingRelease { get; set; } = false;
-
-   // private ReleaseResponse Release { get; set; }
-
-    private ReleaseResponse Release { get; set; } =   new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
-        new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG");
+    
+    private ReleaseResponse Release { get; set; }
 
     public void ClickOnEditingRelease()
     {
@@ -94,6 +91,10 @@
     protected override async Task OnInitializedAsync()
     {
     //    Release = await ReleaseManager.Get();
+
+        //Todo Тестовые данные
+        Release = new ReleaseResponse(Guid.NewGuid(), 1, 1, 1, "Android", "Testing", "http",
+            new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG");
     }
     
 }

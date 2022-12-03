@@ -30,6 +30,7 @@
         <col style="width: 17%;"/>
         <col style="width: 15%;"/>
         <col style="width: 15%;"/>
+        <col>
     </ColGroup>
     <HeaderContent>
         <MudTh>Платформа</MudTh>
@@ -38,6 +39,7 @@
         <MudTh>Статус релиза</MudTh>
         <MudTh>Дата изменения</MudTh>
         <MudTh>Дата завершения</MudTh>
+        <MudTh/>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
@@ -50,6 +52,14 @@
         <MudTd DataLabel="Status">@context.Status</MudTd>
         <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
         <MudTd DataLabel="CompleteDate">@context.CompleteDate.ToString()</MudTd>
+        <MudTd>
+            <div @onclick:stopPropagation="true">
+                <MudTooltip Text="Отправить в работу">
+                    <MudIconButton Class="pa-0" Icon="@Icons.Filled.ScheduleSend"
+                                   Size="@Size.Medium" Color="Color.Primary"/>
+                </MudTooltip>
+            </div>
+        </MudTd>
     </RowTemplate>
     <RowEditingTemplate>
         <MudTd DataLabel="PlatformName">
@@ -83,9 +93,15 @@
         <MudTd DataLabel="CompleteDate">
             <MudDatePicker @bind-Date="@context.CompleteDate" PickerVariant="PickerVariant.Dialog" />
         </MudTd>
+        <MudTd>
+            <MudIconButton Class="pa-0"Icon="@Icons.Filled.ScheduleSend"
+                           Disabled="true" Size="@Size.Medium" Color="Color.Primary"/>
+        </MudTd>
     </RowEditingTemplate>
     <EditButtonContent Context="button">
+    <MudTooltip Text="Изменить">
         <MudIconButton Size="@Size.Medium" Icon="@Icons.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled"/>
+    </MudTooltip>
     </EditButtonContent>
 </MudTable>
 
@@ -100,20 +116,39 @@
     private IList<ReleaseResponse> Releases { get; set; }
     
     private IList<PlatformResponce> Platforms { get; set; }
-    private string[] AllPlatforms { get; set; }
+    private string[] AllNamePlatforms { get; set; }
     
     protected override async Task OnInitializedAsync()
     {
-        Releases = await ReleaseManager.GetPlannedReleases() ;
+        //Releases = await ReleaseManager.GetPlannedReleases() ;
        
+        // TODO Тестовые данные
+        Releases = new List<ReleaseResponse>()
+        {
+            new ReleaseResponse(Guid.NewGuid(), 1, 1, 1, "Android", "Testing", "http",
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+            new ReleaseResponse(Guid.NewGuid(), 1, 1, 1, "Android", "Testing", "http",
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+            new ReleaseResponse(Guid.NewGuid(), 1, 1, 1, "Android", "Testing", "http",
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG")
+        };
+        
+       Platforms = new List<PlatformResponce>()
+        {
+            new PlatformResponce("Android",1,1,1),
+            new PlatformResponce("Ios",1,1,1)
+        };
+    // конец
+
+        AllNamePlatforms = Platforms.Select(x => x.PlatformName).ToArray();
     }
     
     private async Task<IEnumerable<string>> SearchPlatform(string value)
     {
         await Task.Delay(5);
         
-        return string.IsNullOrEmpty(value) ? AllPlatforms
-            : AllPlatforms.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        return string.IsNullOrEmpty(value) ? AllNamePlatforms
+            : AllNamePlatforms.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
     private void RowClicked(TableRowClickEventArgs<ReleaseResponse> _)
