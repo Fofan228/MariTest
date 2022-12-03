@@ -1,4 +1,6 @@
-﻿@inherits LayoutComponentBase
+﻿@using Mari.Client.Models
+@using System.Security.Cryptography.X509Certificates
+@inherits LayoutComponentBase
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -11,9 +13,13 @@
     <MudDrawer @bind-Open="IsDrawerOpened">
         <NavMenu />
     </MudDrawer>
-    <MudMainContent Class="pt-0">
-        @Body
-    </MudMainContent>
+
+   
+    @*<CascadingValue Value="ShowError">*@
+        <MudMainContent Class="pt-0">
+            @Body
+        </MudMainContent>
+      @*</CascadingValue >*@
 </MudLayout>
 
 @code
@@ -24,4 +30,26 @@
     {
         IsDrawerOpened = !IsDrawerOpened;
     }
+    
+    /*[Inject] private IDialogService DialogService { get; set; }
+    
+    public async void ShowError(string title, string message)
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            title, 
+            message, 
+            yesText:"Ok");
+        
+        StateHasChanged();
+    }
+    
+    public async void ShowErrorTest()
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            "title", 
+            "Код ошибки 404, идите нахуй, вы мне тут не нужны  Press F ", 
+            yesText:"Ok");
+        
+        StateHasChanged();
+    }*/
 }

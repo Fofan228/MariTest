@@ -5,7 +5,7 @@ namespace Mari.Client.Common.Interfaces.Managers;
 
 public interface IReleaseManager
 {
-    Task Create(ReleaseFormModel release, CancellationToken token);
+    Task Create(ReleaseCreateModel release, CancellationToken token);
     Task<ReleaseResponse> Get(Guid id,CancellationToken token);
     Task<IEnumerable<ReleaseResponse>> GetCurrentReleases(CancellationToken token);
     Task<IEnumerable<ReleaseResponse>> GetPlannedReleases(CancellationToken token);

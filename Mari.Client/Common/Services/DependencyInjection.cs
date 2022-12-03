@@ -14,6 +14,7 @@ public static class DependencyInjection
         services.AddScoped<IReleaseManager, ReleaseManager>();
         services.AddScoped<IPlatformManager, PlatformManager>();
         services.AddScoped<IUserManager, UserManager>();
+        services.AddScoped<ICommentManager, CommentManager>();
         return services;
     }
 }

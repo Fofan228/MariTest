@@ -35,7 +35,7 @@
     protected override async Task OnInitializedAsync()
     {
         Releases = new List<ReleaseResponse>(await ReleaseManager.Test()) ;
-      //  Releases = new List<ReleaseResponse>(await ReleaseManager.GetCurrentReleases()) ;
+      //  Releases = new List<ReleaseResponse>(await ReleaseManager.()) ;
     }
 
     private void RowClicked(TableRowClickEventArgs<ReleaseResponse> _)

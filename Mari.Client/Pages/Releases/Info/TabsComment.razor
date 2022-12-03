@@ -1,0 +1,76 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using Mari.Client.Models.Comments
+@using Mari.Contracts.Comments.Responce
+@inject ICommentManager CommentManager
+
+    <MudPaper Elevation="0" Class="py-6 mb-10">
+        <MudStack >
+            @foreach (var comment in Comments)
+                {
+                    <MudPaper Class="border-b pl-4 pb-4" Elevation="0">
+                            
+                        <MudPaper Class=" d-flex" Elevation="0">
+                            <MudAvatar Color="Color.Primary">M</MudAvatar>
+                            <MudPaper Class="d-flex align-center pl-4" Elevation="0">
+                                <MudText>@comment.UserName</MudText>
+                            </MudPaper>
+                        </MudPaper>
+
+                        <MudPaper Class="pt-2" Elevation="0">
+                            <MudText>@comment.CreateDate</MudText>
+                        </MudPaper>
+
+                        <MudPaper Class="pt-2" Elevation="0">
+                            <MudText>@comment.Message</MudText>
+                        </MudPaper>
+                    </MudPaper>
+                }
+        </MudStack>
+    </MudPaper>
+
+<MudPaper Elevation="3" Square="true" Class="border-b px-4 py-4 d-flex flex-column sticky" Style="bottom: 0">
+        <MudPaper Class="d-flex" Elevation="0">
+            <MudAvatar Color="Color.Primary">M</MudAvatar>
+            <MudPaper Class="d-flex align-center pl-4" Elevation="0">
+                <MudText>@Name</MudText>
+            </MudPaper>
+        </MudPaper>
+        <MudForm>
+            <MudTextField @bind-Value="@Text" Lines="3" Label="Введите текст" Variant="Variant.Filled" Clearable="true"/>
+            <MudButton Class="mt-2" OnClick="AddEl" Variant="Variant.Filled" Color="Color.Primary">Отправить</MudButton>
+        </MudForm>
+    
+</MudPaper>
+
+
+@code {
+
+    
+    private List<CommentResponse> Comments { get; set; } = new List<CommentResponse>()
+    {
+        new CommentResponse("0000-0000-0000-0000","1" , "Араб", "GG", "15.11.2022",false),
+        new CommentResponse("0000-0000-0000-0000","1" , "Араб", "GG", "15.11.2022",false),
+        new CommentResponse("0000-0000-0000-0000","1" , "Араб", "GG", "15.11.2022",false),
+        new CommentResponse("0000-0000-0000-0000","1" , "Араб","GG", "15.11.2022",false),
+        new CommentResponse("0000-0000-0000-0000","1" , "Араб", "GG", "15.11.2022",false)
+    };
+
+    private CommentCreateModel newCommnet { get; set; } = new CommentCreateModel(); 
+
+    protected override async Task OnInitializedAsync()
+    {
+     //Comments = await CommentManager.GetAll();
+    /*var commnets = await Client.GetFromJsonAsync<IEnumerable<CommentAnswer>>(Routes.Server.CommentController + "all");
+        Comments = commnets.ToList();*/
+    }
+
+    string Name { get; set; } = "Ахимат";
+    string Text { get; set; }
+
+    private void AddEl()
+    {
+      //CommentManager.Create(newCommnet); 
+    }
+
+
+}

@@ -1,7 +1,10 @@
 ﻿@using Contracts.Releases
 @using Mari.Client.Models.Releases
+@using Mari.Contracts.Platforms.Responces
 @using Mari.Contracts.Releases.Responce
+@using Microsoft.Extensions.Options
 @inject IReleaseManager ReleaseManager
+@inject IPlatformManager PlatformManager
 
 <MudPaper Class="" Elevation="0">
     <MudCard Class="border card-create-release">
@@ -15,7 +18,7 @@
             <MudCardContent Class="pt-0">
                 
                 
-                <MudDatePicker @bind-Date="ReleaseCreate.CompleteDate" @ref="DatePicker"  Label="Дата Завершения">
+                <MudDatePicker @bind-Date="ReleaseCreate.CompleteDate" @ref="DatePicker"   Label="Дата Завершения">
                     <PickerActions>
                         <MudButton Class="mr-auto align-self-start" OnClick="@(() => DatePicker.Clear())">Clear</MudButton>
                         <MudButton OnClick="@(() => DatePicker.Close(false))">Cancel</MudButton>
@@ -23,9 +26,17 @@
                     </PickerActions>
                 </MudDatePicker>
                 
-                <MudTextField @bind-Value="ReleaseCreate.PlatformName"  Immediate="true" Label="Платформа" />
+                <MudAutocomplete ResetValueOnEmptyText="false" CoerceText="false" CoerceValue="true" T="string"
+                                  @bind-Value="ReleaseCreate.PlatformName" SearchFunc="@SearchPlatform" Label="Платформа"/>
 
-                <MudTextField @bind-Value="ReleaseCreate.Version"  Immediate="true" Label="Версия" />
+                <MudContainer Class="flex-row d-flex align-end px-0 flex-grow-1 gap-1">
+                    <MudText >Версия: </MudText>
+                    <MudTextField @bind-Value="ReleaseCreate.Major"  Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true"/>
+                    <MudText >.</MudText>
+                    <MudTextField @bind-Value="ReleaseCreate.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true"/>
+                    <MudText>.</MudText>
+                    <MudTextField @bind-Value="ReleaseCreate.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true"/>
+                </MudContainer>
 
                 <MudTextField @bind-Value="ReleaseCreate.MainIssue"  Immediate="true"
                     Label="Ссылка на релиз задачу" />
@@ -47,8 +58,12 @@
 
 
 @code {
+
+
     // Пикер для даты 
     private MudDatePicker DatePicker;
+// Выбраный тип версии 
+    private MudChip SelectedChip;
     
     [Parameter]
     public Action OnAddRelease { get; set;  } 
@@ -56,14 +71,26 @@
     [Parameter]
     public Action SwitchDimming { get; set; } = () => { };
 
-    private ReleaseFormModel ReleaseCreate { get; set; } = new ReleaseFormModel();
+    private ReleaseCreateModel ReleaseCreate { get; set; } = new ReleaseCreateModel();
 
+    private List<PlatformResponce> Platforms { get; set; } /*= new List<PlatformResponce>()
+    {
+        new PlatformResponce("Android", 1, 1, 1),
+        new PlatformResponce("Ios", 1, 2, 1),
+    };*/
+
+    private string[] AllNamePlatforms { get; set; } //= { "Android", "Ios" };
     
-    List<ReleaseResponse> list = new List<ReleaseResponse>();
     public async Task ClickOnCreateRelease()
     { 
-
+       // Platforms = await PlatformManager.GetAll();
+//        AllNamePlatforms = Platforms.Select(x => x.PlatformName).ToArray();
+    }
+    
+    private async Task<IEnumerable<string>> SearchPlatform(string value)
+    {
+        return  string.IsNullOrEmpty(value) ? AllNamePlatforms
+            : AllNamePlatforms.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
-    
 }

@@ -36,6 +36,5 @@ public class UserManager : IUserManager
         var request = new UserUpdateRequest(body);
         var response = await _httpSender.PostAsync(request, token);
         if (!response.IsSuccess) throw new NotImplementedException();
-
     }
 }

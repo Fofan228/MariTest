@@ -14,7 +14,6 @@ public class UserResponce
         Notifications = notifications.ToList();
         IsActive = isActive;
     }
-
     public int Id { get; set; }
     public string Username { get; set; } 
     public string Role { get; set; }

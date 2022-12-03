@@ -1,5 +1,5 @@
 ﻿@using Contracts.Releases
-@using Mari.Client.Common.Enums
+@using Mari.Client.Models.Enums
 @using Mari.Client.Models.Releases
 @using Mari.Contracts.Releases.Responce
 @inject IReleaseManager ReleaseManager
@@ -22,7 +22,7 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
-        <MudTd DataLabel="Version">@context.Version</MudTd>
+        <MudTd DataLabel="Version">@($"{context.Major.ToString()}.{context.Minor.ToString()}.{context.Patch.ToString()}")</MudTd>
         <MudTd DataLabel="ReleaseTask">@context.MainIssue</MudTd>
         <MudTd DataLabel="Status">@context.Status</MudTd>
         <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
@@ -33,7 +33,7 @@
             @context.PlatformName
         </MudTd>
         <MudTd DataLabel="Version">
-            @context.Version
+            @($"{context.Major.ToString()}.{context.Minor.ToString()}.{context.Patch.ToString()}")
         </MudTd>
         <MudTd DataLabel="ReleaseTask">
             @context.MainIssue
@@ -92,12 +92,14 @@
         elementBeforeEdit = new ReleaseResponse
         (
              ((ReleaseResponse)release).ReleaseId,
-             ((ReleaseResponse)release).Version,
+             ((ReleaseResponse)release).Major,
+             ((ReleaseResponse)release).Minor,
+             ((ReleaseResponse)release).Patch,
              ((ReleaseResponse)release).PlatformName,
-            ((ReleaseResponse)release).Status,
+             ((ReleaseResponse)release).Status,
              ((ReleaseResponse)release).MainIssue,
              ((ReleaseResponse)release).CompleteDate,
-            ((ReleaseResponse)release).UpdateDate,
+             ((ReleaseResponse)release).UpdateDate,
              ((ReleaseResponse)release).Description
         );
         StateHasChanged();
@@ -105,7 +107,9 @@
 
     private void ResetItemToOriginalValues(object release)
     {
-        ((ReleaseResponse)release).Version = elementBeforeEdit.Version;
+        ((ReleaseResponse)release).Major = elementBeforeEdit.Major;
+        ((ReleaseResponse)release).Minor = elementBeforeEdit.Minor;
+        ((ReleaseResponse)release).Patch = elementBeforeEdit.Patch;
         ((ReleaseResponse)release).PlatformName = elementBeforeEdit.PlatformName;
         ((ReleaseResponse)release).Status = elementBeforeEdit.Status;
         ((ReleaseResponse)release).MainIssue = elementBeforeEdit.MainIssue;

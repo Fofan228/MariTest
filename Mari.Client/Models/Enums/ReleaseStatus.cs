@@ -1,4 +1,4 @@
-namespace Mari.Client.Common.Enums;
+namespace Mari.Client.Models.Enums;
 
 public enum ReleaseStatus
 {

@@ -1,5 +1,5 @@
 ﻿@using Contracts.Releases
-@using Mari.Client.Common.Enums
+@using Mari.Client.Models.Enums
 @using Mari.Client.Models.Releases
 @using Mari.Contracts.Platforms.Responces
 @using Mari.Contracts.Releases.Responce
@@ -19,11 +19,11 @@
         <MudTh>Релизная задача</MudTh>
         <MudTh>Статус релиза</MudTh>
         <MudTh>Дата изменения</MudTh>
-        <MudTh>Дата завершения</MudTh>a
+        <MudTh>Дата завершения</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
-        <MudTd DataLabel="Version">@context.Version</MudTd>
+        <MudTd DataLabel="Version">@($"{context.Major.ToString()}.{context.Minor.ToString()}.{context.Patch.ToString()}")</MudTd>
         <MudTd DataLabel="ReleaseTask">@context.MainIssue</MudTd>
         <MudTd DataLabel="Status">@context.Status</MudTd>
         <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
@@ -41,14 +41,15 @@
            </div>
         </MudTd>
         <MudTd DataLabel="Version">
-            @*<div @onclick:stopPropagation="true" @onclick:preventDefault="true">
-                <MudSelect @bind-Value="@context.Version" Required>
-                    @foreach (PlatformResponce item in Platforms)
-                    {
-                        <MudSelectItem Value="@item.Version">@item.Version</MudSelectItem>
-                    }
-                </MudSelect>
-            </div>*@
+            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
+                <MudContainer  Class="flex-row d-flex align-end px-0 flex-grow-1 gap-1" >
+                    <MudTextField @bind-Value="@context.Major" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true" Label="Версия" /> 
+                    <MudText >.</MudText>
+                    <MudTextField @bind-Value="@context.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  /> 
+                    <MudText>.</MudText>
+                    <MudTextField @bind-Value="@context.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  /> 
+                </MudContainer>
+            </div>
         </MudTd>
         <MudTd DataLabel="ReleaseTask">
             <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
@@ -89,7 +90,11 @@
 
     private List<ReleaseResponse> Releases { get; set; }
     
-    private List<PlatformResponce> Platforms { get; set; }
+    private List<PlatformResponce> Platforms { get; set; }/*= new List<PlatformResponce>()
+    {
+        new PlatformResponce("Android", 1, 1, 1),
+        new PlatformResponce("Ios", 1, 2, 1),
+    };*/
     private string[] Statuses { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -111,7 +116,9 @@
         elementBeforeEdit = new ReleaseResponse
             (
             ((ReleaseResponse)release).ReleaseId,
-            ((ReleaseResponse)release).Version,
+            ((ReleaseResponse)release).Major,
+            ((ReleaseResponse)release).Minor,
+            ((ReleaseResponse)release).Patch,
             ((ReleaseResponse)release).PlatformName,
             ((ReleaseResponse)release).Status,
             ((ReleaseResponse)release).MainIssue,
@@ -124,7 +131,9 @@
 
     private void ResetItemToOriginalValues(object release)
     {
-        ((ReleaseResponse)release).Version = elementBeforeEdit.Version;
+        ((ReleaseResponse)release).Major = elementBeforeEdit.Major;
+        ((ReleaseResponse)release).Minor = elementBeforeEdit.Minor;
+        ((ReleaseResponse)release).Patch = elementBeforeEdit.Patch;
         ((ReleaseResponse)release).PlatformName = elementBeforeEdit.PlatformName;
         ((ReleaseResponse)release).Status = elementBeforeEdit.Status;
         ((ReleaseResponse)release).MainIssue = elementBeforeEdit.MainIssue;

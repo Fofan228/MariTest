@@ -1,6 +1,5 @@
 ﻿using System.Xml.Linq;
 using MapsterMapper;
-using Mari.Client.Common.Enums;
 using Mari.Client.Common.Interfaces.Managers;
 using Mari.Client.Models.Releases;
 using Mari.Contracts.Releases;
@@ -22,7 +21,7 @@ public class ReleaseManager : IReleaseManager
         _mapper = mapper;
     }
 
-    public async Task Create(ReleaseFormModel model, CancellationToken token)
+    public async Task Create(ReleaseCreateModel model, CancellationToken token)
     {
         var body = _mapper.Map<ReleaseCreateRequest.Body>(model);
         var request = new ReleaseCreateRequest(body);
@@ -80,14 +79,20 @@ public class ReleaseManager : IReleaseManager
     {
         List<ReleaseResponse> Releases = new List<ReleaseResponse>()
         {
-            new ReleaseResponse("0000-0000-0000-0000", "1.1.1", "Android", "Testing", "http",
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
                 new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
-            new ReleaseResponse("0000-0000-0000-0001", "1.1.1", "Android", "Testing", "http",
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
                 new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
-            new ReleaseResponse("0000-0000-0000-0002", "1.1.1", "Android", "Testing", "http",
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
                 new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
-            new ReleaseResponse("0000-0000-0000-0003", "1.1.1", "Android", "Testing", "http",
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG")
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
         };
 
         return Releases;
