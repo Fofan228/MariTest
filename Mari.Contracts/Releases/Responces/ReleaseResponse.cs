@@ -2,7 +2,7 @@
 
 public class ReleaseResponse 
 {
-    public ReleaseResponse(Guid? releaseId, uint? major, uint? minor, uint? patch, string? platformName, string? status,
+    public ReleaseResponse(Guid? releaseId, int? major, int? minor, int? patch, string? platformName, string? status,
         string? mainIssue, DateTime? completeDate, DateTime? updateDate, string? description)
     {
         ReleaseId = releaseId;
@@ -18,9 +18,9 @@ public class ReleaseResponse
     }
 
     public Guid? ReleaseId { get; set; }
-    public uint? Major { get;  set; }
-    public uint? Minor { get;  set; }
-    public uint? Patch { get;  set; }
+    public int? Major { get;  set; }
+    public int? Minor { get;  set; }
+    public int? Patch { get; set; }
     public string? PlatformName { get; set; } = null!;
     public string? Status { get; set; } = null!;
     public string? MainIssue { get; set; } = null!;

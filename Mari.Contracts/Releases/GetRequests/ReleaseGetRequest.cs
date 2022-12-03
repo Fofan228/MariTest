@@ -15,7 +15,7 @@ public class ReleaseGetRequest : GetRequest<Route, EmptyQuery, ReleaseResponse>
     
     public ReleaseGetRequest(
         Route route)
-        : base(route, null)
+        : base(route, new())
     {
     }
     

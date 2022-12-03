@@ -12,7 +12,6 @@
 </MudDrawerHeader>
 <MudAvatar Image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhR6hdp4YiDTfruKhi_ncPiKHMAfeW6oEreB1_L4mF&s"
     Class="mx-auto" Style="width: 5em; height: 5em;" Color="Color.Primary">
-    @* <MudIcon Icon="@Icons.Custom.Brands.MudBlazor"/> *@
 </MudAvatar>
 <MudPaper Elevation="0">
     <MudContainer Class="py-4" MaxWidth="MaxWidth.Medium">
@@ -26,21 +25,14 @@
     </MudContainer>
 </MudPaper>
 <MudNavMenu Dense="true" Class="mx-auto" Margin="Margin.Normal">
-    <MudNavLink Icon="@Icons.Filled.AccountCircle" IconColor="Color.Primary" Href="#">
-        <MudText>Личный кабинет</MudText>
-    </MudNavLink>
+
     <MudNavLink Icon="@Icons.Filled.BuildCircle" IconColor="Color.Primary" Href="@ClientRoutes.Pages.Settings">
-        <MudText>Настройки</MudText>
+        <MudText>Настройка пользователей</MudText>
     </MudNavLink>
 
     <MudNavLink Icon="@Icons.Filled.SupportAgent" IconColor="Color.Primary" Href="@ClientRoutes.Pages.Archive">
         <MudText>Архив</MudText>
     </MudNavLink>
-    <MudNavLink Icon="@Icons.Filled.Info" IconColor="Color.Primary" Href="#">
-        <MudText>Информация</MudText>
-    </MudNavLink>
-    <MudNavLink Icon="@Icons.Filled.SupportAgent" IconColor="Color.Primary" Href="#">
-        <MudText>Тех. поддержка</MudText>
-    </MudNavLink>
+
 </MudNavMenu>
 

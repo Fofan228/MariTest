@@ -77,3 +77,10 @@
     background: #D1D1D1;
     z-index: 10;
 }
+
+.tabs-in-info .mud-tabs-panels {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

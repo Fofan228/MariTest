@@ -2,7 +2,7 @@
 
 public class PlatformResponce
 {
-    public PlatformResponce(string platformName, uint major, uint minor, uint patch)
+    public PlatformResponce(string platformName, int major, int minor, int patch)
     {
         PlatformName = platformName;
         Major = major;
@@ -11,8 +11,8 @@ public class PlatformResponce
     }
 
     public string PlatformName { get;  set; }
-    public uint Major { get;  set; }
-    public uint Minor { get;  set; }
-    public uint Patch { get;  set; }
+    public int Major { get;  set; }
+    public int Minor { get;  set; }
+    public int Patch { get;  set; }
 
 }

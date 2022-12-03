@@ -20,8 +20,27 @@ public class ReleaseManager : IReleaseManager
         _httpSender = httpSender;
         _mapper = mapper;
     }
+    
+    // TODO Тестовые данные
+    private static List<ReleaseResponse> Comments = new List<ReleaseResponse>()
+    {
+        new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+            new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+        new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+            new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+        new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+            new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+        new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+            new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+        new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+            new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+        new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+            new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+        new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
+            new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
+    };
 
-    public async Task Create(ReleaseCreateModel model, CancellationToken token)
+    public async Task Create(ReleaseCreateModel model, CancellationToken token = default)
     {
         var body = _mapper.Map<ReleaseCreateRequest.Body>(model);
         var request = new ReleaseCreateRequest(body);
@@ -29,7 +48,7 @@ public class ReleaseManager : IReleaseManager
         if (!response.IsSuccess) throw new NotImplementedException();
     }
 
-    public async Task<ReleaseResponse> Get(Guid id,CancellationToken token)
+    public async Task<ReleaseResponse> Get(Guid id,CancellationToken token = default)
     {
         var request = new ReleaseGetRequest(new(id));
         var response = await _httpSender.GetAsync(request, token);
@@ -37,7 +56,7 @@ public class ReleaseManager : IReleaseManager
         return null;
     }
 
-    public async Task<IEnumerable<ReleaseResponse>> GetCurrentReleases(CancellationToken token)
+    public async Task<IList<ReleaseResponse>> GetCurrentReleases(CancellationToken token = default)
     {
         var request = new ReleaseGetCurrentRequest();
         var response = await _httpSender.GetAsync(request, token);
@@ -45,7 +64,7 @@ public class ReleaseManager : IReleaseManager
         return null;
     }
 
-    public async Task<IEnumerable<ReleaseResponse>> GetPlannedReleases(CancellationToken token)
+    public async Task<IList<ReleaseResponse>> GetPlannedReleases(CancellationToken token = default)
     {
         var request = new ReleaseGetPlannedRequest();
         var response = await _httpSender.GetAsync(request, token);
@@ -53,7 +72,7 @@ public class ReleaseManager : IReleaseManager
         return null;
     }
 
-    public async Task<IEnumerable<ReleaseResponse>> GetInWorkReleases(CancellationToken token)
+    public async Task<IList<ReleaseResponse>> GetInWorkReleases(CancellationToken token = default)
     {
         var request = new ReleaseGetInWorkRequest();
         var response = await _httpSender.GetAsync(request, token);
@@ -61,7 +80,7 @@ public class ReleaseManager : IReleaseManager
         return null;
     }
 
-    public async Task UpdateRelease(ReleaseResponse model,CancellationToken token)
+    public async Task UpdateRelease(ReleaseResponse model,CancellationToken token = default)
     {
         var body = _mapper.Map<ReleaseUpdateRequest.Body>(model);
         var request = new ReleaseUpdateRequest(body);
@@ -69,32 +88,11 @@ public class ReleaseManager : IReleaseManager
         if (!response.IsSuccess) throw new NotImplementedException();
     }
 
-    public async Task DeleteRelease(Guid id,CancellationToken token)
+    public async Task DeleteRelease(Guid id,CancellationToken token = default)
     {
         var request = new ReleaseDeleteRequest(new(id));
         var response = await _httpSender.PostAsync(request, token);
         if (!response.IsSuccess) throw new NotImplementedException(); 
     }
-    public async Task<IEnumerable<ReleaseResponse>> Test()
-    {
-        List<ReleaseResponse> Releases = new List<ReleaseResponse>()
-        {
-            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
-            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
-            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
-            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
-            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
-            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
-            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", "http",
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "GG"),
-        };
 
-        return Releases;
-    }
 }

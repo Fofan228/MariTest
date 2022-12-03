@@ -2,9 +2,11 @@
 
 public class CommentResponse 
 {
-    public CommentResponse(string commentId, string userId, string userName, string message, string createDate, bool isEdit)
+    public CommentResponse(Guid? commentId, Guid? releaseId, int? userId, 
+        string userName, string message, string createDate, bool isEdit)
     {
         CommentId = commentId;
+        ReleaseId = releaseId;
         UserId = userId;
         UserName = userName;
         Message = message;
@@ -12,8 +14,9 @@ public class CommentResponse
         IsEdit = isEdit;
     }
 
-    public string CommentId { get;  set; } = null!;
-    public string UserId { get;  set; } = null!;
+    public Guid? CommentId { get;  set; } = null!;
+    public Guid? ReleaseId { get;  set; } = null!;
+    public int? UserId { get;  set; } = null!;
     public string UserName { get; set; } = null!;
     public string Message { get; set; } = null!;
     public string CreateDate { get;  set; } = null!;

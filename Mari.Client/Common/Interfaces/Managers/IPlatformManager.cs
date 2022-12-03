@@ -8,5 +8,5 @@ namespace Mari.Client.Common.Interfaces.Managers;
 
 public interface IPlatformManager
 {
-    Task<IEnumerable<PlatformResponce>> GetAll(CancellationToken token);
+    Task<IList<PlatformResponce>> GetAll(CancellationToken token = default);
 }

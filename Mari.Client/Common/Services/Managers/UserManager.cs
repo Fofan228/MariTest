@@ -22,7 +22,17 @@ public class UserManager : IUserManager
         _mapper = mapper;
     }
     
-    public async Task<IEnumerable<UserResponce>> GetAll(CancellationToken token)
+    // TODO Тестовые данные
+    private  List<UserResponce> Users = new List<UserResponce>()
+    {
+        new UserResponce(0,"Putin","ReleaseManager",new List<string>(){
+            "Android","IOS"},true),
+        
+        new UserResponce(0,"Ахимат","ReleaseManager",new List<string>(){
+            "Android"} ,true)
+    };
+    
+    public async Task<IList<UserResponce>> GetAll(CancellationToken token = default)
     {
         var request = new UsersGetAllRequests();
         var response = await _httpSender.GetAsync(request, token);
@@ -30,7 +40,7 @@ public class UserManager : IUserManager
         return null;
     }
 
-    public async Task Update(UserResponce model, CancellationToken token)
+    public async Task Update(UserResponce model, CancellationToken token = default)
     {
         var body = _mapper.Map<UserUpdateRequest.Body>(model);
         var request = new UserUpdateRequest(body);

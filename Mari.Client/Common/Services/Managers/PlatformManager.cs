@@ -21,7 +21,14 @@ public class PlatformManager : IPlatformManager
         _mapper = mapper;
     }
     
-    public async Task<IEnumerable<PlatformResponce>> GetAll(CancellationToken token)
+    // TODO Тестовые данные
+    private static List<PlatformResponce> Comments = new List<PlatformResponce>()
+    {
+        new PlatformResponce("Android",1,1,1),
+        new PlatformResponce("Ios",1,1,1)
+    };
+    
+    public async Task<IList<PlatformResponce>> GetAll(CancellationToken token = default)
     {
         var request = new PlatformGetAllRequest();
         var response = await _httpSender.GetAsync(request, token);

@@ -1,5 +1,6 @@
 ﻿@using Contracts.Releases
 @using Mari.Client.Models.Enums
+@using Mari.Contracts.Platforms.Responces
 @using Mari.Contracts.Users.Responce
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
@@ -51,11 +52,11 @@
            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
                <MudSelect T="string" MultiSelection="true" SelectAll="true" SelectAllText="Включены все уведомления" 
                            @bind-Value="value" @bind-SelectedValues="Selected"
-                          MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))" Label="Notifications"
+                          MultiSelectionTextFunc="@(new Func<IList<string>, string>(GetMultiSelectionText))" Label="Notifications"
                           AdornmentIcon="@Icons.Material.Filled.Search">
                    @foreach (var item in Platforms)
                    {
-                    <MudSelectItem T="string" Value="@item">@item</MudSelectItem>
+                    <MudSelectItem T="string" Value="@item.PlatformName">@item.PlatformName</MudSelectItem>
                    }
                </MudSelect>
            </div>
@@ -125,25 +126,20 @@
     }
 
 
-    private List<UserResponce> Users { get; set; } /*= new List<UserResponce>() {   
-        new UserResponce(0,"Putin","ReleaseManager",new List<string>(){
-        "Android","IOS"},true),
-        
-        new UserResponce(0,"Ахимат","ReleaseManager",new List<string>(){
-            "Android"} ,true)};*/
+    private IList<UserResponce> Users { get; set; } = new List<UserResponce>();
     
     private string value { get; set; } = "Ничего не выбрано";
-    private List<string> Platforms { get; set; } /*= new List<string>(){"Android","IOS"};*/
+    private IList<PlatformResponce> Platforms { get; set; } = new List<PlatformResponce>();
     private IEnumerable<string> Selected { get; set; } = new List<string>() {  };
     
     
     protected override async Task OnInitializedAsync()
     {
-       // Users = await UserManager.GetAll();
-       // Platforms = await PlatformManager.GetAll();
+        Users = await UserManager.GetAll();
+       Platforms = await PlatformManager.GetAll();
     }
     
-    private string GetMultiSelectionText(List<string> selectedValues)
+    private string GetMultiSelectionText(IList<string> selectedValues)
     {
         return $"Уведомления приходят по {selectedValues.Count} {(selectedValues.Count == 1 ? "платформе" : "платформам")}";
     }

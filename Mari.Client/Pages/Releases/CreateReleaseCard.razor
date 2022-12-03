@@ -62,9 +62,7 @@
 
     // Пикер для даты 
     private MudDatePicker DatePicker;
-// Выбраный тип версии 
-    private MudChip SelectedChip;
-    
+
     [Parameter]
     public Action OnAddRelease { get; set;  } 
     
@@ -72,19 +70,14 @@
     public Action SwitchDimming { get; set; } = () => { };
 
     private ReleaseCreateModel ReleaseCreate { get; set; } = new ReleaseCreateModel();
+    private IList<PlatformResponce> Platforms { get; set; } 
 
-    private List<PlatformResponce> Platforms { get; set; } /*= new List<PlatformResponce>()
-    {
-        new PlatformResponce("Android", 1, 1, 1),
-        new PlatformResponce("Ios", 1, 2, 1),
-    };*/
-
-    private string[] AllNamePlatforms { get; set; } //= { "Android", "Ios" };
+    private string[] AllNamePlatforms { get; set; } 
     
     public async Task ClickOnCreateRelease()
     { 
-       // Platforms = await PlatformManager.GetAll();
-//        AllNamePlatforms = Platforms.Select(x => x.PlatformName).ToArray();
+        Platforms = await PlatformManager.GetAll();
+        AllNamePlatforms = Platforms.Select(x => x.PlatformName).ToArray();
     }
     
     private async Task<IEnumerable<string>> SearchPlatform(string value)

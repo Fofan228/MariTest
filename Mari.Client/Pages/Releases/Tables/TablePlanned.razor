@@ -1,18 +1,36 @@
-﻿@using Contracts.Releases
-@using Mari.Client.Models.Enums
+﻿
+@using Contracts.Releases
 @using Mari.Client.Models.Releases
+@using System.Text
+@using Mari.Client.Models.Enums
 @using Mari.Contracts.Platforms.Responces
 @using Mari.Contracts.Releases.Responce
 @using Microsoft.AspNetCore.Components
-@inject IPlatformManager PlatformManager
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
+@inject IPlatformManager PlatformManager
 @inject ISnackbar Snackbar
 
-<MudTable Class="mt-8" CanCancelEdit="true" RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues"
-    RowEditCommit="ItemHasBeenCommitted" CommitEditTooltip="Сохранить"
-    OnCommitEditClick="@(() => Snackbar.Add("Изменения сохранены"))" EditTrigger="@editTrigger" Items="@Releases"
-    Hover="true" T="ReleaseResponse" OnRowClick="RowClicked">
+<MudTable Items="@Releases" Hover="true" T="ReleaseResponse" Class="mt-8" CanCancelEdit="true"
+          RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted"
+          CommitEditTooltip="Сохранить" CancelEditTooltip="Отменить"
+          EditTrigger="@editTrigger" Filter="new Func<ReleaseResponse,bool>(FilterFunc)"
+          OnCommitEditClick="@(() => { Snackbar.Add("Изменения сохранены"); _clickOnRow = true; })"
+          OnCancelEditClick="@(() => { Snackbar.Add("Отменено"); _clickOnRow = true; })"
+          OnPreviewEditClick="@(() => _clickOnRow = false)" OnRowClick="RowClicked"> 
+    <ToolBarContent>
+        <MudSpacer />
+        <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, версии, релизной задаче, статусу и датам"
+                      Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" />
+    </ToolBarContent>
+    <ColGroup>
+        <col style="width: 15%;"/>
+        <col style="width: 10%;"/>
+        <col style="width: 25%;"/>
+        <col style="width: 17%;"/>
+        <col style="width: 15%;"/>
+        <col style="width: 15%;"/>
+    </ColGroup>
     <HeaderContent>
         <MudTh>Платформа</MudTh>
         <MudTh>Версия</MudTh>
@@ -24,91 +42,86 @@
     <RowTemplate>
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
         <MudTd DataLabel="Version">@($"{context.Major.ToString()}.{context.Minor.ToString()}.{context.Patch.ToString()}")</MudTd>
-        <MudTd DataLabel="ReleaseTask">@context.MainIssue</MudTd>
+        <MudTd DataLabel="ReleaseTask">
+            <div @onclick:stopPropagation="true">
+                <MudLink Href="@context.MainIssue">@context.MainIssue</MudLink>
+            </div>
+        </MudTd>
         <MudTd DataLabel="Status">@context.Status</MudTd>
         <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
         <MudTd DataLabel="CompleteDate">@context.CompleteDate.ToString()</MudTd>
     </RowTemplate>
     <RowEditingTemplate>
         <MudTd DataLabel="PlatformName">
-           <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
-               <MudSelect @bind-Value="@context.PlatformName" Required>
-                   @foreach (PlatformResponce item in Platforms)
-                   {
-                       <MudSelectItem Value="@item.PlatformName">@item.PlatformName</MudSelectItem>
-                   }
-               </MudSelect>
-           </div>
+            <MudAutocomplete T="string" @bind-Value="@context.PlatformName" SearchFunc="@SearchPlatform" CoerceValue="true"/>
         </MudTd>
         <MudTd DataLabel="Version">
-            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
-                <MudContainer  Class="flex-row d-flex align-end px-0 flex-grow-1 gap-1" >
-                    <MudTextField @bind-Value="@context.Major" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true" Label="Версия" /> 
-                    <MudText >.</MudText>
-                    <MudTextField @bind-Value="@context.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  /> 
-                    <MudText>.</MudText>
-                    <MudTextField @bind-Value="@context.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  /> 
-                </MudContainer>
-            </div>
+
+            <MudContainer  Class="flex-row d-flex align-end px-0 flex-grow-1 gap-1" >
+                <MudTextField @bind-Value="@context.Major" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true" Label="Версия" /> 
+                <MudText >.</MudText>
+                <MudTextField @bind-Value="@context.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  /> 
+                <MudText>.</MudText>
+                <MudTextField @bind-Value="@context.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  /> 
+            </MudContainer>
+
         </MudTd>
         <MudTd DataLabel="ReleaseTask">
-            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
-                <MudTextField @bind-Value="@context.MainIssue" Required />
-            </div>
+            <MudTextField @bind-Value="@context.MainIssue" Required/>
         </MudTd>
         <MudTd DataLabel="Status">
-           <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
-              <MudSelect @bind-Value="@context.Status" Required>
-                  @foreach (var item in Enum.GetValues(typeof(ReleaseStatus)))
-                  {
-                      <MudSelectItem Value="@Convert.ToString(item)">@item</MudSelectItem>
-                  }
-              </MudSelect>
-          </div>
+            <MudSelect @bind-Value="@context.Status" Required>
+                @foreach (var item in Enum.GetValues(typeof(ReleaseStatus)))
+                {
+                    <MudSelectItem Value="@Convert.ToString(item)">@item</MudSelectItem>
+                }
+            </MudSelect>
         </MudTd>
         <MudTd DataLabel="UpdateDate">
             @context.UpdateDate.ToString()
         </MudTd>
         <MudTd DataLabel="CompleteDate">
-            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
-                <MudDatePicker Class="date-picker" @bind-Date="@context.CompleteDate" ErrorText="Неверная дата"
-                    Editable="true" Mask="@(new DateMask("dd/MM/yyyy"))" DateFormat="dd/MM/yyyy">
-                </MudDatePicker>
-            </div>
+            <MudDatePicker @bind-Date="@context.CompleteDate" PickerVariant="PickerVariant.Dialog" />
         </MudTd>
     </RowEditingTemplate>
     <EditButtonContent Context="button">
-        <MudIconButton Size="@Size.Small" Icon="@Icons.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction"
-            Disabled="@button.ButtonDisabled" />
+        <MudIconButton Size="@Size.Medium" Icon="@Icons.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled"/>
     </EditButtonContent>
 </MudTable>
 
 @code
 {
+    bool _clickOnRow = true;
+    MudDatePicker _picker;
+    private string _searchString = "";
     private TableEditTrigger editTrigger = TableEditTrigger.EditButton;
     private ReleaseResponse elementBeforeEdit;
-
-    private List<ReleaseResponse> Releases { get; set; }
     
-    private List<PlatformResponce> Platforms { get; set; }/*= new List<PlatformResponce>()
-    {
-        new PlatformResponce("Android", 1, 1, 1),
-        new PlatformResponce("Ios", 1, 2, 1),
-    };*/
-    private string[] Statuses { get; set; }
-
+    private IList<ReleaseResponse> Releases { get; set; }
+    
+    private IList<PlatformResponce> Platforms { get; set; }
+    private string[] AllPlatforms { get; set; }
+    
     protected override async Task OnInitializedAsync()
     {
-        Releases = new List<ReleaseResponse>(await ReleaseManager.Test()) ;
-     //   Releases = new List<ReleaseResponse>(await ReleaseManager.GetPlannedReleases()) ;
-        
-        // Platforms = await PlatformManager.GetAll();
+        Releases = await ReleaseManager.GetPlannedReleases() ;
+       
     }
-
+    
+    private async Task<IEnumerable<string>> SearchPlatform(string value)
+    {
+        await Task.Delay(5);
+        
+        return string.IsNullOrEmpty(value) ? AllPlatforms
+            : AllPlatforms.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
 
     private void RowClicked(TableRowClickEventArgs<ReleaseResponse> _)
     {
-        NavigationManager.NavigateTo("/info");
+        if (_clickOnRow)
+        {
+            NavigationManager.NavigateTo("/info");
+        }
     }
 
     private void BackupItem(object release)
@@ -140,9 +153,22 @@
         ((ReleaseResponse)release).CompleteDate = elementBeforeEdit.CompleteDate;
         StateHasChanged();
     }
-
+    
     private void ItemHasBeenCommitted(object release)
     {
         StateHasChanged();
+    }
+    
+    private bool FilterFunc(ReleaseResponse answer)
+    {
+        if (string.IsNullOrEmpty(_searchString))
+            return true;
+        if (answer.PlatformName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (answer.MainIssue.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (answer.Status.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(_searchString);
     }
 }

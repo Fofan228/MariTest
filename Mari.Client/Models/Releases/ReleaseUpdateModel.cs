@@ -2,7 +2,7 @@
 
 public class ReleaseUpdateModel
 {
-    public ReleaseUpdateModel(Guid? releaseId, uint? major, uint? minor, uint? patch, string? platformName,
+    public ReleaseUpdateModel(Guid? releaseId, int? major, int? minor, int? patch, string? platformName,
         string? status, string? mainIssue, DateTime? completeDate, string? description)
     {
         ReleaseId = releaseId;
@@ -17,9 +17,9 @@ public class ReleaseUpdateModel
     }
 
     public Guid? ReleaseId { get; set; } = null!;
-    public uint? Major { get;  set; }
-    public uint? Minor { get;  set; }
-    public uint? Patch { get;  set; }
+    public int? Major { get;  set; }
+    public int? Minor { get;  set; }
+    public int? Patch { get;  set; }
     public string? PlatformName { get; set; } = null!;
     public string? Status { get; set; } = null!;
     public string? MainIssue { get; set; } = null!;

@@ -47,9 +47,9 @@
             </MudContainer>
             
             
-            <MudDrawer @bind-Open="IsRightDrawerOpened" Width="400px" Anchor="Anchor.Right">
-                        <MenuRelease ReleaseStatus="@Release.Status" ClickOnEditingRelease="ClickOnEditingRelease"/>
-                    </MudDrawer>
+            <MudDrawer @bind-Open="IsRightDrawerOpened" Width="400px" Height="100%" Anchor="Anchor.Right">
+                <MenuRelease ReleaseStatus="@Release.Status" ClickOnEditingRelease="ClickOnEditingRelease"/>
+            </MudDrawer>
         </MudContainer>
         
     </MudContainer>

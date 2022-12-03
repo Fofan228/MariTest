@@ -12,13 +12,23 @@ public class CommentManager : ICommentManager
      private readonly HttpSender _httpSender;
      private readonly IMapper _mapper;
 
+     // TODO Тестовые данные
+     private static List<CommentResponse> Comments = new List<CommentResponse>()
+     {
+         new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
+         new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
+         new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
+         new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
+
+     };
+
      public CommentManager(HttpSender httpSender, IMapper mapper)
      {
          _httpSender = httpSender;
          _mapper = mapper;
      }
      
-     public async Task Create(CommentResponse comment, CancellationToken token)
+     public async Task Create(CommentResponse comment, CancellationToken token = default)
      {
          var body = _mapper.Map<CommentCreateRequest.Body>(comment);
          var request = new CommentCreateRequest(body);
@@ -26,15 +36,23 @@ public class CommentManager : ICommentManager
          if (!response.IsSuccess) throw new NotImplementedException();
      }
 
-     public async Task<IEnumerable<CommentResponse>> GetAll(Guid releaseId,CancellationToken token)
+     public async Task<IList<CommentResponse>> GetAllUserComment(Guid releaseId,CancellationToken token = default)
      {
-         var request = new CommentGetAllRequest(new(releaseId));
+         var request = new CommentUserGetAllRequest(new(releaseId));
          var response = await _httpSender.GetAsync(request, token);
          if (!response.IsSuccess) throw new NotImplementedException();
          return null;
      }
 
-     public async Task UpdateComments(CommentResponse comment,CancellationToken token)
+     public async Task<IList<CommentResponse>> GetAllSystemComment(Guid releaseId, CancellationToken token = default)
+     {
+         var request = new CommentUserGetAllRequest(new(releaseId));
+         var response = await _httpSender.GetAsync(request, token);
+         if (!response.IsSuccess) throw new NotImplementedException();
+         return null;
+     }
+
+     public async Task UpdateComments(CommentResponse comment,CancellationToken token = default)
      {
          var body = _mapper.Map<CommentUpdateRequest.Body>(comment);
          var request = new CommentUpdateRequest(body);
@@ -42,7 +60,7 @@ public class CommentManager : ICommentManager
          if (!response.IsSuccess) throw new NotImplementedException();
      }
      
-     public async Task DeleteComments(Guid commnetId,CancellationToken token)
+     public async Task DeleteComments(Guid commnetId,CancellationToken token = default)
      {
          var request = new CommentDeleteRequest(new(commnetId));
          var response = await _httpSender.PostAsync(request, token);

@@ -11,11 +11,11 @@ namespace Mari.Contracts.Platforms.GetRequests;
 public class PlatformGetAllRequest : GetRequest<EmptyRoute, EmptyQuery, IEnumerable<PlatformResponce>>
 {
 
-    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Platform}";
+    public const string ConstRouteTemplate = ServerRoutes.Controllers.Platform;
     public override string RouteTemplate => ConstRouteTemplate;
     
     public PlatformGetAllRequest()
-        : base(null, null)
+        : base(new(), new())
     {
     }
 }
