@@ -6,7 +6,7 @@ namespace Mari.Client.Models.Releases;
 
 public class ReleaseModel
 {
-    public ReleaseModel(Guid id, int major, int minor, int patch, string platformName, string releaseStatus,
+    public ReleaseModel(Guid id, int? major, int? minor, int? patch, string platformName, string releaseStatus,
         DateTime? completeDate, DateTime? updateDate, string mainIssue, string description)
     {
         Id = id;
@@ -22,9 +22,9 @@ public class ReleaseModel
     }
 
     public Guid Id { get; set; }
-    public int Major { get; set; }
-    public int Minor { get; set; }
-    public int Patch { get; set; }
+    public int? Major { get; set; }
+    public int? Minor { get; set; }
+    public int? Patch { get; set; }
     public string PlatformName { get; set; }
     public string ReleaseStatus { get; set; }
     public DateTime? CompleteDate { get; set; }

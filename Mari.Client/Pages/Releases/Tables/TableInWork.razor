@@ -106,10 +106,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //Releases = await ReleaseManager.GetInWorkReleases();
-       // Platforms = await PlatformManager.GetAll();
+        Releases = await ReleaseManager.GetInWorkReleases();
+        Platforms = await ReleaseManager.GetAllPlatforms();
        
-    // TODO Тестовые данные
+    /*// TODO Тестовые данные
         Releases = new List<ReleaseModel>()
         {
             new ReleaseModel(Guid.NewGuid(), 1,1,1, "Android", "Testing", 
@@ -119,7 +119,7 @@
             new ReleaseModel(Guid.NewGuid(), 1,1,1, "Android", "Testing", 
                 new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "http","GG")
         };
-    // конец
+    // конец*/
     }
 
     private void RowClicked(TableRowClickEventArgs<ReleaseModel> _)

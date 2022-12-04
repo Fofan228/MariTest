@@ -2,11 +2,11 @@ namespace Mari.Client.Models.Enums;
 
 public enum ReleaseStatus
 {
-    Planning,
+   // Planning,
     Developing,
     Testing,
     MarketModeration,
     InPublicationProcess,
-    Complete,
+  //  Complete,
     Paused
 }

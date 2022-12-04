@@ -79,12 +79,7 @@
             <MudTextField @bind-Value="@context.MainIssue" Required/>
         </MudTd>
         <MudTd DataLabel="Status">
-            <MudSelect @bind-Value="@context.ReleaseStatus" Required>
-                @foreach (var item in Enum.GetValues(typeof(ReleaseStatus)))
-                {
-                    <MudSelectItem Value="@Convert.ToString(item)">@item</MudSelectItem>
-                }
-            </MudSelect>
+            @context.ReleaseStatus
         </MudTd>
         <MudTd DataLabel="UpdateDate">
             @context.UpdateDate.ToString()
@@ -104,11 +99,39 @@
     </EditButtonContent>
 </MudTable>
 
-
+@if (IsDimming)
+{
+    <MudPaper Class="paper-create-release" Elevation="0">
+        <CreateReleaseCard  SwitchDimming="Switch" SwitchDimmingAdd="SwitchDimmingAdd" />
+    </MudPaper>
+}
 
 
 @code
 {
+    [Parameter]
+    public bool IsDimming { get; set; }
+
+    [Parameter]
+    public Action SwitchDimming { get; set; }
+
+    private void Switch()
+    {
+        SwitchDimming();
+        StateHasChanged();
+    }
+
+    private void SwitchDimmingAdd()
+    {
+        SwitchDimming();
+        Platforms = ReleaseManager.GetAllPlatforms().Result;
+        if(Platforms is not null)
+            AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
+        StateHasChanged();
+    }
+    
+    
+    
     bool _clickOnRow = true;
     MudDatePicker _picker;
     private string _searchString = "";
@@ -122,9 +145,10 @@
     
     protected override async Task OnInitializedAsync()
     {
-        //Releases = await ReleaseManager.GetPlannedReleases() ;
-       
-        // TODO Тестовые данные
+        Releases = await ReleaseManager.GetPlannedReleases() ;
+        Platforms = await ReleaseManager.GetAllPlatforms();
+        
+    /*// TODO Тестовые данные
         Releases = new List<ReleaseModel>()
         {
             new ReleaseModel(Guid.NewGuid(), 1, 1, 1, "Android", "Testing", 
@@ -140,9 +164,10 @@
             new PlatformResponse("Android",1,1,1),
             new PlatformResponse("Ios",1,1,1)
         };
-    // конец
+    // конец*/
 
-        AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
+        if(Platforms is not null)
+            AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
     }
     
     private async Task<IEnumerable<string>> SearchPlatform(string value)
