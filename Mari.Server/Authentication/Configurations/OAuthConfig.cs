@@ -24,6 +24,7 @@ public static class OAuthConfig
         options.CallbackPath = new PathString(ServerRoutes.OAuthCallbackPath);
         options.UserInformationEndpoint = oauthSettings.UserInformationEndpoint;
         options.SaveTokens = true;
+        foreach (var scope in oauthSettings.Scopes) options.Scope.Add(scope);
         options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, oauthSettings.IdJsonKey);
         options.ClaimActions.MapJsonKey(ClaimTypes.Name, oauthSettings.NameJsonKey);
         options.Events = new OAuthEvents
