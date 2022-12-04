@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace Mari.Server.Controllers.Common;
 
 [ApiController]
-[MariAuthorizeFilter]
 public class ApiController : ControllerBase
 {
     protected ActionResult Problem(List<Error> errors)
