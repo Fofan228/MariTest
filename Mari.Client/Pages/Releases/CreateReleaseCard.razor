@@ -79,12 +79,21 @@
     {
         Platforms = null;
         AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
+        // ReleaseManager.Create(ReleaseCreate);
     }
 
     private async Task<IEnumerable<string>> SearchPlatform(string value)
     {
         return string.IsNullOrEmpty(value) ? AllNamePlatforms
         : AllNamePlatforms.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Platforms = await PlatformManager.GetAll();
+
+        // TODO Тестовые данные
+        // конец
     }
 
 }
