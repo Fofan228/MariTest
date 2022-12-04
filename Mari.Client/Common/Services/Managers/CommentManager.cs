@@ -4,7 +4,7 @@ using Mari.Contracts.Comments.DeleteRequests;
 using Mari.Contracts.Comments.GetRequests;
 using Mari.Contracts.Comments.PostRequests;
 using Mari.Contracts.Comments.PutRequests;
-using Mari.Contracts.Comments.Responce;
+using Mari.Contracts.Comments.Responses;
 using Mari.Http.Services;
 
 namespace Mari.Client.Common.Services.Managers;

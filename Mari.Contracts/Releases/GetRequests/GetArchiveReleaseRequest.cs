@@ -9,12 +9,12 @@ using Mari.Http.Requests;
 
 namespace Mari.Contracts.Releases.GetRequests;
 
-public class ReleaseGetArchiveRequest : GetRequest<EmptyRoute, EmptyQuery, IEnumerable<ReleaseResponse>>
+public class GetArchiveReleaseRequest : GetRequest<EmptyRoute, EmptyQuery, IEnumerable<ReleaseResponse>>
 {
     public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/archive";
     public override string RouteTemplate => ConstRouteTemplate;
 
-    public ReleaseGetArchiveRequest()
+    public GetArchiveReleaseRequest()
         : base(new(), new())
     {
     }

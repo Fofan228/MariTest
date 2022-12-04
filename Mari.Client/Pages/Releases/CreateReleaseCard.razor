@@ -6,7 +6,7 @@
 
 <MudPaper Class="" Elevation="0">
     <MudCard Class="border card-create-release">
-
+              
         <MudForm Model="@ReleaseCreate">
             <MudCardActions Class="pb-0">
                 <!-- TODO доделать OnClick -->
@@ -14,43 +14,40 @@
             </MudCardActions>
 
             <MudCardContent Class="pt-0">
-
-
-                <MudDatePicker @bind-Date="ReleaseCreate.CompleteDate" @ref="DatePicker" Label="Дата Завершения">
+                
+                
+                <MudDatePicker @bind-Date="ReleaseCreate.CompleteDate" @ref="DatePicker"   Label="Дата Завершения">
                     <PickerActions>
-                        <MudButton Class="mr-auto align-self-start" OnClick="@(() => DatePicker.Clear())">Clear
-                        </MudButton>
+                        <MudButton Class="mr-auto align-self-start" OnClick="@(() => DatePicker.Clear())">Clear</MudButton>
                         <MudButton OnClick="@(() => DatePicker.Close(false))">Cancel</MudButton>
                         <MudButton Color="Color.Primary" OnClick="@(() => DatePicker.Close())">Ok</MudButton>
                     </PickerActions>
                 </MudDatePicker>
-
+                
                 <MudAutocomplete ResetValueOnEmptyText="false" CoerceText="false" CoerceValue="true" T="string"
-                    @bind-Value="ReleaseCreate.PlatformName" SearchFunc="@SearchPlatform" Label="Платформа" />
+                                  @bind-Value="ReleaseCreate.PlatformName" SearchFunc="@SearchPlatform" Label="Платформа"/>
 
                 <MudContainer Class="flex-row d-flex align-end px-0 flex-grow-1 gap-1">
-                    <MudText>Версия: </MudText>
-                    <MudTextField @bind-Value="ReleaseCreate.Major" Class="flex-none" Style="max-width: 28px"
-                        Variant="Variant.Text" MaxLength="2" Immediate="true" />
+                    <MudText >Версия: </MudText>
+                    <MudTextField @bind-Value="ReleaseCreate.Major"  Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true"/>
+                    <MudText >.</MudText>
+                    <MudTextField @bind-Value="ReleaseCreate.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true"/>
                     <MudText>.</MudText>
-                    <MudTextField @bind-Value="ReleaseCreate.Minor" Class="flex-none" Style="max-width: 28px"
-                        Variant="Variant.Text" MaxLength="2" Immediate="true" />
-                    <MudText>.</MudText>
-                    <MudTextField @bind-Value="ReleaseCreate.Patch" Class="flex-none" Style="max-width: 28px"
-                        Variant="Variant.Text" MaxLength="2" Immediate="true" />
+                    <MudTextField @bind-Value="ReleaseCreate.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true"/>
                 </MudContainer>
 
-                <MudTextField @bind-Value="ReleaseCreate.MainIssue" Immediate="true" Label="Ссылка на релиз задачу" />
+                <MudTextField @bind-Value="ReleaseCreate.MainIssue"  Immediate="true"
+                    Label="Ссылка на релиз задачу" />
 
-                <MudTextField @bind-Value="ReleaseCreate.Description" Immediate="true" Variant="Variant.Filled"
-                    Lines="5" Label="Информация" />
+                <MudTextField @bind-Value="ReleaseCreate.Description" Immediate="true"
+                    Variant="Variant.Filled" Lines="5" Label="Информация" />
 
             </MudCardContent>
 
             <MudCardActions>
                 <!-- TODO доделать OnClick -->
                 <MudButton OnClick="ClickOnCreateRelease" Variant="Variant.Filled" Color="Color.Primary"
-                    Class="mx-auto">Добавить</MudButton>
+                           Class="mx-auto">Добавить</MudButton>
             </MudCardActions>
         </MudForm>
     </MudCard>
@@ -61,39 +58,44 @@
 @code {
 
 
-    // Пикер для даты
+    // Пикер для даты 
     private MudDatePicker DatePicker;
 
     [Parameter]
-    public Action OnAddRelease { get; set; }
-
+    public Action OnAddRelease { get; set;  } 
+    
     [Parameter]
     public Action SwitchDimming { get; set; } = () => { };
 
     private ReleaseCreateModel ReleaseCreate { get; set; } = new ReleaseCreateModel();
-    private IList<PlatformResponse> Platforms { get; set; }
+    private IList<PlatformResponse> Platforms { get; set; } 
 
-    private string[] AllNamePlatforms { get; set; }
-
+    private string[] AllNamePlatforms { get; set; } 
+    
     public async Task ClickOnCreateRelease()
     {
-        Platforms = null;
-        AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
-        // ReleaseManager.Create(ReleaseCreate);
+       // ReleaseManager.Create(ReleaseCreate);
     }
-
+    
     private async Task<IEnumerable<string>> SearchPlatform(string value)
     {
-        return string.IsNullOrEmpty(value) ? AllNamePlatforms
-        : AllNamePlatforms.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+        return  string.IsNullOrEmpty(value) ? AllNamePlatforms
+            : AllNamePlatforms.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
 
     protected override async Task OnInitializedAsync()
     {
         // Platforms = await PlatformManager.GetAll();
-
+        
         // TODO Тестовые данные
+            Platforms = new List<PlatformResponse>()
+            {
+                new PlatformResponse("Android", 1, 1, 1),
+                new PlatformResponse("Ios", 1, 1, 1)
+            };
         // конец
+
+            AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
     }
 
 }

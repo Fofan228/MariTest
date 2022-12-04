@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Mari.Contracts.Comments.Responce;
+using Mari.Contracts.Comments.Responses;
 using Mari.Contracts.Common.Routes.Server;
 using Mari.Contracts.Releases.GetRequests;
 using Mari.Contracts.Releases.Responses;
