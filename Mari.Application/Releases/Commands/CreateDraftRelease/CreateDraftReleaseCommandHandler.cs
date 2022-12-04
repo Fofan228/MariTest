@@ -10,10 +10,14 @@ namespace Mari.Application.Releases.Commands.CreateDraftRelease;
 internal class CreateDraftReleaseCommandHandler : IRequestHandler<CreateDraftReleaseCommand, ErrorOr<Created>>
 {
     private readonly IReleaseRepository _releaseRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateDraftReleaseCommandHandler(IReleaseRepository releaseRepository)
+    public CreateDraftReleaseCommandHandler(
+        IReleaseRepository releaseRepository,
+        IUnitOfWork unitOfWork)
     {
         _releaseRepository = releaseRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Created>> Handle(CreateDraftReleaseCommand request, CancellationToken cancellationToken)
@@ -40,6 +44,7 @@ internal class CreateDraftReleaseCommandHandler : IRequestHandler<CreateDraftRel
         if (errors.Count > 0) return errors;
 
         await _releaseRepository.Insert(releaseCreateError.Value, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         return Result.Created;
     }
 }
