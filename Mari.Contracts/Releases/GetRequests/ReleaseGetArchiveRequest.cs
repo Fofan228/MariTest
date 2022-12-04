@@ -3,18 +3,18 @@
 // See the LICENSE file in the project root for more information.
 
 using Mari.Contracts.Common.Routes.Server;
-using Mari.Contracts.Releases.Responce;
+using Mari.Contracts.Releases.Responses;
 using Mari.Http.Models;
 using Mari.Http.Requests;
 
 namespace Mari.Contracts.Releases.GetRequests;
 
-public class ReleaseGetArchive : GetRequest<EmptyRoute, EmptyQuery, IEnumerable<ReleaseResponse>>
+public class ReleaseGetArchiveRequest : GetRequest<EmptyRoute, EmptyQuery, IEnumerable<ReleaseResponse>>
 {
     public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/archive";
     public override string RouteTemplate => ConstRouteTemplate;
 
-    public ReleaseGetArchive()
+    public ReleaseGetArchiveRequest()
         : base(new(), new())
     {
     }

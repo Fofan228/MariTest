@@ -77,7 +77,7 @@ public class ReleaseManager : IReleaseManager
 
     public async Task<IList<ReleaseResponse>> GetArchive(CancellationToken token = default)
     {
-        var request = new ReleaseGetArchive();
+        var request = new ReleaseGetArchiveRequest();
         var response = await _httpSender.GetAsync(request, token);
         if (!response.IsSuccess) throw new NotImplementedException();
         return null;
