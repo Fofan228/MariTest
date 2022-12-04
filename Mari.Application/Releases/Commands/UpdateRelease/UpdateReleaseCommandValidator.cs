@@ -14,7 +14,6 @@ public class UpdateReleaseCommandValidator : AbstractValidator<UpdateReleaseComm
         IValidator<ReleaseDescription> releaseDescriptionValidator,
         IValidator<Issue> releaseIssueValidator,
         IValidator<PlatformName> releasePlatformNameValidator,
-        IValidator<ReleaseStatus> releaseStatusValidator,
         IValidator<ReleaseVersion> releaseVersionValidator)
     {
         RuleFor(command => command.Id).SetValidator(releaseIdValidator);
@@ -22,7 +21,7 @@ public class UpdateReleaseCommandValidator : AbstractValidator<UpdateReleaseComm
         RuleFor(command => command.Description).SetValidator(releaseDescriptionValidator);
         RuleFor(command => command.MainIssue).SetValidator(releaseIssueValidator);
         RuleFor(command => command.PlatformName).SetValidator(releasePlatformNameValidator);
-        RuleFor(command => command.Status).SetValidator(releaseStatusValidator);
+        RuleFor(command => command.Status).IsInEnum();
         RuleFor(command => command.Version).SetValidator(releaseVersionValidator);
     }
 }
