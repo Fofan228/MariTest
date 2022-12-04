@@ -4,11 +4,11 @@
     <MudPaper Elevation="0" Width="100%">
         <MudTabs Class="pa-0 tabs-in-info"  Rounded="true" Style="height: 100%">
             <MudTabPanel Class="text-size-6" Text="Комментарии" >
-                <TabsComment/>
+                <TabsComment ReleaseId="@Id"/>
             </MudTabPanel>
             
             <MudTabPanel Class="text-size-6" Text="История релиза">
-                <TabsHist/>
+                <TabsHist ReleaseId="@Id"/>
             </MudTabPanel>
         </MudTabs >
     </MudPaper>
@@ -21,5 +21,5 @@
     
     
     [Parameter]
-    public string ReleaseStatus { get; set; } = null!;
+    public string Id { get; set; } = null!;
 }

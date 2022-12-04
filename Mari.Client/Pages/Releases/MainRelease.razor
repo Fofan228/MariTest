@@ -13,26 +13,12 @@
 
     <MudTabPanel Class="tabsItem" Text="Запланированный релиз">
         <MudMainContent Class="main-content ml-0">
-            <PlannedReleases SwitchDimming="SwitchDimming" />
+            <PlannedReleases  />
         </MudMainContent>
-        @if (IsDimming)
-        {
-            <MudPaper Class="paper-create-release" Elevation="0">
-                <CreateReleaseCard SwitchDimming="SwitchDimming" />
-            </MudPaper>
-        }
-
     </MudTabPanel>
 </MudTabs>
 
 @code {
-    private bool openCreateRelease { get; set; }
-    private bool IsDimming { get; set; }
 
-    private void SwitchDimming()
-    {
-        openCreateRelease = !openCreateRelease;
-        IsDimming = !IsDimming;
-    }
 
 }

@@ -5,26 +5,17 @@
         <MudButton Variant="Variant.Filled" OnClick="SwitchDimming" Color="Color.Primary"> Создать новый релиз
         </MudButton>
     </MudPaper>
-    <TablePlanned />
+    <TablePlanned IsDimming="IsDimming" SwitchDimming="SwitchDimming"/>
 </MudPaper>
 
 
 @code {
+  
+    private bool IsDimming { get; set; }
 
-    [Parameter]
-    public Action SwitchDimming { get; set; } = () => { };
-
-    /*MudDatePicker DatePicker;
-    OrderModel Model = new OrderModel();
-
-    public class OrderModel
+    private void SwitchDimming()
     {
-        public DateTime? Date { get; set; }
-
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string CCNumber { get; set; }
-        public string Information { get; set; }
-
-    }*/
+        IsDimming = !IsDimming;
+        StateHasChanged();
+    }
 }

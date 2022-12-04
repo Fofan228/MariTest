@@ -26,14 +26,15 @@
 
 @code {
 
-
+    [Parameter]
+    public string ReleaseId { get; set; } = null!;
     
     List<CommentResponse> SystemComments { get; set; }
 
 
     protected override async Task OnInitializedAsync()
     {
-        //SystemComments = await CommentManager.GetAllSystemComment();
+        //SystemComments = await CommentManager.GetAllSystemComment(Guid.Parse(Id));
         
     // TODO Тестовые данные
         SystemComments = new List<CommentResponse>()

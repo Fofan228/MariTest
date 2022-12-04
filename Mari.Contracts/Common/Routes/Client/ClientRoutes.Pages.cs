@@ -8,6 +8,6 @@ public static partial class ClientRoutes
         public const string TokenHandler = $"{Prefix}/token";
         public const string Archive = $"{Prefix}/archive";
         public const string Settings = $"{Prefix}/setting";
-        public const string ReleasesInfo = $"{Prefix}/info";
+        public const string ReleasesInfo = $"{Prefix}/info/{{Id}}";
     }
 }

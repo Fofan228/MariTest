@@ -4,6 +4,7 @@
 @using Mari.Contracts.Releases.Responses
 @using Microsoft.AspNetCore.Components
 @inject HttpClient Client
+@inject IReleaseManager ReleaseManager
 
 
 <MudPaper Class="paper-edit-release" Elevation="0">
@@ -12,7 +13,7 @@
         <MudForm Model="@EditRelease">
             <MudCardActions Class="pb-0">
                 <!-- TODO доделать OnClick -->
-                <MudIconButton Class="ml-auto" OnClick="ClickOnEditingRelease" Icon="@Icons.Filled.Close" />
+                <MudIconButton Class="ml-auto" OnClick="SwitchEditRelease" Icon="@Icons.Filled.Close" />
             </MudCardActions>
 
             <MudCardContent Class="pt-0">
@@ -38,7 +39,7 @@
                     </MudContainer>
                
                 
-                <MudTextField @bind-Value="EditRelease.Status"   Immediate="true" Label="Статус" /> <!-- TODO только для релиз-менеджера -->
+                <MudTextField @bind-Value="EditRelease.ReleaseStatus"   Immediate="true" Label="Статус" /> <!-- TODO только для релиз-менеджера -->
 
                 <MudTextField @bind-Value="EditRelease.MainIssue"   Immediate="true"
                               Label="Ссылка на релиз задачу" />
@@ -49,12 +50,13 @@
             </MudCardContent>
 
             <MudCardActions>
-                <!-- TODO доделать OnClick -->
                 <MudButton OnClick="ClickOnEditRelease" Variant="Variant.Filled" Color="Color.Primary"
-                    Class="mx-auto">Добавить</MudButton>
+                           Class="mx-auto">Добавить</MudButton>
             </MudCardActions>
         </MudForm>
-
+        <MudText>@SwitchEditRelease</MudText>
+        <MudText>@GetUpdateUser</MudText>
+        <MudText>@Release</MudText>
     </MudCard>
 </MudPaper>
 
@@ -62,14 +64,17 @@
 @code {
     private List<PlatformResponse> Platforms { get; set; }
     private string[] AllNamePlatforms { get; set; }
-	
-	[Parameter]
-	public Action ClickOnEditingRelease { get; set; } = () => { };
 
     [Parameter]
-    public ReleaseResponse Release { get; set;  }
+    public Action SwitchEditRelease { get; set; } = () => { };
     
-    public ReleaseUpdateModel EditRelease { get; set; }
+    [Parameter]
+    public Action GetUpdateUser { get; set; } = () => { };
+        
+    [Parameter]
+    public ReleaseModel Release { get; set;  }
+    
+    public ReleaseModel EditRelease { get; set; }
     
 	MudDatePicker DatePicker;
 
@@ -88,24 +93,20 @@
         
         AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
         
-        EditRelease = new ReleaseUpdateModel(
+        EditRelease = new ReleaseModel(
             Release.Id,
             Release.Major,
             Release.Minor,
             Release.Patch,
             Release.PlatformName,
-            Release.Status,
-            Release.MainIssue,
+            Release.ReleaseStatus,
             Release.CompleteDate,
+            Release.UpdateDate,
+            Release.MainIssue,
             Release.Description
             );
     }
-    
-    public async Task ClickOnEditRelease()
-    {
-        ClickOnEditingRelease(); 
-    }
-    
+
     private async Task<IEnumerable<string>> SearchPlatform(string value)
     {
         await Task.Delay(5);
@@ -113,4 +114,12 @@
         return string.IsNullOrEmpty(value) ? AllNamePlatforms
             : AllNamePlatforms.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
+    
+    public async void ClickOnEditRelease()
+    {
+        await ReleaseManager.UpdateRelease(EditRelease);
+        GetUpdateUser();
+        StateHasChanged();
+    }
+
 }

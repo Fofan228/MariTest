@@ -37,13 +37,15 @@
     </MudPaper>
     <MudForm>
         <MudTextField @bind-Value="@Text" Lines="3" Label="Введите текст" Variant="Variant.Filled" Clearable="true"/>
-        <MudButton Class="mt-2" OnClick="AddEl" Variant="Variant.Filled" Color="Color.Primary">Отправить</MudButton>
+        <MudButton Class="mt-2" OnClick="AddComment" Variant="Variant.Filled" Color="Color.Primary">Отправить</MudButton>
     </MudForm>
 </MudPaper>
 
 
 @code {
 
+    [Parameter]
+    public string ReleaseId { get; set; } = null!;
 
     private List<CommentResponse> UserComments { get; set; } = new List<CommentResponse>();
 
@@ -51,7 +53,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-       // Comments = await CommentManager.GetAllUserComment();
+       // Comments = await CommentManager.GetAllUserComment(Guid.Parse(Id));
         
     // TODO Тестовые данные
      UserComments = new List<CommentResponse>()
@@ -67,9 +69,11 @@
     string Name { get; set; } = "Ахимат";
     string Text { get; set; }
 
-    private void AddEl()
+    private void AddComment()
     {
      // CommentManager.Post(newCommnet); 
+    // Comments = await CommentManager.GetAllUserComment(Guid.Parse(Id));
+        StateHasChanged();
     }
 }
 
