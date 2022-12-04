@@ -92,6 +92,8 @@ public abstract class Repository<TAggregateRoot, TId> : IRepository<TAggregateRo
 
     protected IQueryable<TAggregateRoot> AddRange(IQueryable<TAggregateRoot> query, Range range)
     {
+        if (range.Equals(Range.All) || range.Equals(default)) return query;
+
         if (range.Start.Value > range.End.Value)
         {
             throw new ArgumentOutOfRangeException(

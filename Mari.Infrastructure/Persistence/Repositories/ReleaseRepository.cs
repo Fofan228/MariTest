@@ -18,8 +18,8 @@ public class ReleaseRepository : Repository<Release, ReleaseId>, IReleaseReposit
     public IAsyncEnumerable<Platform> GetAllPlatforms()
     {
         return Set.AsNoTracking()
-            .DistinctBy(r => r.Platform)
             .Select(r => r.Platform)
+            .Distinct()
             .AsAsyncEnumerable();
     }
 
