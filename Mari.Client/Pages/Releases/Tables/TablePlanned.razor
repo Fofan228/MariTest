@@ -13,7 +13,8 @@
           RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted"
           CommitEditTooltip="Сохранить" CancelEditTooltip="Отменить"
           EditTrigger="@editTrigger" Filter="new Func<ReleaseModel,bool>(FilterFunc)"
-          OnCommitEditClick="@(() => { Snackbar.Add("Изменения сохранены"); _clickOnRow = true; })"
+          OnCommitEditClick="@(() => { Snackbar.Add("Изменения сохранены");
+                                         _clickOnRow = true; })"
           OnCancelEditClick="@(() => { Snackbar.Add("Отменено"); _clickOnRow = true; })"
           OnPreviewEditClick="@(() => _clickOnRow = false)" OnRowClick="RowClicked"> 
     <ToolBarContent>
@@ -47,7 +48,7 @@
                 <MudLink Href="@context.MainIssue">@context.MainIssue</MudLink>
             </div>
         </MudTd>
-        <MudTd DataLabel="Status">@context.Status</MudTd>
+        <MudTd DataLabel="Status">@context.ReleaseStatus</MudTd>
         <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
         <MudTd DataLabel="CompleteDate">@context.CompleteDate.ToString()</MudTd>
         <MudTd>
@@ -78,7 +79,7 @@
             <MudTextField @bind-Value="@context.MainIssue" Required/>
         </MudTd>
         <MudTd DataLabel="Status">
-            <MudSelect @bind-Value="@context.Status" Required>
+            <MudSelect @bind-Value="@context.ReleaseStatus" Required>
                 @foreach (var item in Enum.GetValues(typeof(ReleaseStatus)))
                 {
                     <MudSelectItem Value="@Convert.ToString(item)">@item</MudSelectItem>
@@ -97,11 +98,14 @@
         </MudTd>
     </RowEditingTemplate>
     <EditButtonContent Context="button">
-    <MudTooltip Text="Изменить">
-        <MudIconButton Size="@Size.Medium" Icon="@Icons.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled"/>
-    </MudTooltip>
+        <MudTooltip Text="Изменить">
+            <MudIconButton Size="@Size.Medium" Icon="@Icons.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled"/>
+        </MudTooltip>
     </EditButtonContent>
 </MudTable>
+
+
+
 
 @code
 {
@@ -157,6 +161,7 @@
         }
     }
 
+    
     private void BackupItem(object release)
     {
         elementBeforeEdit = new ReleaseModel
@@ -166,7 +171,7 @@
             ((ReleaseModel)release).Minor,
             ((ReleaseModel)release).Patch,
             ((ReleaseModel)release).PlatformName,
-            ((ReleaseModel)release).Status,
+            ((ReleaseModel)release).ReleaseStatus,
             ((ReleaseModel)release).CompleteDate,
             ((ReleaseModel)release).UpdateDate,
             ((ReleaseModel)release).MainIssue,
@@ -181,14 +186,17 @@
         ((ReleaseModel)release).Minor = elementBeforeEdit.Minor;
         ((ReleaseModel)release).Patch = elementBeforeEdit.Patch;
         ((ReleaseModel)release).PlatformName = elementBeforeEdit.PlatformName;
-        ((ReleaseModel)release).Status = elementBeforeEdit.Status;
+        ((ReleaseModel)release).ReleaseStatus = elementBeforeEdit.ReleaseStatus;
         ((ReleaseModel)release).MainIssue = elementBeforeEdit.MainIssue;
         ((ReleaseModel)release).CompleteDate = elementBeforeEdit.CompleteDate;
         StateHasChanged();
     }
     
-    private void ItemHasBeenCommitted(object release)
+    private async void ItemHasBeenCommitted(object release)
     {
+        await ReleaseManager.UpdateRelease((ReleaseModel)release);
+        Releases = await ReleaseManager.GetPlannedReleases() ;
+        
         StateHasChanged();
     }
     
@@ -200,7 +208,7 @@
             return true;
         if (answer.MainIssue.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-        if (answer.Status.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+        if (answer.ReleaseStatus.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(_searchString);
     }

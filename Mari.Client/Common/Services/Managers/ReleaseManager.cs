@@ -1,4 +1,5 @@
 ﻿using System.Xml.Linq;
+using Mapster;
 using MapsterMapper;
 using Mari.Client.Common.Interfaces.Managers;
 using Mari.Client.Models.Releases;
@@ -32,7 +33,7 @@ public class ReleaseManager : IReleaseManager
         if (!response.IsSuccess) throw new NotImplementedException();
     }
 
-    public async Task<ReleaseModel> Get(Guid id,CancellationToken token = default)
+    public async Task<ReleaseModel> Get(Guid iReleaseResponsed,CancellationToken token = default)
     {
         /*var request = new GetR(new(id));
         var response = await _httpSender.GetAsync(request, token);
@@ -76,9 +77,9 @@ public class ReleaseManager : IReleaseManager
     public async Task UpdateRelease(ReleaseModel model,CancellationToken token = default)
     {
         var body = _mapper.Map<ReleaseUpdateRequest.Body>(model);
-        var request = new ReleaseUpdateRequest(body);
+        /*var request = new ReleaseUpdateRequest(body);
         var response = await _httpSender.PutAsync(request, token);
-        if (!response.IsSuccess) throw new NotImplementedException();
+        if (!response.IsSuccess) throw new NotImplementedException();*/
     }
 
     public async Task DeleteRelease(Guid id,CancellationToken token = default)

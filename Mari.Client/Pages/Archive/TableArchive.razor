@@ -59,7 +59,9 @@
 
     private void RowClicked(TableRowClickEventArgs<ReleaseResponse> _)
     {
-        NavigationManager.NavigateTo("/info");
+    
+        NavigationManager.NavigateTo($"/info/{_.Item.Id}");
+        
     }
     
     private bool FilterFunc(ReleaseResponse answer)

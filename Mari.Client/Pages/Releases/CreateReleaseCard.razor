@@ -46,7 +46,7 @@
 
             <MudCardActions>
                 <!-- TODO доделать OnClick -->
-                <MudButton OnClick="ClickOnCreateRelease" Variant="Variant.Filled" Color="Color.Primary"
+                <MudButton @onclick="ClickOnCreateRelease" Variant="Variant.Filled" Color="Color.Primary"
                            Class="mx-auto">Добавить</MudButton>
             </MudCardActions>
         </MudForm>
@@ -65,16 +65,19 @@
     public Action OnAddRelease { get; set;  } 
     
     [Parameter]
-    public Action SwitchDimming { get; set; } = () => { };
-
+    public Action SwitchDimming { get; set; }
+    
+  
     private ReleaseCreateModel ReleaseCreate { get; set; } = new ReleaseCreateModel();
     private IList<PlatformResponse> Platforms { get; set; } 
 
     private string[] AllNamePlatforms { get; set; } 
     
-    public async Task ClickOnCreateRelease()
+    public async  Task ClickOnCreateRelease()
     {
-       // ReleaseManager.Create(ReleaseCreate);
+      //  await ReleaseManager.Create(ReleaseCreate);
+
+        SwitchDimming();
     }
     
     private async Task<IEnumerable<string>> SearchPlatform(string value)
@@ -82,9 +85,11 @@
         return  string.IsNullOrEmpty(value) ? AllNamePlatforms
             : AllNamePlatforms.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
+    
 
     protected override async Task OnInitializedAsync()
     {
+        
         // Platforms = await PlatformManager.GetAll();
         
         // TODO Тестовые данные

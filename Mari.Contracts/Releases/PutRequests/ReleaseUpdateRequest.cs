@@ -15,12 +15,14 @@ public class ReleaseUpdateRequest : PutRequest<EmptyRoute, EmptyQuery, ReleaseUp
     {
     }
     public record Body(
-        Guid id,
-        string platformName,
-        string version,
-        string releaseStatus,
-        DateTime updateDate,
-        DateTime completeDate,
-        string description,
-        Uri mainIssue) : RequestBody;
+        Guid Id,
+        int Major,
+        int Minor,
+        int Patch,
+        string PlatformName,
+        string ReleaseStatus,
+        DateTime? CompleteDate,
+        DateTime? UpdateDate,
+        string MainIssue,
+        string Description) : RequestBody;
 }

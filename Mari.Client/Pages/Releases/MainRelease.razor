@@ -18,7 +18,7 @@
         @if (IsDimming)
         {
             <MudPaper Class="paper-create-release" Elevation="0">
-                <CreateReleaseCard SwitchDimming="SwitchDimming" />
+                <CreateReleaseCard  SwitchDimming="SwitchDimming" />
             </MudPaper>
         }
 
@@ -26,13 +26,12 @@
 </MudTabs>
 
 @code {
-    private bool openCreateRelease { get; set; }
     private bool IsDimming { get; set; }
 
     private void SwitchDimming()
     {
-        openCreateRelease = !openCreateRelease;
         IsDimming = !IsDimming;
+        StateHasChanged();
     }
 
 }

@@ -44,6 +44,8 @@
 
 @code {
 
+    [Parameter]
+    public string ReleaseId { get; set; } = null!;
 
     private List<CommentResponse> UserComments { get; set; } = new List<CommentResponse>();
 
@@ -51,7 +53,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-       // Comments = await CommentManager.GetAllUserComment();
+       // Comments = await CommentManager.GetAllUserComment(Guid.Parse(Id));
         
     // TODO Тестовые данные
      UserComments = new List<CommentResponse>()

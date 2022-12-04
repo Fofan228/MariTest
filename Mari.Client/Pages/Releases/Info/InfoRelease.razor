@@ -1,4 +1,4 @@
-@using Mari.Contracts.Releases.Responses
+@using Mari.Client.Models.Releases
 
 @attribute [Route(ClientRoutes.Pages.ReleasesInfo)]
 @inject IReleaseManager ReleaseManager
@@ -19,7 +19,7 @@
                 </MudContainer>
                 <MudContainer Class=" d-flex flex-row-reverse">
                      <MudButton  Variant="Variant.Filled" Color="Color.Primary" OnClick="RightDrawerButtonOnClick">Дополнительно</MudButton>
-                   <MudIconButton Title="Редактировать" Class="mr-4" Icon="@Icons.Filled.Edit" OnClick="ClickOnEditingRelease" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" />
+                   <MudIconButton Title="Редактировать" Class="mr-4" Icon="@Icons.Filled.Edit" OnClick="SwitchEditRelease" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Medium" />
                 </MudContainer>
 
             </MudContainer>
@@ -29,7 +29,7 @@
                 <MudContainer Class="px-0" MaxWidth="MaxWidth.Medium" Style="display: flex; flex-direction: column;">
                     <MudText>Версия: @($"{Release.Major.ToString()}.{Release.Minor.ToString()}.{Release.Patch.ToString()}")</MudText>
                     <MudText>Релиз задача: url</MudText>
-                    <MudText>Статус: @Release.Status</MudText>
+                    <MudText>Статус: @Release.ReleaseStatus</MudText>
                 </MudContainer>
 
                 <MudContainer MaxWidth="MaxWidth.Medium" Style="display: flex; flex-direction: column; justify-content: space-between">
@@ -47,8 +47,8 @@
             </MudContainer>
             
             
-            <MudDrawer @bind-Open="IsRightDrawerOpened" Width="400px" Height="100%" Anchor="Anchor.Right">
-                <MenuRelease ReleaseStatus="@Release.Status" ClickOnEditingRelease="ClickOnEditingRelease"/>
+            <MudDrawer  @bind-Open="IsRightDrawerOpened" Width="400px" Height="100%" Anchor="Anchor.Right">
+                <MenuRelease Id="@Id" ClickOnEditingRelease="SwitchEditRelease"/>
             </MudDrawer>
         </MudContainer>
         
@@ -57,43 +57,55 @@
 
 @if (openEditingRelease)
 {
-    <CardEditRelease Release="Release"  ClickOnEditingRelease="ClickOnEditingRelease" />
+    <CardEditRelease Release="Release" SwitchEditRelease="SwitchEditRelease" GetUpdateUser="GetUpdateUser" />
 }
 
 @code {
 
     
     [Parameter] 
-    public string ReleaseId { get; set; } 
+    public string Id { get; set; } 
 
     private bool IsRightDrawerOpened { get; set; } = false;
     private bool openEditingRelease { get; set; } = false;
     
-    private ReleaseResponse Release { get; set; }
+    private ReleaseModel Release { get; set; }
 
-    public void ClickOnEditingRelease()
+    public async void SwitchEditRelease()
     {
         IsRightDrawerOpened = false;
         openEditingRelease = !openEditingRelease;
     }
     
+    public async void GetUpdateUser()
+    {
+      //  Release = await ReleaseManager.Get(Guid.Parse(Id));
+        IsRightDrawerOpened = false;
+        openEditingRelease = false;
+        StateHasChanged();
+    }
+    
     private void BackButtonClick()
     {
         IsRightDrawerOpened = false;
+        
+        StateHasChanged();
     }
     
     private void RightDrawerButtonOnClick()
     {
         IsRightDrawerOpened = !IsRightDrawerOpened;
+        
+        StateHasChanged();
     }
     
     
     protected override async Task OnInitializedAsync()
     {
-    //    Release = await ReleaseManager.Get();
+        //Release = await ReleaseManager.Get(Guid.Parse(Id));
 
         //Todo Тестовые данные
-        Release = new ReleaseResponse(Guid.NewGuid(), 1, 1, 1, "Android", "Testing", 
+        Release = new ReleaseModel(Guid.NewGuid(), 1, 1, 1, "Android", "Testing", 
             new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "http","GG");
     }
     
