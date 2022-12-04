@@ -2,7 +2,7 @@
 using Mari.Client.Common.Interfaces.Managers;
 using Mari.Contracts.Users.GetRequests;
 using Mari.Contracts.Users.PutRequests;
-using Mari.Contracts.Users.Responce;
+using Mari.Contracts.Users.Response;
 using Mari.Http.Services;
 
 namespace Mari.Client.Common.Services.Managers;
@@ -19,16 +19,16 @@ public class UserManager : IUserManager
     }
     
     // TODO Тестовые данные
-    private  List<UserResponce> Users = new List<UserResponce>()
+    private  List<UserResponse> Users = new List<UserResponse>()
     {
-        new UserResponce(0,"Putin","ReleaseManager",new List<string>(){
+        new UserResponse(0,"Putin","ReleaseManager",new List<string>(){
             "Android","IOS"},true),
         
-        new UserResponce(0,"Ахимат","ReleaseManager",new List<string>(){
+        new UserResponse(0,"Ахимат","ReleaseManager",new List<string>(){
             "Android"} ,true)
     };
     
-    public async Task<IList<UserResponce>> GetAll(CancellationToken token = default)
+    public async Task<IList<UserResponse>> GetAll(CancellationToken token = default)
     {
         var request = new UsersGetAllRequest();
         var response = await _httpSender.GetAsync(request, token);
@@ -36,7 +36,7 @@ public class UserManager : IUserManager
         return null;
     }
 
-    public async Task Update(UserResponce model, CancellationToken token = default)
+    public async Task Update(UserResponse model, CancellationToken token = default)
     {
         var body = _mapper.Map<UserUpdateRequest.Body>(model);
         var request = new UserUpdateRequest(body);

@@ -2,7 +2,9 @@
 
 public record ReleaseResponse(
     Guid Id,
-    string Version,
+    int Major,
+    int Minor,
+    int Patch,
     string PlatformName,
     string Status,
     DateTime CompleteDate,

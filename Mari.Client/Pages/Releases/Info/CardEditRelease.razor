@@ -1,0 +1,116 @@
+﻿@using Mari.Contracts.Releases
+@using System.Data
+@using Mari.Client.Models.Releases
+@using Mari.Contracts.Releases.Responses
+@using Microsoft.AspNetCore.Components
+@inject HttpClient Client
+
+
+<MudPaper Class="paper-edit-release" Elevation="0">
+    <MudCard Class="border card-create-release">
+
+        <MudForm Model="@EditRelease">
+            <MudCardActions Class="pb-0">
+                <!-- TODO доделать OnClick -->
+                <MudIconButton Class="ml-auto" OnClick="ClickOnEditingRelease" Icon="@Icons.Filled.Close" />
+            </MudCardActions>
+
+            <MudCardContent Class="pt-0">
+                
+                <MudDatePicker @bind-Date="EditRelease.CompleteDate" @ref="DatePicker"  Label="Дата Завершения">
+                    <PickerActions>
+                        <MudButton Class="mr-auto align-self-start" OnClick="@(() => DatePicker.Clear())">Clear</MudButton>
+                        <MudButton OnClick="@(() => DatePicker.Close(false))">Cancel</MudButton>
+                        <MudButton Color="Color.Primary" OnClick="@(() => DatePicker.Close())">Ok</MudButton>
+                    </PickerActions>
+                </MudDatePicker>
+                
+                <MudAutocomplete ResetValueOnEmptyText="false" CoerceText="false" CoerceValue="true" T="string"
+                                 @bind-Value="EditRelease.PlatformName" SearchFunc="@SearchPlatform" Label="Платформа"/>
+                
+                   <MudContainer Class="flex-row d-flex align-end px-0 flex-grow-1 gap-1">
+                        <MudText >Версия: </MudText>
+                        <MudTextField @bind-Value="EditRelease.Major"  Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true"/>
+                        <MudText >.</MudText>
+                        <MudTextField @bind-Value="EditRelease.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true"/>
+                        <MudText>.</MudText>
+                        <MudTextField @bind-Value="EditRelease.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true"/>
+                    </MudContainer>
+               
+                
+                <MudTextField @bind-Value="EditRelease.Status"   Immediate="true" Label="Статус" /> <!-- TODO только для релиз-менеджера -->
+
+                <MudTextField @bind-Value="EditRelease.MainIssue"   Immediate="true"
+                              Label="Ссылка на релиз задачу" />
+
+                <MudTextField @bind-Value="EditRelease.Description"  Immediate="true"
+                    Variant="Variant.Filled" Lines="5" Label="Информация" />
+
+            </MudCardContent>
+
+            <MudCardActions>
+                <!-- TODO доделать OnClick -->
+                <MudButton OnClick="ClickOnEditRelease" Variant="Variant.Filled" Color="Color.Primary"
+                    Class="mx-auto">Добавить</MudButton>
+            </MudCardActions>
+        </MudForm>
+
+    </MudCard>
+</MudPaper>
+
+
+@code {
+    private List<PlatformResponse> Platforms { get; set; }
+    private string[] AllNamePlatforms { get; set; }
+	
+	[Parameter]
+	public Action ClickOnEditingRelease { get; set; } = () => { };
+
+    [Parameter]
+    public ReleaseResponse Release { get; set;  }
+    
+    public ReleaseUpdateModel EditRelease { get; set; }
+    
+	MudDatePicker DatePicker;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Platforms = await PlatformManager.GetAll();
+            
+            
+        // TODO Тестовые данные
+            Platforms = new List<PlatformResponse>()
+            {
+                new PlatformResponse("Android",1,1,1),
+                new PlatformResponse("Ios",1,1,1)
+            };
+        // конец
+        
+        AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
+        
+        EditRelease = new ReleaseUpdateModel(
+            Release.Id,
+            Release.Major,
+            Release.Minor,
+            Release.Patch,
+            Release.PlatformName,
+            Release.Status,
+            Release.MainIssue,
+            Release.CompleteDate,
+            Release.Description
+            );
+    }
+    
+    public async Task ClickOnEditRelease()
+    {
+        ClickOnEditingRelease(); 
+    }
+    
+    private async Task<IEnumerable<string>> SearchPlatform(string value)
+    {
+        await Task.Delay(5);
+
+        return string.IsNullOrEmpty(value) ? AllNamePlatforms
+            : AllNamePlatforms.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
+    }
+}

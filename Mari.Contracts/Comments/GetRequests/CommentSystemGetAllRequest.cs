@@ -1,4 +1,4 @@
-﻿using Mari.Contracts.Comments.Responce;
+﻿using Mari.Contracts.Comments.Responses;
 using Mari.Contracts.Common.Routes.Server;
 using Mari.Http.Common.Classes;
 using Mari.Http.Models;

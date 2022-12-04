@@ -4,12 +4,20 @@
 @inject NavigationManager NavigationManager
 
 <MudTable Class="mt-8" Items="@Releases" Hover="true" T="ReleaseResponse"
-          OnRowClick="RowClicked" Filter="new Func<ReleaseResponse, bool>(FilterFunc)">
+          OnRowClick="RowClicked" Filter="new Func<ReleaseResponse,bool>(FilterFunc)">
     <ToolBarContent>
-          <MudText Typo="Typo.h6">Настройки</MudText>
-          <MudSpacer />
-          <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-      </ToolBarContent>
+        <MudSpacer />
+        <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, версии, релизной задаче, статусу и датам"
+                      Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" />
+    </ToolBarContent>
+    <ColGroup>
+        <col style="width: 15%;"/>
+        <col style="width: 10%;"/>
+        <col style="width: 25%;"/>
+        <col style="width: 17%;"/>
+        <col style="width: 15%;"/>
+        <col style="width: 15%;"/>
+    </ColGroup>
     <HeaderContent>
         <MudTh>Платформа</MudTh>
         <MudTh>Версия</MudTh>
@@ -19,59 +27,57 @@
         <MudTh>Дата завершения</MudTh>
     </HeaderContent>
     <RowTemplate>
-
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
-
         <MudTd DataLabel="Version">@($"{context.Major.ToString()}.{context.Minor.ToString()}.{context.Patch.ToString()}")</MudTd>
-
-        <MudTd DataLabel="ReleaseTask">@context.MainIssue</MudTd>
-
+        <MudTd DataLabel="ReleaseTask">
+            <div @onclick:stopPropagation="true">
+                <MudLink Href="#">@context.MainIssue</MudLink>
+            </div>
+        </MudTd>
         <MudTd DataLabel="ReleaseStatus">@context.Status</MudTd>
-
         <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
-
         <MudTd DataLabel="CompleteDate">@context.CompleteDate.ToString()</MudTd>
-
     </RowTemplate>
 </MudTable>
 
 @code {
-    private string searchString = "";
-    private List<ReleaseResponse> Releases { get; set; }
+    private string _searchString = "";
+    
+    private IList<ReleaseResponse> Releases { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-    // Releases = await ReleaseManager.GetArchive();
+      // Releases = await ReleaseManager.GetCurrentReleases();
         
         
     // TODO Тестовые данные
         Releases = new List<ReleaseResponse>()
         {
             new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", 
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11),"http", "GG"),
+                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "http","GG"),
             new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", 
                 new DateTime(2022, 11, 11), new DateTime(2022, 11, 11),"http", "GG"),
-            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "IOS", "Testing", 
+            new ReleaseResponse(Guid.NewGuid(), 1,1,1, "Android", "Testing", 
                 new DateTime(2022, 11, 11), new DateTime(2022, 11, 11),"http", "GG")
         };
     // конец
     }
-
+    
     private void RowClicked(TableRowClickEventArgs<ReleaseResponse> _)
     {
-        NavigationManager.NavigateTo("/info");
+        NavigationManager.NavigateTo($"/info/{_.Item.Id}");
     }
-    
+
     private bool FilterFunc(ReleaseResponse answer)
     {
-        if (string.IsNullOrEmpty(searchString))
+        if (string.IsNullOrEmpty(_searchString))
             return true;
-        if (answer.PlatformName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (answer.PlatformName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-        if (answer.MainIssue.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (answer.MainIssue.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-        if (answer.Status.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (answer.Status.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-        return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(searchString);
+        return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(_searchString);
     }
 }
