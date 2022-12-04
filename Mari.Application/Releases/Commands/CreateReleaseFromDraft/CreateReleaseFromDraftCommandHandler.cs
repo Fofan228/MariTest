@@ -12,13 +12,16 @@ internal class CreateReleaseFromDraftCommandHandler : IRequestHandler<CreateRele
 {
     private readonly IReleaseRepository _releaseRepository;
     private readonly IValidator<Release> _releaseValidator;
+    private readonly IUnitOfWork _unitOfWork;
 
     public CreateReleaseFromDraftCommandHandler(
         IReleaseRepository releaseRepository,
-        IValidator<Release> releaseValidator)
+        IValidator<Release> releaseValidator,
+        IUnitOfWork unitOfWork)
     {
         _releaseRepository = releaseRepository;
         _releaseValidator = releaseValidator;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Created>> Handle(CreateReleaseFromDraftCommand request, CancellationToken cancellationToken)
@@ -34,6 +37,7 @@ internal class CreateReleaseFromDraftCommandHandler : IRequestHandler<CreateRele
         if (result.IsError) return result.Errors;
 
         await _releaseRepository.Update(draftRelease, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
         return Result.Created;
     }
 }
