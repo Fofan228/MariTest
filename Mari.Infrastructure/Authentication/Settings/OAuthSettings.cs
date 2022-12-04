@@ -11,4 +11,5 @@ public class OAuthSettings
     public string UserInformationEndpoint { get; set; } = null!;
     public string IdJsonKey { get; set; } = null!;
     public string NameJsonKey { get; set; } = null!;
+    public string[] Scopes { get; set; } = null!;
 }
