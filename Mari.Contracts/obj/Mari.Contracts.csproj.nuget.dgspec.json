@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/var/home/nanoster/Projects/MariTest/Mari.Contracts/Mari.Contracts.csproj": {}
+    "/home/nanoster/projects/MariTest/Mari.Contracts/Mari.Contracts.csproj": {}
   },
   "projects": {
-    "/var/home/nanoster/Projects/MariTest/Mari.Contracts/Mari.Contracts.csproj": {
+    "/home/nanoster/projects/MariTest/Mari.Contracts/Mari.Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/var/home/nanoster/Projects/MariTest/Mari.Contracts/Mari.Contracts.csproj",
+        "projectUniqueName": "/home/nanoster/projects/MariTest/Mari.Contracts/Mari.Contracts.csproj",
         "projectName": "Mari.Contracts",
-        "projectPath": "/var/home/nanoster/Projects/MariTest/Mari.Contracts/Mari.Contracts.csproj",
-        "packagesPath": "/var/home/nanoster/.nuget/packages/",
-        "outputPath": "/var/home/nanoster/Projects/MariTest/Mari.Contracts/obj/",
+        "projectPath": "/home/nanoster/projects/MariTest/Mari.Contracts/Mari.Contracts.csproj",
+        "packagesPath": "/home/nanoster/.nuget/packages/",
+        "outputPath": "/home/nanoster/projects/MariTest/Mari.Contracts/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/var/home/nanoster/.nuget/NuGet/NuGet.Config"
+          "/home/nanoster/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -26,8 +26,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/var/home/nanoster/Projects/MariTest/Mari.Http/Mari.Http.csproj": {
-                "projectPath": "/var/home/nanoster/Projects/MariTest/Mari.Http/Mari.Http.csproj"
+              "/home/nanoster/projects/MariTest/Mari.Http/Mari.Http.csproj": {
+                "projectPath": "/home/nanoster/projects/MariTest/Mari.Http/Mari.Http.csproj"
               }
             }
           }
@@ -57,21 +57,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/var/lib/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/var/home/nanoster/Projects/MariTest/Mari.Http/Mari.Http.csproj": {
+    "/home/nanoster/projects/MariTest/Mari.Http/Mari.Http.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/var/home/nanoster/Projects/MariTest/Mari.Http/Mari.Http.csproj",
+        "projectUniqueName": "/home/nanoster/projects/MariTest/Mari.Http/Mari.Http.csproj",
         "projectName": "Mari.Http",
-        "projectPath": "/var/home/nanoster/Projects/MariTest/Mari.Http/Mari.Http.csproj",
-        "packagesPath": "/var/home/nanoster/.nuget/packages/",
-        "outputPath": "/var/home/nanoster/Projects/MariTest/Mari.Http/obj/",
+        "projectPath": "/home/nanoster/projects/MariTest/Mari.Http/Mari.Http.csproj",
+        "packagesPath": "/home/nanoster/.nuget/packages/",
+        "outputPath": "/home/nanoster/projects/MariTest/Mari.Http/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/var/home/nanoster/.nuget/NuGet/NuGet.Config"
+          "/home/nanoster/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -120,7 +120,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/var/lib/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
         }
       }
     }

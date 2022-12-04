@@ -4,7 +4,7 @@
 
 using Mari.Client.Models.Releases;
 using Mari.Contracts.Comments.Responce;
-using Mari.Contracts.Releases.Responce;
+using Mari.Contracts.Releases.Responses;
 
 namespace Mari.Client.Common.Interfaces.Managers;
 

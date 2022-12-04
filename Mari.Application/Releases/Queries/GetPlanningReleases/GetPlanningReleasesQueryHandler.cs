@@ -5,18 +5,18 @@ using Mari.Application.Releases.Results;
 using Mari.Domain.Releases.Enums;
 using MediatR;
 
-namespace Mari.Application.Releases.Queries.GetPlanningReleases;
+namespace Mari.Application.Releases.Queries.GetPlannedReleases;
 
-internal class GetPlanningReleasesQueryHandler : IRequestHandler<GetPlanningReleasesQuery, ErrorOr<IEnumerable<ReleaseResult>>>
+internal class GetPlannedReleasesQueryHandler : IRequestHandler<GetPlannedReleasesQuery, ErrorOr<IEnumerable<ReleaseResult>>>
 {
     private readonly IReleaseRepository _releaseRepository;
 
-    public GetPlanningReleasesQueryHandler(IReleaseRepository releaseRepository)
+    public GetPlannedReleasesQueryHandler(IReleaseRepository releaseRepository)
     {
         _releaseRepository = releaseRepository;
     }
 
-    public async Task<ErrorOr<IEnumerable<ReleaseResult>>> Handle(GetPlanningReleasesQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<IEnumerable<ReleaseResult>>> Handle(GetPlannedReleasesQuery request, CancellationToken cancellationToken)
     {
         var spec = ReleaseSpecs.StatusIn(ReleaseStatus.Planning);
         return await _releaseRepository.FindMany(spec, request.Range)

@@ -1,10 +1,9 @@
-﻿@using Mari.Contracts.Releases
-@using Mari.Contracts.Releases.Responce
+﻿@using Mari.Contracts.Releases.Responses
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
 
-<MudTable Class="mt-8" Items="@Releases" Hover="true" T="ReleaseResponse" 
-          OnRowClick="RowClicked" Filter="new Func<ReleaseResponse, bool>(FilterFunc)">
+<MudTable Class="mt-8" Items="@Releases" Hover="true" T="ReleaseResponse" OnRowClick="RowClicked"
+    Filter="new Func<ReleaseResponse, bool>(FilterFunc)">
     <HeaderContent>
         <MudTh>Платформа</MudTh>
         <MudTh>Версия</MudTh>
@@ -17,7 +16,7 @@
 
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
 
-        <MudTd DataLabel="Version">@($"{context.Major.ToString()}.{context.Minor.ToString()}.{context.Patch.ToString()}")</MudTd>
+        <MudTd DataLabel="Version">@context.Version</MudTd>
 
         <MudTd DataLabel="ReleaseTask">@context.MainIssue</MudTd>
 
@@ -36,15 +35,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-       // Releases = new List<ReleaseResponse>(await ReleaseManager.Test()) ;
-      //  Releases = new List<ReleaseResponse>(await ReleaseManager.()) ;
+        // Releases = new List<ReleaseResponse>(await ReleaseManager.Test()) ;
+        // Releases = new List<ReleaseResponse>(await ReleaseManager.()) ;
     }
 
     private void RowClicked(TableRowClickEventArgs<ReleaseResponse> _)
     {
         NavigationManager.NavigateTo("/info");
     }
-    
+
     private bool FilterFunc(ReleaseResponse answer)
     {
         if (string.IsNullOrEmpty(_searchString))

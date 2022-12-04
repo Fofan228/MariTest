@@ -2,16 +2,16 @@ using Mari.Contracts.Common.Routes.Server;
 using Mari.Http.Common.Classes;
 using Mari.Http.Models;
 using Mari.Http.Requests;
-using static Mari.Contracts.Releases.PostRequests.ReleaseCreateRequest;
+using static Mari.Contracts.Releases.PostRequests.CreateDraftReleaseRequest;
 
 namespace Mari.Contracts.Releases.PostRequests;
 
-public class ReleaseCreateRequest : PostRequest<EmptyRoute, EmptyQuery, Body, VoidResponse>
+public class CreateDraftReleaseRequest : PostRequest<EmptyRoute, EmptyQuery, Body, VoidResponse>
 {
-    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}";
+    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/draft";
     public override string RouteTemplate => ConstRouteTemplate;
 
-    public ReleaseCreateRequest(Body body) : base(new(), new(), body)
+    public CreateDraftReleaseRequest(Body body) : base(new(), new(), body)
     {
     }
 
@@ -19,7 +19,9 @@ public class ReleaseCreateRequest : PostRequest<EmptyRoute, EmptyQuery, Body, Vo
         string? MainIssue,
         DateTime? CompleteDate,
         string? PlatformName,
-        string? Version,
+        int? VersionMajor,
+        int? VersionMinor,
+        int? VersionPatch,
         string? Description)
         : RequestBody;
 }

@@ -5,7 +5,7 @@
 using Mari.Contracts.Comments.Responce;
 using Mari.Contracts.Common.Routes.Server;
 using Mari.Contracts.Releases.GetRequests;
-using Mari.Contracts.Releases.Responce;
+using Mari.Contracts.Releases.Responses;
 using Mari.Http.Common.Classes;
 using Mari.Http.Models;
 using Mari.Http.Requests;
@@ -18,13 +18,13 @@ public class CommentUserGetAllRequest : GetRequest<Route, EmptyQuery, IEnumerabl
 
     public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Comment}/user/{{{nameof(Route.id)}}}";
     public override string RouteTemplate => $"{ServerRoutes.Controllers.Comment}/user/{RouteParams!.id}";
-    
+
     public CommentUserGetAllRequest(
         Route route)
         : base(route, new())
     {
     }
-    
+
 
     public record Route(Guid id) : RequestRoute;
 }

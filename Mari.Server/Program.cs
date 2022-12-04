@@ -4,6 +4,7 @@ using Mari.Infrastructure;
 using Mari.Server.Authentication;
 using Mari.Server.Mapping;
 using Mari.Server.Settings;
+using Mari.Server.Swagger;
 using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddControllers();
     builder.Services.AddRazorPages();
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(options => options.SetUp(builder.Configuration));
 }
 
 var app = builder.Build();

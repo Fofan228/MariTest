@@ -1826,19 +1826,19 @@
     ]
   },
   "packageFolders": {
-    "/var/home/nanoster/.nuget/packages/": {}
+    "/home/nanoster/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/var/home/nanoster/Projects/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj",
+      "projectUniqueName": "/home/nanoster/projects/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj",
       "projectName": "Mari.Infrastructure",
-      "projectPath": "/var/home/nanoster/Projects/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj",
-      "packagesPath": "/var/home/nanoster/.nuget/packages/",
-      "outputPath": "/var/home/nanoster/Projects/MariTest/Mari.Infrastructure/obj/",
+      "projectPath": "/home/nanoster/projects/MariTest/Mari.Infrastructure/Mari.Infrastructure.csproj",
+      "packagesPath": "/home/nanoster/.nuget/packages/",
+      "outputPath": "/home/nanoster/projects/MariTest/Mari.Infrastructure/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/var/home/nanoster/.nuget/NuGet/NuGet.Config"
+        "/home/nanoster/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -1850,8 +1850,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/var/home/nanoster/Projects/MariTest/Mari.Application/Mari.Application.csproj": {
-              "projectPath": "/var/home/nanoster/Projects/MariTest/Mari.Application/Mari.Application.csproj"
+            "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj": {
+              "projectPath": "/home/nanoster/projects/MariTest/Mari.Application/Mari.Application.csproj"
             }
           }
         }
@@ -1915,7 +1915,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/var/lib/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.100/RuntimeIdentifierGraph.json"
       }
     }
   }
