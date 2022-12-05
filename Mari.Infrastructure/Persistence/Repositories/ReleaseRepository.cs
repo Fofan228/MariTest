@@ -54,12 +54,4 @@ public class ReleaseRepository : Repository<Release, ReleaseId>, IReleaseReposit
 
         return query.AsAsyncEnumerable();
     }
-
-    public override async Task<Release> Insert(Release aggregateRoot, CancellationToken token = default)
-    {
-        if (aggregateRoot.Platform.Id is null)
-            Context.Set<Platform>().Add(aggregateRoot.Platform);
-
-        return await base.Insert(aggregateRoot, token);
-    }
 }

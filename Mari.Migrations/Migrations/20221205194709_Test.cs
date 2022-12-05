@@ -6,30 +6,34 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Mari.Migrations.Migrations
 {
-    public partial class Initial : Migration
+    /// <inheritdoc />
+    public partial class Test : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "platforms",
+                name: "platform",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_platforms", x => x.id);
+                    table.PrimaryKey("pk_platform", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "users",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false),
-                    username = table.Column<string>(type: "text", nullable: false),
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    username = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     role = table.Column<int>(type: "integer", nullable: false),
-                    is_active = table.Column<bool>(type: "boolean", nullable: false)
+                    isactive = table.Column<bool>(name: "is_active", type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,21 +45,23 @@ namespace Mari.Migrations.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    version_major = table.Column<long>(type: "bigint", nullable: false),
-                    version_minor = table.Column<long>(type: "bigint", nullable: false),
-                    version_patch = table.Column<long>(type: "bigint", nullable: false),
-                    platform_id = table.Column<int>(type: "integer", nullable: false),
+                    versionmajor = table.Column<int>(name: "version_major", type: "integer", nullable: false),
+                    versionminor = table.Column<int>(name: "version_minor", type: "integer", nullable: false),
+                    versionpatch = table.Column<int>(name: "version_patch", type: "integer", nullable: false),
+                    platformid = table.Column<int>(name: "platform_id", type: "integer", nullable: false),
                     status = table.Column<int>(type: "integer", nullable: false),
-                    complete_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    update_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    completedate = table.Column<DateTime>(name: "complete_date", type: "timestamp with time zone", nullable: false),
+                    updatedate = table.Column<DateTime>(name: "update_date", type: "timestamp with time zone", nullable: false),
+                    description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    mainissue = table.Column<string>(name: "main_issue", type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_releases", x => x.id);
                     table.ForeignKey(
-                        name: "fk_releases_platforms_platform_temp_id",
-                        column: x => x.platform_id,
-                        principalTable: "platforms",
+                        name: "fk_releases_platform_platform_temp_id",
+                        column: x => x.platformid,
+                        principalTable: "platform",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -65,44 +71,26 @@ namespace Mari.Migrations.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    content = table.Column<string>(type: "text", nullable: false),
-                    user_id = table.Column<int>(type: "integer", nullable: false),
-                    release_id = table.Column<Guid>(type: "uuid", nullable: false)
+                    content = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
+                    userid = table.Column<int>(name: "user_id", type: "integer", nullable: false),
+                    releaseid = table.Column<Guid>(name: "release_id", type: "uuid", nullable: false),
+                    createdate = table.Column<DateTime>(name: "create_date", type: "timestamp with time zone", nullable: false),
+                    isredacted = table.Column<bool>(name: "is_redacted", type: "boolean", nullable: false),
+                    issystem = table.Column<bool>(name: "is_system", type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_comments", x => x.id);
                     table.ForeignKey(
-                        name: "fk_comments_releases_release_temp_id1",
-                        column: x => x.release_id,
+                        name: "fk_comments_releases_release_temp_id",
+                        column: x => x.releaseid,
                         principalTable: "releases",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "fk_comments_users_user_temp_id",
-                        column: x => x.user_id,
+                        column: x => x.userid,
                         principalTable: "users",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "issue",
-                columns: table => new
-                {
-                    release_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    link = table.Column<string>(type: "text", nullable: false),
-                    title = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_issue", x => new { x.release_id, x.id });
-                    table.ForeignKey(
-                        name: "fk_issue_releases_release_temp_id",
-                        column: x => x.release_id,
-                        principalTable: "releases",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -123,22 +111,20 @@ namespace Mari.Migrations.Migrations
                 column: "platform_id");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "comments");
 
             migrationBuilder.DropTable(
-                name: "issue");
+                name: "releases");
 
             migrationBuilder.DropTable(
                 name: "users");
 
             migrationBuilder.DropTable(
-                name: "releases");
-
-            migrationBuilder.DropTable(
-                name: "platforms");
+                name: "platform");
         }
     }
 }

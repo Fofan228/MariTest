@@ -17,7 +17,7 @@ namespace Mari.Migrations.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -25,6 +25,7 @@ namespace Mari.Migrations.Migrations
             modelBuilder.Entity("Mari.Domain.Comments.Comment", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -66,9 +67,31 @@ namespace Mari.Migrations.Migrations
                     b.ToTable("comments", (string)null);
                 });
 
+            modelBuilder.Entity("Mari.Domain.Releases.Entities.Platform", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_platform");
+
+                    b.ToTable("platform", (string)null);
+                });
+
             modelBuilder.Entity("Mari.Domain.Releases.Release", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -87,6 +110,10 @@ namespace Mari.Migrations.Migrations
                         .HasColumnType("text")
                         .HasColumnName("main_issue");
 
+                    b.Property<int>("PlatformId")
+                        .HasColumnType("integer")
+                        .HasColumnName("platform_id");
+
                     b.Property<int>("Status")
                         .HasColumnType("integer")
                         .HasColumnName("status");
@@ -98,14 +125,20 @@ namespace Mari.Migrations.Migrations
                     b.HasKey("Id")
                         .HasName("pk_releases");
 
+                    b.HasIndex("PlatformId")
+                        .HasDatabaseName("ix_releases_platform_id");
+
                     b.ToTable("releases", (string)null);
                 });
 
             modelBuilder.Entity("Mari.Domain.Users.User", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean")
@@ -146,30 +179,12 @@ namespace Mari.Migrations.Migrations
 
             modelBuilder.Entity("Mari.Domain.Releases.Release", b =>
                 {
-                    b.OwnsOne("Mari.Domain.Releases.Entities.Platform", "Platform", b1 =>
-                        {
-                            b1.Property<Guid>("ReleaseId")
-                                .HasColumnType("uuid")
-                                .HasColumnName("id");
-
-                            b1.Property<int>("Id")
-                                .HasColumnType("integer")
-                                .HasColumnName("platform_id");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)")
-                                .HasColumnName("platform_name");
-
-                            b1.HasKey("ReleaseId");
-
-                            b1.ToTable("releases");
-
-                            b1.WithOwner()
-                                .HasForeignKey("ReleaseId")
-                                .HasConstraintName("fk_releases_releases_id");
-                        });
+                    b.HasOne("Mari.Domain.Releases.Entities.Platform", "Platform")
+                        .WithMany()
+                        .HasForeignKey("PlatformId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_releases_platform_platform_temp_id");
 
                     b.OwnsOne("Mari.Domain.Releases.ValueObjects.ReleaseVersion", "Version", b1 =>
                         {
@@ -198,8 +213,7 @@ namespace Mari.Migrations.Migrations
                                 .HasConstraintName("fk_releases_releases_id");
                         });
 
-                    b.Navigation("Platform")
-                        .IsRequired();
+                    b.Navigation("Platform");
 
                     b.Navigation("Version")
                         .IsRequired();

@@ -1,6 +1,5 @@
 using Mari.Domain.Comments;
 using Mari.Domain.Releases;
-using Mari.Domain.Releases.Entities;
 using Mari.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +16,6 @@ public class MariDbContext : DbContext
     DbSet<User> Users { get; set; } = null!;
     DbSet<Comment> Comments { get; set; } = null!;
     DbSet<Release> Releases { get; set; } = null!;
-    DbSet<Platform> Platforms { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
