@@ -66,24 +66,6 @@ namespace Mari.Migrations.Migrations
                     b.ToTable("comments", (string)null);
                 });
 
-            modelBuilder.Entity("Mari.Domain.Releases.Entities.Platform", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_platforms");
-
-                    b.ToTable("platforms", (string)null);
-                });
-
             modelBuilder.Entity("Mari.Domain.Releases.Release", b =>
                 {
                     b.Property<Guid>("Id")
@@ -105,10 +87,6 @@ namespace Mari.Migrations.Migrations
                         .HasColumnType("text")
                         .HasColumnName("main_issue");
 
-                    b.Property<int>("PlatformId")
-                        .HasColumnType("integer")
-                        .HasColumnName("platform_id");
-
                     b.Property<int>("Status")
                         .HasColumnType("integer")
                         .HasColumnName("status");
@@ -119,9 +97,6 @@ namespace Mari.Migrations.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_releases");
-
-                    b.HasIndex("PlatformId")
-                        .HasDatabaseName("ix_releases_platform_id");
 
                     b.ToTable("releases", (string)null);
                 });
@@ -171,12 +146,30 @@ namespace Mari.Migrations.Migrations
 
             modelBuilder.Entity("Mari.Domain.Releases.Release", b =>
                 {
-                    b.HasOne("Mari.Domain.Releases.Entities.Platform", "Platform")
-                        .WithMany()
-                        .HasForeignKey("PlatformId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_releases_platforms_platform_temp_id");
+                    b.OwnsOne("Mari.Domain.Releases.Entities.Platform", "Platform", b1 =>
+                        {
+                            b1.Property<Guid>("ReleaseId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("id");
+
+                            b1.Property<int>("Id")
+                                .HasColumnType("integer")
+                                .HasColumnName("platform_id");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("platform_name");
+
+                            b1.HasKey("ReleaseId");
+
+                            b1.ToTable("releases");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ReleaseId")
+                                .HasConstraintName("fk_releases_releases_id");
+                        });
 
                     b.OwnsOne("Mari.Domain.Releases.ValueObjects.ReleaseVersion", "Version", b1 =>
                         {
@@ -184,16 +177,16 @@ namespace Mari.Migrations.Migrations
                                 .HasColumnType("uuid")
                                 .HasColumnName("id");
 
-                            b1.Property<long>("Major")
-                                .HasColumnType("bigint")
+                            b1.Property<int>("Major")
+                                .HasColumnType("integer")
                                 .HasColumnName("version_major");
 
-                            b1.Property<long>("Minor")
-                                .HasColumnType("bigint")
+                            b1.Property<int>("Minor")
+                                .HasColumnType("integer")
                                 .HasColumnName("version_minor");
 
-                            b1.Property<long>("Patch")
-                                .HasColumnType("bigint")
+                            b1.Property<int>("Patch")
+                                .HasColumnType("integer")
                                 .HasColumnName("version_patch");
 
                             b1.HasKey("ReleaseId");
@@ -205,7 +198,8 @@ namespace Mari.Migrations.Migrations
                                 .HasConstraintName("fk_releases_releases_id");
                         });
 
-                    b.Navigation("Platform");
+                    b.Navigation("Platform")
+                        .IsRequired();
 
                     b.Navigation("Version")
                         .IsRequired();

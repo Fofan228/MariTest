@@ -51,7 +51,7 @@ public abstract class Repository<TAggregateRoot, TId> : IRepository<TAggregateRo
 
     public virtual Task<TAggregateRoot> Insert(TAggregateRoot aggregateRoot, CancellationToken token = default)
     {
-        Set.AddAsync(aggregateRoot, token);
+        Set.Add(aggregateRoot);
         return Task.FromResult(aggregateRoot);
     }
 

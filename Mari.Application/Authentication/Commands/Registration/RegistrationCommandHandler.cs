@@ -29,10 +29,11 @@ internal class RegistrationCommandHandler : IRequestHandler<RegistrationCommand,
         var user = await _userRepository.GetById(request.UserId, cancellationToken);
         if (user is not null) return Errors.User.UserAlreadyExists;
 
-        var userCreateResult = User.Create(id: request.UserId, username: request.Username);
+        var userCreateResult = User.Create(username: request.Username);
         if (userCreateResult.IsError) return userCreateResult.Errors;
 
         user = userCreateResult.Value;
+        user.SetId(request.UserId);
         user = await _userRepository.Insert(user, cancellationToken);
 
         var unblockResult = user.UnblockUser();

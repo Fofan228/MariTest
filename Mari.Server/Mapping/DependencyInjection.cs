@@ -9,6 +9,7 @@ public static class DependencyInjection
     {
         var config = TypeAdapterConfig.GlobalSettings;
         config.Scan(typeof(DependencyInjection).Assembly);
+        config.Default.MapToConstructor(true);
         services.AddSingleton(config);
         services.AddScoped<IMapper, ServiceMapper>();
         return services;

@@ -11,7 +11,8 @@ public class PlatformConfiguration : IEntityTypeConfiguration<Platform>
     public void Configure(EntityTypeBuilder<Platform> builder)
     {
         builder.Property(p => p.Id)
-            .IsValueObjectWrapper<int, PlatformId>();
+            .IsValueObjectWrapper<int, PlatformId>()
+            .ValueGeneratedOnAdd();
 
         builder.Property(p => p.Name)
             .IsStringWrapper()

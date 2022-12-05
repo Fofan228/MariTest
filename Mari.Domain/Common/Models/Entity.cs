@@ -5,11 +5,11 @@ namespace Mari.Domain.Common.Models;
 public abstract class Entity<TId> : IEquatable<Entity<TId>>
     where TId : IEquatable<TId>, IHasDefaultValue<TId>
 {
-    public TId Id { get; protected set; }
+    public TId Id { get; protected set; } = default!;
 
-    protected Entity(TId? id)
+    public void SetId(TId id)
     {
-        Id = id ?? TId.Default;
+        Id = id;
     }
 
     public bool Equals(Entity<TId>? other)

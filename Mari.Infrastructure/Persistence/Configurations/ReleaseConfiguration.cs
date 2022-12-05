@@ -1,3 +1,4 @@
+using System.Numerics;
 using Mari.Domain.Releases;
 using Mari.Domain.Releases.ValueObjects;
 using Mari.Infrastructure.Persistence.Configurations.Extensions;
@@ -11,7 +12,8 @@ public class ReleaseConfiguration : IEntityTypeConfiguration<Release>
     public void Configure(EntityTypeBuilder<Release> builder)
     {
         builder.Property(r => r.Id)
-            .IsValueObjectWrapper<Guid, ReleaseId>();
+            .IsValueObjectWrapper<Guid, ReleaseId>()
+            .ValueGeneratedOnAdd();
 
         builder.Property(r => r.Description)
             .IsStringWrapper()
@@ -32,17 +34,17 @@ public class ReleaseConfiguration : IEntityTypeConfiguration<Release>
         builder.Property(r => r.Status)
             .IsRequired();
 
-        var version = builder.OwnsOne(r => r.Version);
+        var version = builder.OwnsOne(r => r.Version, version =>
         {
             version.Property(v => v.Major)
-                .IsRequired();
+           .IsRequired();
 
             version.Property(v => v.Minor)
                 .IsRequired();
 
             version.Property(v => v.Patch)
                 .IsRequired();
-        }
+        });
 
         builder.HasOne(r => r.Platform)
             .WithMany()

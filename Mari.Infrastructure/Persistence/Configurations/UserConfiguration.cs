@@ -11,7 +11,8 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     public void Configure(EntityTypeBuilder<User> builder)
     {
         builder.Property(u => u.Id)
-            .IsValueObjectWrapper<int, UserId>();
+            .IsValueObjectWrapper<int, UserId>()
+            .ValueGeneratedOnAdd();
 
         builder.Property(u => u.Username)
             .IsStringWrapper()

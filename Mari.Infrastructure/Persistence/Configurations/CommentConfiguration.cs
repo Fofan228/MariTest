@@ -13,7 +13,8 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
     public void Configure(EntityTypeBuilder<Comment> builder)
     {
         builder.Property(c => c.Id)
-            .IsValueObjectWrapper<Guid, CommentId>();
+            .IsValueObjectWrapper<Guid, CommentId>()
+            .ValueGeneratedOnAdd();
 
         builder.Property(c => c.IsRedacted)
             .IsRequired();
