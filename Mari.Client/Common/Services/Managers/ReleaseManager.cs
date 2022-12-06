@@ -2,6 +2,7 @@
 using Mapster;
 using MapsterMapper;
 using Mari.Client.Common.Interfaces.Managers;
+using Mari.Client.Models.Enums;
 using Mari.Client.Models.Releases;
 using Mari.Contracts.Releases;
 using Mari.Contracts.Releases.DeleteRequests;
@@ -10,6 +11,7 @@ using Mari.Contracts.Releases.PostRequests;
 using Mari.Contracts.Releases.PutRequests;
 using Mari.Contracts.Releases.Responses;
 using Mari.Http.Services;
+
 
 namespace Mari.Client.Common.Services.Managers;
 
@@ -32,7 +34,7 @@ public class ReleaseManager : IReleaseManager
     {
         PlannedList.Add(new ReleaseModel(Guid.NewGuid(),model.Major,
             model.Minor,model.Patch,model.PlatformName,"Planing",
-            model.CompleteDate,model.CompleteDate,model.MainIssue, model.Description));
+            model.CompleteDate,DateTime.Now, model.MainIssue, model.Description));
         
         Platforms.Add(new PlatformResponse( model.PlatformName, model.Major, model.Minor,model.Patch));
          
@@ -124,7 +126,8 @@ public class ReleaseManager : IReleaseManager
        
         
         
-        /*var body = _mapper.Map<ReleaseUpdateRequest.Body>(model);
+        /*
+        var body = _mapper.Map<ReleaseUpdateRequest.Body>(model);
         var request = new ReleaseUpdateRequest(body);
         var response = await _httpSender.PutAsync(request, token);
         if (!response.IsSuccess) throw new NotImplementedException();*/
@@ -133,6 +136,7 @@ public class ReleaseManager : IReleaseManager
 
     public async Task DeleteRelease(Guid id,CancellationToken token = default)
     {
+        
         for (int i = 0; i < CurrentList.Count; i++)
         {
             if (CurrentList[i].Id == id)
@@ -149,7 +153,6 @@ public class ReleaseManager : IReleaseManager
                 InWorkList.RemoveAt(i);
         }
         
-        
         /*var request = new ReleaseDeleteRequest(new(id));
         var response = await _httpSender.DeleteAsync(request, token);
         if (!response.IsSuccess) throw new NotImplementedException(); */
@@ -159,9 +162,46 @@ public class ReleaseManager : IReleaseManager
     {
         /*var request = new GetAllPlatformsRequest();
         var response = await _httpSender.GetAsync(request, token);
-        if (!response.IsSuccess) throw new NotImplementedException();*/
+        if (!response.IsSuccess) throw new NotImplementedException();
+        return response.Response.ToList();*/
         return Platforms;
     }
 
-    
+    public IList<ReleaseModel> TransInWork(ReleaseModel model)
+    {
+        if (model.PlatformName == null) return PlannedList;
+        if (model.Major == null) return PlannedList;
+        if (model.Minor == null) return PlannedList;
+        if (model.Patch == null) return PlannedList;
+        if (model.MainIssue == null) return PlannedList;
+        if (model.CompleteDate == null) return PlannedList;
+        if (model.UpdateDate == null) return PlannedList;
+        
+        for (int i = 0; i < PlannedList.Count; i++)
+        {
+            if (PlannedList[i].Equals(model))
+            {
+                model.Status = nameof(ReleaseStatus.Developing);
+                PlannedList.RemoveAt(i);
+                InWorkList.Add(model);
+            }
+        }
+        return PlannedList;
+    }
+
+    public  IList<ReleaseModel> TransInCurrent(ReleaseModel model)
+    {
+        for (int i = 0; i < InWorkList.Count; i++)
+        {
+            if (InWorkList[i].Equals(model))
+            {
+                model.Status = "Complete";
+                InWorkList.RemoveAt(i);
+                CurrentList.Add(model);
+            }
+        }
+
+        return InWorkList;
+    }
+
 }

@@ -10,7 +10,7 @@
 <MudPaper Class="paper-edit-release" Elevation="0">
     <MudCard Class="border card-create-release">
 
-        <MudForm Model="@EditRelease">
+        <MudForm @ref="_form" Model="@EditRelease" @bind-IsValid="@_success">
             <MudCardActions Class="pb-0">
                 <!-- TODO доделать OnClick -->
                 <MudIconButton Class="ml-auto" OnClick="SwitchEditRelease" Icon="@Icons.Filled.Close" />
@@ -26,20 +26,22 @@
                     </PickerActions>
                 </MudDatePicker>
                 
-                <MudAutocomplete ResetValueOnEmptyText="false" CoerceText="false" CoerceValue="true" T="string"
-                                 @bind-Value="EditRelease.PlatformName" SearchFunc="@SearchPlatform" Label="Платформа"/>
+                 <MudAutocomplete ResetValueOnEmptyText="true"
+                                 Immediate="true" T="string" Label="Платформа" CoerceValue="true"
+                                 @bind-Value="EditRelease.PlatformName" SearchFunc="@SearchPlatform"
+                                 Validation="@(new Func<string, IEnumerable<string>>(ValidatePlatform))" Required/>
                 
                    <MudContainer Class="flex-row d-flex align-end px-0 flex-grow-1 gap-1">
                         <MudText >Версия: </MudText>
-                        <MudTextField @bind-Value="EditRelease.Major"  Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true"/>
+                        <MudTextField @bind-Value="EditRelease.Major"  Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true" Required RequiredError="@String.Empty"/>
                         <MudText >.</MudText>
-                        <MudTextField @bind-Value="EditRelease.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true"/>
+                        <MudTextField @bind-Value="EditRelease.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true" Required RequiredError="@String.Empty"/>
                         <MudText>.</MudText>
-                        <MudTextField @bind-Value="EditRelease.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true"/>
+                        <MudTextField @bind-Value="EditRelease.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true" Required RequiredError="@String.Empty"/>
                     </MudContainer>
                
                 
-                <MudTextField @bind-Value="EditRelease.ReleaseStatus"   Immediate="true" Label="Статус" /> <!-- TODO только для релиз-менеджера -->
+                <MudTextField @bind-Value="EditRelease.Status" Disabled="true" Immediate="true" Label="Статус" />
 
                 <MudTextField @bind-Value="EditRelease.MainIssue"   Immediate="true"
                               Label="Ссылка на релиз задачу" />
@@ -50,26 +52,29 @@
             </MudCardContent>
 
             <MudCardActions>
-                <MudButton OnClick="ClickOnEditRelease" Variant="Variant.Filled" Color="Color.Primary"
-                           Class="mx-auto">Добавить</MudButton>
+                <MudButton OnClick="ClickOnEditRelease" Variant="Variant.Filled"
+                           Color="Color.Primary" Class="mx-auto" Disabled="@(!_success)">
+                    Изменить
+                </MudButton>
             </MudCardActions>
         </MudForm>
-        <MudText>@SwitchEditRelease</MudText>
-        <MudText>@GetUpdateUser</MudText>
-        <MudText>@Release</MudText>
     </MudCard>
 </MudPaper>
 
 
 @code {
-    private List<PlatformResponse> Platforms { get; set; }
+    
+    private MudForm _form;
+    private bool _success;
+    
+    private IList<PlatformResponse> Platforms { get; set; }
     private string[] AllNamePlatforms { get; set; }
 
     [Parameter]
     public Action SwitchEditRelease { get; set; } = () => { };
     
     [Parameter]
-    public Action GetUpdateUser { get; set; } = () => { };
+    public Action GetUpdateUser { get; set; } 
         
     [Parameter]
     public ReleaseModel Release { get; set;  }
@@ -80,7 +85,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // Platforms = await PlatformManager.GetAll();
+         //Platforms = await ReleaseManager.GetAllPlatforms();
             
             
         // TODO Тестовые данные
@@ -99,7 +104,7 @@
             Release.Minor,
             Release.Patch,
             Release.PlatformName,
-            Release.ReleaseStatus,
+            Release.Status,
             Release.CompleteDate,
             Release.UpdateDate,
             Release.MainIssue,
@@ -121,5 +126,10 @@
         GetUpdateUser();
         StateHasChanged();
     }
-
+    
+    private IEnumerable<string> ValidatePlatform(string value)
+    {
+        if (!string.IsNullOrWhiteSpace(value)) yield break;
+        yield return "Заполните платформу";
+    }
 }

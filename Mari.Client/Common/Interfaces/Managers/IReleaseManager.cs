@@ -14,5 +14,7 @@ public interface IReleaseManager
     Task UpdateRelease(ReleaseModel model,CancellationToken token = default);
     Task DeleteRelease(Guid id,CancellationToken token = default);
     Task<IList<PlatformResponse>> GetAllPlatforms(CancellationToken token = default);
+    IList<ReleaseModel> TransInWork(ReleaseModel model);
+    IList<ReleaseModel> TransInCurrent(ReleaseModel model);
     
 }

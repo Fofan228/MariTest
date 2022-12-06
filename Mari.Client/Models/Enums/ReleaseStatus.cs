@@ -7,6 +7,6 @@ public enum ReleaseStatus
     Testing,
     MarketModeration,
     InPublicationProcess,
-  //  Complete,
+    // Complete,
     Paused
 }

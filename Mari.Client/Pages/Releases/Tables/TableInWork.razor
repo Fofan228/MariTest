@@ -4,6 +4,7 @@
 @using Mari.Client.Models.Releases
 @using Mari.Contracts.Releases.Responses
 @using Microsoft.AspNetCore.Components
+@using System.Xml.Linq
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
@@ -12,12 +13,13 @@
           RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted"
           CommitEditTooltip="Сохранить" CancelEditTooltip="Отменить"
           EditTrigger="@editTrigger" Filter="new Func<ReleaseModel,bool>(FilterFunc)"
-          OnCommitEditClick="@(() => { Snackbar.Add("Изменения сохранены"); _clickOnRow = true; })"
+          OnCommitEditClick="@(() => { Snackbar.Add("Изменения сохранены"); 
+                                         _clickOnRow = true; })"
           OnCancelEditClick="@(() => { Snackbar.Add("Отменено"); _clickOnRow = true; })"
           OnPreviewEditClick="@(() => _clickOnRow = false)" OnRowClick="RowClicked"> 
     <ToolBarContent>
         <MudSpacer />
-        <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, версии, релизной задаче, статусу и датам"
+        <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, релизной задаче, статусу и датам"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" />
     </ToolBarContent>
     <ColGroup>
@@ -46,13 +48,13 @@
                 <MudLink Href="@context.MainIssue">@context.MainIssue</MudLink>
             </div>
         </MudTd>
-        <MudTd DataLabel="Status">@context.ReleaseStatus</MudTd>
+        <MudTd DataLabel="Status">@context.Status</MudTd>
         <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
         <MudTd DataLabel="CompleteDate">@context.CompleteDate.ToString()</MudTd>
         <MudTd>
             <div @onclick:stopPropagation="true">
                 <MudTooltip Text="Завершить">
-                   <MudIconButton Class="pa-0" Icon="@Icons.Filled.CancelScheduleSend"
+                   <MudIconButton Class="pa-0" OnClick="@(() => Trans(context))" Icon="@Icons.Filled.CancelScheduleSend"
                                   Size="@Size.Medium" Color="Color.Primary"/>
                 </MudTooltip>
             </div>
@@ -69,7 +71,7 @@
             @context.MainIssue
         </MudTd>
         <MudTd DataLabel="Status">
-            <MudSelect @bind-Value="@context.ReleaseStatus" Required>
+            <MudSelect @bind-Value="@context.Status" Required>
                 @foreach (var item in Enum.GetValues(typeof(ReleaseStatus)))
                 {
                     <MudSelectItem Value="@Convert.ToString(item)">@item</MudSelectItem>
@@ -104,6 +106,7 @@
     private IList<ReleaseModel> Releases { get; set; }
     private IList<PlatformResponse> Platforms { get; set; }
 
+    
     protected override async Task OnInitializedAsync()
     {
         Releases = await ReleaseManager.GetInWorkReleases();
@@ -139,7 +142,7 @@
              ((ReleaseModel)release).Minor,
              ((ReleaseModel)release).Patch,
              ((ReleaseModel)release).PlatformName,
-             ((ReleaseModel)release).ReleaseStatus,
+             ((ReleaseModel)release).Status,
              ((ReleaseModel)release).CompleteDate,
              ((ReleaseModel)release).UpdateDate,
              ((ReleaseModel)release).MainIssue,
@@ -154,7 +157,7 @@
         ((ReleaseModel)release).Minor = elementBeforeEdit.Minor;
         ((ReleaseModel)release).Patch = elementBeforeEdit.Patch;
         ((ReleaseModel)release).PlatformName = elementBeforeEdit.PlatformName;
-        ((ReleaseModel)release).ReleaseStatus = elementBeforeEdit.ReleaseStatus;
+        ((ReleaseModel)release).Status = elementBeforeEdit.Status;
         ((ReleaseModel)release).MainIssue = elementBeforeEdit.MainIssue;
         ((ReleaseModel)release).CompleteDate = elementBeforeEdit.CompleteDate;
         StateHasChanged();
@@ -163,7 +166,7 @@
     private async void ItemHasBeenCommitted(object release)
     {
         await ReleaseManager.UpdateRelease((ReleaseModel)release);
-        Releases = await ReleaseManager.GetPlannedReleases() ;
+        Releases = await ReleaseManager.GetInWorkReleases() ;
         
         StateHasChanged();
     }
@@ -176,8 +179,15 @@
             return true;
         if (answer.MainIssue.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-        if (answer.ReleaseStatus.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+        if (answer.Status.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(_searchString);
+    }
+    
+    
+    private void Trans(ReleaseModel model)
+    {
+        Releases = ReleaseManager.TransInCurrent(model);
+        StateHasChanged();
     }
 }

@@ -19,7 +19,7 @@
           OnPreviewEditClick="@(() => _clickOnRow = false)" OnRowClick="RowClicked"> 
     <ToolBarContent>
         <MudSpacer />
-        <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, версии, релизной задаче, статусу и датам"
+        <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, релизной задаче, статусу и датам"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" />
     </ToolBarContent>
     <ColGroup>
@@ -48,13 +48,13 @@
                 <MudLink Href="@context.MainIssue">@context.MainIssue</MudLink>
             </div>
         </MudTd>
-        <MudTd DataLabel="Status">@context.ReleaseStatus</MudTd>
+        <MudTd DataLabel="Status">@context.Status</MudTd>
         <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
         <MudTd DataLabel="CompleteDate">@context.CompleteDate.ToString()</MudTd>
         <MudTd>
             <div @onclick:stopPropagation="true">
                 <MudTooltip Text="Отправить в работу">
-                    <MudIconButton Class="pa-0" Icon="@Icons.Filled.ScheduleSend"
+                    <MudIconButton Class="pa-0" OnClick="@(() => Trans(context))" Icon="@Icons.Filled.ScheduleSend"
                                    Size="@Size.Medium" Color="Color.Primary"/>
                 </MudTooltip>
             </div>
@@ -62,24 +62,25 @@
     </RowTemplate>
     <RowEditingTemplate>
         <MudTd DataLabel="PlatformName">
-            <MudAutocomplete T="string" @bind-Value="@context.PlatformName" SearchFunc="@SearchPlatform" CoerceValue="true"/>
+            <MudAutocomplete T="string" @bind-Value="@context.PlatformName" SearchFunc="@SearchPlatform"
+                             CoerceValue="true" ResetValueOnEmptyText="true" Required RequiredError="Заполните платформу"/>
         </MudTd>
         <MudTd DataLabel="Version">
 
             <MudContainer  Class="flex-row d-flex align-end px-0 flex-grow-1 gap-1" >
-                <MudTextField @bind-Value="@context.Major" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true" Label="Версия" /> 
+                <MudTextField @bind-Value="@context.Major" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true" Required="true" RequiredError="@String.Empty"/> 
                 <MudText >.</MudText>
-                <MudTextField @bind-Value="@context.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  /> 
+                <MudTextField @bind-Value="@context.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  Required="true" RequiredError="@String.Empty"/> 
                 <MudText>.</MudText>
-                <MudTextField @bind-Value="@context.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  /> 
+                <MudTextField @bind-Value="@context.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  Required="true" RequiredError="@String.Empty"/> 
             </MudContainer>
 
         </MudTd>
         <MudTd DataLabel="ReleaseTask">
-            <MudTextField @bind-Value="@context.MainIssue" Required/>
+            <MudTextField @bind-Value="@context.MainIssue"/>
         </MudTd>
         <MudTd DataLabel="Status">
-            @context.ReleaseStatus
+            @context.Status
         </MudTd>
         <MudTd DataLabel="UpdateDate">
             @context.UpdateDate.ToString()
@@ -94,7 +95,8 @@
     </RowEditingTemplate>
     <EditButtonContent Context="button">
         <MudTooltip Text="Изменить">
-            <MudIconButton Size="@Size.Medium" Icon="@Icons.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled"/>
+            <MudIconButton Size="@Size.Medium" Icon="@Icons.Outlined.Edit" Class="pa-0"
+                           OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled"/>
         </MudTooltip>
     </EditButtonContent>
 </MudTable>
@@ -124,9 +126,9 @@
     private void SwitchDimmingAdd()
     {
         SwitchDimming();
-        Platforms = ReleaseManager.GetAllPlatforms().Result;
-        if(Platforms is not null)
-            AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
+       // Platforms = ReleaseManager.GetAllPlatforms().Result;
+      //  if(Platforms is not null)
+        //    AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
         StateHasChanged();
     }
     
@@ -146,28 +148,27 @@
     protected override async Task OnInitializedAsync()
     {
         Releases = await ReleaseManager.GetPlannedReleases() ;
-        Platforms = await ReleaseManager.GetAllPlatforms();
+        //Platforms = await ReleaseManager.GetAllPlatforms();
         
-    /*// TODO Тестовые данные
-        Releases = new List<ReleaseModel>()
-        {
-            new ReleaseModel(Guid.NewGuid(), 1, 1, 1, "Android", "Testing", 
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11),"http", "GG"),
-            new ReleaseModel(Guid.NewGuid(), 1, 1, 1, "Android", "Testing",
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "http","GG"),
-            new ReleaseModel(Guid.NewGuid(), 1, 1, 1, "Android", "Testing", 
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "http","GG")
-        };
+    // TODO Тестовые данные
+        // Releases = new List<ReleaseModel>()
+        // {
+        //     new ReleaseModel(Guid.NewGuid(), 1, 1, 1, "Android", "Testing", 
+        //         new DateTime(2022, 11, 11), new DateTime(2022, 11, 11),"http", "GG"),
+        //     new ReleaseModel(Guid.NewGuid(), 1, 1, 1, "Android", "Testing",
+        //         new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "http","GG"),
+        //     new ReleaseModel(Guid.NewGuid(), 1, 1, 1, "Android", "Testing", 
+        //         new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "http","GG")
+        // };
         
        Platforms = new List<PlatformResponse>()
         {
             new PlatformResponse("Android",1,1,1),
             new PlatformResponse("Ios",1,1,1)
         };
-    // конец*/
-
-        if(Platforms is not null)
-            AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
+    // конец
+        
+        AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
     }
     
     private async Task<IEnumerable<string>> SearchPlatform(string value)
@@ -196,7 +197,7 @@
             ((ReleaseModel)release).Minor,
             ((ReleaseModel)release).Patch,
             ((ReleaseModel)release).PlatformName,
-            ((ReleaseModel)release).ReleaseStatus,
+            ((ReleaseModel)release).Status,
             ((ReleaseModel)release).CompleteDate,
             ((ReleaseModel)release).UpdateDate,
             ((ReleaseModel)release).MainIssue,
@@ -211,7 +212,7 @@
         ((ReleaseModel)release).Minor = elementBeforeEdit.Minor;
         ((ReleaseModel)release).Patch = elementBeforeEdit.Patch;
         ((ReleaseModel)release).PlatformName = elementBeforeEdit.PlatformName;
-        ((ReleaseModel)release).ReleaseStatus = elementBeforeEdit.ReleaseStatus;
+        ((ReleaseModel)release).Status = elementBeforeEdit.Status;
         ((ReleaseModel)release).MainIssue = elementBeforeEdit.MainIssue;
         ((ReleaseModel)release).CompleteDate = elementBeforeEdit.CompleteDate;
         StateHasChanged();
@@ -233,8 +234,14 @@
             return true;
         if (answer.MainIssue.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-        if (answer.ReleaseStatus.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+        if (answer.Status.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(_searchString);
+    }
+    
+    private void Trans(ReleaseModel model)
+    {
+        Releases = ReleaseManager.TransInWork(model);
+        StateHasChanged();
     }
 }

@@ -53,17 +53,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-       // Comments = await CommentManager.GetAllUserComment(Guid.Parse(Id));
+        
+       // UserComments = await CommentManager.GetAllUserComment(Guid.Parse(Id));
         
     // TODO Тестовые данные
-     UserComments = new List<CommentResponse>()
+     /*UserComments = new List<CommentResponse>()
         {
             new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
             new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
             new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
             new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
 
-        };
+        };*/
     }
 
     string Name { get; set; } = "Ахимат";
@@ -71,6 +72,10 @@
 
     private void AddComment()
     {
+        
+        UserComments.Add(new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, Name, Text, DateTime.UtcNow.ToString(), false));
+
+        Text = null;
      // CommentManager.Post(newCommnet); 
     // Comments = await CommentManager.GetAllUserComment(Guid.Parse(Id));
         StateHasChanged();
