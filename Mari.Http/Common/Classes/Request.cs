@@ -1,28 +1,27 @@
+using System.Reflection.Emit;
 using System.Net.Http.Json;
 using Mari.Http.Common.Interfaces;
+using Mari.Http.Models;
 
 namespace Mari.Http.Common.Classes;
 
-public abstract class Request<TRoute, TQuery, TBody, TResponse> : IRequest<TResponse>
-    where TRoute : IRequestRoute
-    where TQuery : IRequestQuery
-    where TBody : IRequestBody
+public abstract class Request<TResponse> : IRequest<TResponse>
     where TResponse : notnull
 {
-    protected Request(TRoute route, TQuery query, TBody body)
+    protected Request(IRequestRoute? route = default, IRequestQuery? query = default, IRequestBody? body = default)
     {
-        RouteParams = route;
-        QueryParams = query;
-        BodyContent = body;
+        RouteParams = route ?? new EmptyRoute();
+        QueryParams = query ?? new EmptyQuery();
+        BodyContent = body ?? new EmptyBody();
     }
 
-    public TRoute RouteParams { get; set; }
-    public TQuery QueryParams { get; set; }
-    public TBody BodyContent { get; set; }
+    public IRequestRoute RouteParams { get; set; }
+    public IRequestQuery QueryParams { get; set; }
+    public IRequestBody BodyContent { get; set; }
 
     public abstract string RouteTemplate { get; }
 
-    public string GetRouteWithParams() => RouteParams.GetRoute(RouteTemplate);
+    public string GetRoute() => RouteParams.GetRouteString(RouteTemplate);
     public string GetQueryString() => QueryParams.GetQueryString();
     public JsonContent? GetBodyContent() => BodyContent.GetBody();
 }

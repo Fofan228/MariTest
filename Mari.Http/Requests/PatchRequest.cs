@@ -3,13 +3,11 @@ using Mari.Http.Common.Interfaces;
 
 namespace Mari.Http.Requests;
 
-public abstract class PatchRequest<TRoute, TQuery, TBody, TResponse> : Request<TRoute, TQuery, TBody, TResponse>
-    where TRoute : IRequestRoute
-    where TQuery : IRequestQuery
-    where TBody : IRequestBody
+public abstract class PatchRequest<TResponse> : Request<TResponse>
     where TResponse : notnull
 {
-    protected PatchRequest(TRoute route, TQuery query, TBody body) : base(route, query, body)
+    protected PatchRequest(IRequestRoute? route = null, IRequestQuery? query = null, IRequestBody? body = null)
+        : base(route, query, body)
     {
     }
 }

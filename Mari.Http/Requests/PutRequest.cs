@@ -4,12 +4,10 @@ using Mari.Http.Models;
 
 namespace Mari.Http.Requests;
 
-public abstract class PutRequest<TRoute, TQuery, TBody> : Request<TRoute, TQuery, TBody, VoidResponse>
-    where TRoute : IRequestRoute
-    where TQuery : IRequestQuery
-    where TBody : IRequestBody
+public abstract class PutRequest : Request<VoidResponse>
 {
-    protected PutRequest(TRoute route, TQuery query, TBody body) : base(route, query, body)
+    protected PutRequest(IRequestRoute? route = null, IRequestQuery? query = null, IRequestBody? body = null)
+        : base(route, query, body)
     {
     }
 }

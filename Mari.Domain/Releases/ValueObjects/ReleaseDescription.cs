@@ -13,7 +13,7 @@ public record ReleaseDescription :
 
     public static ReleaseDescription Default => ReleaseDescription.Create(string.Empty);
 
-    public static string Pattern => "*";
+    public static string Pattern => ".*";
     public static uint? MaxLength => 1000;
     public static uint? MinLength => null;
 }

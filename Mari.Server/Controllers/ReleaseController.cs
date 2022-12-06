@@ -2,13 +2,18 @@ using MapsterMapper;
 using Mari.Application.Releases.Commands.CreateDraftRelease;
 using Mari.Application.Releases.Commands.CreateRelease;
 using Mari.Application.Releases.Commands.CreateReleaseFromDraft;
+using Mari.Application.Releases.Commands.DeleteRelease;
+using Mari.Application.Releases.Commands.UpdateDraftRelease;
+using Mari.Application.Releases.Commands.UpdateRelease;
 using Mari.Application.Releases.Queries.GetAllPlatforms;
 using Mari.Application.Releases.Queries.GetCurrentReleases;
 using Mari.Application.Releases.Queries.GetInWorkReleases;
 using Mari.Application.Releases.Queries.GetPlannedReleases;
 using Mari.Contracts.Common.Routes.Server;
+using Mari.Contracts.Releases.DeleteRequests;
 using Mari.Contracts.Releases.GetRequests;
 using Mari.Contracts.Releases.PostRequests;
+using Mari.Contracts.Releases.PutRequests;
 using Mari.Contracts.Releases.Responses;
 using Mari.Server.Controllers.Common;
 using MediatR;
@@ -109,6 +114,42 @@ public class ReleaseController : ApiController
     {
         var request = _mapper.Map<CreateReleaseFromDraftCommand>(route);
         var result = await _sender.Send(request, token);
+
+        if (result.IsError) return Problem(result.Errors);
+
+        return Ok();
+    }
+
+    [HttpPut(UpdateReleaseRequest.ConstRouteTemplate)]
+    public async Task<ActionResult> UpdateRelease(
+        [FromBody] UpdateReleaseRequest.Body body)
+    {
+        var updateReleaseCommand = _mapper.Map<UpdateReleaseCommand>(body);
+        var result = await _sender.Send(updateReleaseCommand);
+
+        if (result.IsError) return Problem(result.Errors);
+
+        return Ok();
+    }
+
+    [HttpPut(UpdateDraftReleaseRequest.ConstRouteTemplate)]
+    public async Task<ActionResult> UpdateDraftRelease(
+        [FromBody] UpdateDraftReleaseRequest.Body body)
+    {
+        var updateReleaseCommand = _mapper.Map<UpdateDraftReleaseCommand>(body);
+        var result = await _sender.Send(updateReleaseCommand);
+
+        if (result.IsError) return Problem(result.Errors);
+
+        return Ok();
+    }
+
+    [HttpDelete(DeleteReleaseRequest.ConstRouteTemplate)]
+    public async Task<ActionResult> DeleteRelease(
+        [FromRoute] DeleteReleaseRequest.Route route)
+    {
+        var deleteReleaseCommand = _mapper.Map<DeleteReleaseCommand>(route);
+        var result = await _sender.Send(deleteReleaseCommand);
 
         if (result.IsError) return Problem(result.Errors);
 

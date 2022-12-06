@@ -5,7 +5,7 @@ namespace Mari.Http.Common.Interfaces;
 public interface IRequest<TResponse>
     where TResponse : notnull
 {
-    string GetRouteWithParams();
+    string GetRoute();
     string GetQueryString();
     JsonContent? GetBodyContent();
 }

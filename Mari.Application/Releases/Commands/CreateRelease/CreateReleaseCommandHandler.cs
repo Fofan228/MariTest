@@ -3,7 +3,6 @@ using Mari.Application.Common.Interfaces.Persistence;
 using Mari.Domain.Releases;
 using Mari.Domain.Releases.Entities;
 using Mari.Domain.Releases.Enums;
-using Mari.Domain.Releases.ValueObjects;
 using MediatR;
 
 namespace Mari.Application.Releases.Commands.CreateRelease;

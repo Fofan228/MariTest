@@ -3,13 +3,11 @@ using Mari.Http.Common.Interfaces;
 
 namespace Mari.Http.Requests;
 
-public abstract class PostRequest<TRoute, TQuery, TBody, TResponse> : Request<TRoute, TQuery, TBody, TResponse>
-    where TRoute : IRequestRoute
-    where TQuery : IRequestQuery
-    where TBody : IRequestBody
+public abstract class PostRequest<TResponse> : Request<TResponse>
     where TResponse : notnull
 {
-    protected PostRequest(TRoute route, TQuery query, TBody body) : base(route, query, body)
+    protected PostRequest(IRequestRoute? route = default, IRequestQuery? query = null, IRequestBody? body = null)
+        : base(route, query, body)
     {
     }
 }

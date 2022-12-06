@@ -1,9 +1,9 @@
 using System.Net.Http.Json;
-using Mari.Http.Common.Classes;
+using Mari.Http.Common.Interfaces;
 
 namespace Mari.Http.Models;
 
-public sealed record EmptyBody : RequestBody
+public sealed record EmptyBody : IRequestBody
 {
-    public override JsonContent? GetBody() => null;
+    public JsonContent? GetBody() => null;
 }

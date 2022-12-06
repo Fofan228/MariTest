@@ -6,12 +6,12 @@ using static Mari.Contracts.Releases.PostRequests.CreateReleaseRequest;
 
 namespace Mari.Contracts.Releases.PostRequests;
 
-public class CreateReleaseRequest : PostRequest<EmptyRoute, EmptyQuery, Body, VoidResponse>
+public class CreateReleaseRequest : PostRequest<VoidResponse>
 {
     public const string ConstRouteTemplate = ServerRoutes.Controllers.Release;
     public override string RouteTemplate => ConstRouteTemplate;
 
-    public CreateReleaseRequest(Body body) : base(new(), new(), body)
+    public CreateReleaseRequest(Body body) : base(body: body)
     {
     }
 

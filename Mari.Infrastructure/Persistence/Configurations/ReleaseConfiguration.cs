@@ -49,5 +49,8 @@ public class ReleaseConfiguration : IEntityTypeConfiguration<Release>
         builder.HasOne(r => r.Platform)
             .WithMany()
             .IsRequired();
+
+        builder.Navigation(r => r.Platform)
+            .AutoInclude();
     }
 }

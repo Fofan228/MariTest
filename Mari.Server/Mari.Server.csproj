@@ -20,7 +20,6 @@
     <ProjectReference Include="..\Mari.Contracts\Mari.Contracts.csproj" />
     <ProjectReference Include="..\Mari.Application\Mari.Application.csproj" />
     <ProjectReference Include="..\Mari.Infrastructure\Mari.Infrastructure.csproj" />
-    <ProjectReference Include="..\Mari.Client\Mari.Client.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@ using Mari.Domain.Releases.ValueObjects;
 
 namespace Mari.Application.Releases.Commands.CreateRelease;
 
-internal class CreateReleaseCommandValidator : AbstractValidator<CreateReleaseCommand>
+public class CreateReleaseCommandValidator : AbstractValidator<CreateReleaseCommand>
 {
     public CreateReleaseCommandValidator(
         IValidator<Issue> issueValidator,

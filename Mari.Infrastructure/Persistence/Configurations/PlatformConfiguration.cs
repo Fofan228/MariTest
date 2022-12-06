@@ -17,5 +17,7 @@ public class PlatformConfiguration : IEntityTypeConfiguration<Platform>
         builder.Property(p => p.Name)
             .IsStringWrapper()
             .IsRequired();
+
+        builder.HasAlternateKey(p => p.Name);
     }
 }
