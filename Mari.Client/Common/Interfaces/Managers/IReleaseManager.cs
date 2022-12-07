@@ -1,5 +1,4 @@
 using Mari.Client.Models.Releases;
-using Mari.Contracts.Releases.Responses;
 
 namespace Mari.Client.Common.Interfaces.Managers;
 

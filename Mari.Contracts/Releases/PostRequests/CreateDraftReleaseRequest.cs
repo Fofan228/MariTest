@@ -19,7 +19,7 @@ public class CreateDraftReleaseRequest : PostRequest<VoidResponse>
         string? MainIssue,
         DateTime? CompleteDate,
         string? PlatformName,
-        VersionDto Version,
+        ReleaseVersionDto? Version,
         string? Description)
         : RequestBody;
 }

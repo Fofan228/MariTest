@@ -11,7 +11,7 @@ public record CreateReleaseCommand : IRequest<ErrorOr<Created>>
         string mainIssue,
         DateTime completeDate,
         string platformName,
-        VersionDto version,
+        ReleaseVersionDto version,
         string description)
     {
         MainIssue = Issue.Create(mainIssue);

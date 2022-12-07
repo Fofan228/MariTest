@@ -1,6 +1,7 @@
 using ErrorOr;
 using Mari.Application.Common.Interfaces.Persistence;
 using Mari.Application.Common.Specifications;
+using Mari.Application.Releases.Dto;
 using Mari.Application.Releases.Results;
 using MediatR;
 
@@ -24,7 +25,7 @@ public class GetAllPlatformsQueryHandler : IRequestHandler<GetAllPlatformsQuery,
         {
             var platformSpec = ReleaseSpecs.PlatformIn(platform);
             var version = await _releaseRepository.GetMaxVersion(platformSpec, token);
-            result.Add(new PlatformResult(platform.Name, version.Major, version.Minor, version.Patch));
+            result.Add(new PlatformResult(platform.Name, ReleaseVersionDto.FromVersion(version)));
         }
 
         return result;

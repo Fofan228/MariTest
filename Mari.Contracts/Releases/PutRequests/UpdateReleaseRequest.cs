@@ -16,9 +16,9 @@ public class UpdateReleaseRequest : PutRequest
 
     public record Body(
         Guid Id,
-        VersionDto Version,
+        ReleaseVersionDto Version,
         string PlatformName,
-        int Status,
+        string Status,
         DateTime CompleteDate,
         string MainIssue,
         string Description)

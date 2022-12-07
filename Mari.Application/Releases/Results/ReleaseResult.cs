@@ -1,10 +1,11 @@
+using Mari.Application.Releases.Dto;
 using Mari.Domain.Releases;
 
 namespace Mari.Application.Releases.Results;
 
 public record ReleaseResult(
     Guid Id,
-    string Version,
+    ReleaseVersionDto Version,
     string PlatformName,
     string Status,
     DateTime CompleteDate,
@@ -14,7 +15,7 @@ public record ReleaseResult(
 {
     public static ReleaseResult FromRelease(Release release) => new(
         Id: release.Id,
-        Version: release.Version.ToVersionString(),
+        Version: ReleaseVersionDto.FromVersion(release.Version),
         PlatformName: release.Platform.Name,
         Status: release.Status.ToString(),
         CompleteDate: release.CompleteDate,

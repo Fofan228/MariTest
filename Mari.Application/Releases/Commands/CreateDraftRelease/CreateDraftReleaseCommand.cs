@@ -12,7 +12,7 @@ public record CreateDraftReleaseCommand : IRequest<ErrorOr<Created>>
         DateTime? completeDate,
         string? platformName,
         string? description,
-        VersionDto version)
+        ReleaseVersionDto version)
     {
         if (mainIssue is not null)
             MainIssue = Issue.Create(mainIssue);

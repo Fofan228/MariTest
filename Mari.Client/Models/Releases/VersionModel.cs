@@ -1,6 +1,6 @@
 namespace Mari.Client.Models.Releases;
 
-public struct VersionModel
+public class VersionModel
 {
     public int Major { get; set; }
     public int Minor { get; set; }

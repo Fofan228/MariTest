@@ -1,14 +1,12 @@
 ﻿using MapsterMapper;
 using Mari.Client.Common.Http.ProblemsHandling;
 using Mari.Client.Common.Interfaces.Managers;
-using Mari.Client.Models.Enums;
 using Mari.Client.Models.Releases;
 using Mari.Contracts.Releases.DeleteRequests;
 using Mari.Contracts.Releases.GetRequests;
 using Mari.Contracts.Releases.PatchRequests;
 using Mari.Contracts.Releases.PostRequests;
 using Mari.Contracts.Releases.PutRequests;
-using Mari.Contracts.Releases.Responses;
 using Mari.Http.Services;
 
 
@@ -98,7 +96,7 @@ public class ReleaseManager : IReleaseManager
 
     public async Task<IList<ReleaseModel>> GetInWork(CancellationToken token = default)
     {
-        /*var request = new GetInWorkReleasesRequest();
+        var request = new GetInWorkReleasesRequest();
         var response = await _httpSender.GetAsync(request, token);
         if (!response.IsSuccess)
         {
