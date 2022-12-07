@@ -10,6 +10,6 @@ public interface IReleaseRepository : IRepository<Release, ReleaseId>
 {
     IAsyncEnumerable<Platform> GetAllPlatforms();
     Task<Platform?> GetPlatformByName(PlatformName name, CancellationToken token = default);
-    Task<ReleaseVersion> GetMaxVersion(Specification<Release> specification, CancellationToken token = default);
+    Task<ReleaseVersion?> GetMaxVersion(Specification<Release> specification, CancellationToken token = default);
     IAsyncEnumerable<Release> GetCurrentReleases(Range range);
 }

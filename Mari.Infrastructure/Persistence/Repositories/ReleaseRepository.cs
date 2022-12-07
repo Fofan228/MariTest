@@ -32,13 +32,17 @@ public class ReleaseRepository : Repository<Release, ReleaseId>, IReleaseReposit
             .FirstOrDefaultAsync();
     }
 
-    public Task<ReleaseVersion> GetMaxVersion(
+    public async Task<ReleaseVersion?> GetMaxVersion(
         Specification<Release> specification,
         CancellationToken token = default)
     {
         return Set.AsNoTracking()
             .Where(specification)
-            .MaxAsync(r => r.Version, token);
+            .OrderByDescending(r => r.Version.Major)
+            .ThenBy(r => r.Version.Minor)
+            .ThenBy(r => r.Version.Patch)
+            .Select(r => r.Version)
+            .FirstOrDefault();
     }
 
     public IAsyncEnumerable<Release> GetCurrentReleases(Range range)

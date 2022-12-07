@@ -3,6 +3,7 @@ using Mari.Application.Common.Interfaces.Persistence;
 using Mari.Application.Common.Specifications;
 using Mari.Application.Releases.Dto;
 using Mari.Application.Releases.Results;
+using Mari.Domain.Releases.ValueObjects;
 using MediatR;
 
 namespace Mari.Application.Releases.Queries.GetAllPlatforms;
@@ -18,14 +19,14 @@ public class GetAllPlatformsQueryHandler : IRequestHandler<GetAllPlatformsQuery,
 
     public async Task<ErrorOr<IEnumerable<PlatformResult>>> Handle(GetAllPlatformsQuery request, CancellationToken token)
     {
-        var platforms = _releaseRepository.GetAllPlatforms();
+        var platforms = await _releaseRepository.GetAllPlatforms().ToListAsync(token);
         var result = new List<PlatformResult>();
 
-        await foreach (var platform in platforms)
+        foreach (var platform in platforms)
         {
             var platformSpec = ReleaseSpecs.PlatformIn(platform);
             var version = await _releaseRepository.GetMaxVersion(platformSpec, token);
-            result.Add(new PlatformResult(platform.Name, ReleaseVersionDto.FromVersion(version)));
+            result.Add(new PlatformResult(platform.Name, ReleaseVersionDto.FromVersion(version!)));
         }
 
         return result;

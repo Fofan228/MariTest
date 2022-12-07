@@ -37,7 +37,7 @@ public class ReleaseConfiguration : IEntityTypeConfiguration<Release>
         var version = builder.OwnsOne(r => r.Version, version =>
         {
             version.Property(v => v.Major)
-           .IsRequired();
+                .IsRequired();
 
             version.Property(v => v.Minor)
                 .IsRequired();
