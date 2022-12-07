@@ -5,13 +5,8 @@ using Mari.Http.Requests;
 
 namespace Mari.Contracts.Releases.GetRequests;
 
-public class GetCurrentReleasesRequest : GetRequest<EmptyRoute, EmptyQuery, IEnumerable<ReleaseResponse>>
+public class GetCurrentReleasesRequest : GetRequest<IEnumerable<ReleaseResponse>>
 {
     public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/current";
     public override string RouteTemplate => ConstRouteTemplate;
-
-    public GetCurrentReleasesRequest()
-        : base(new(), new())
-    {
-    }
 }

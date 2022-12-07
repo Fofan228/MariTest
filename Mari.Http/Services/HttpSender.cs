@@ -28,11 +28,9 @@ public class HttpSender
             : _httpClientFactory.CreateClient(clientName);
     }
 
-    public async Task<ProblemOr<TResponse>> GetAsync<TRoute, TQuery, TResponse>(
-        GetRequest<TRoute, TQuery, TResponse> request,
+    public async Task<ProblemOr<TResponse>> GetAsync<TResponse>(
+        GetRequest<TResponse> request,
         CancellationToken cancellationToken = default)
-        where TRoute : IRequestRoute
-        where TQuery : IRequestQuery
         where TResponse : notnull
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
@@ -40,12 +38,9 @@ public class HttpSender
         return await HandleHttpResponse<TResponse>(response, cancellationToken);
     }
 
-    public async Task<ProblemOr<TResponse>> PostAsync<TRoute, TQuery, TBody, TResponse>(
-        PostRequest<TRoute, TQuery, TBody, TResponse> request,
+    public async Task<ProblemOr<TResponse>> PostAsync<TResponse>(
+        PostRequest<TResponse> request,
         CancellationToken cancellationToken = default)
-        where TRoute : IRequestRoute
-        where TQuery : IRequestQuery
-        where TBody : IRequestBody
         where TResponse : notnull
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
@@ -53,23 +48,18 @@ public class HttpSender
         return await HandleHttpResponse<TResponse>(response, cancellationToken);
     }
 
-    public async Task<ProblemOr<VoidResponse>> PutAsync<TRoute, TQuery, TBody>(
-        PutRequest<TRoute, TQuery, TBody> request,
+    public async Task<ProblemOr<VoidResponse>> PutAsync(
+        PutRequest request,
         CancellationToken cancellationToken = default)
-        where TRoute : IRequestRoute
-        where TQuery : IRequestQuery
-        where TBody : IRequestBody
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
         var response = await Client.PutAsJsonAsync(absoluteRoute, request.BodyContent, cancellationToken);
         return await HandleHttpResponse<VoidResponse>(response, cancellationToken);
     }
 
-    public async Task<ProblemOr<TResponse>> DeleteAsync<TRoute, TQuery, TResponse>(
-        DeleteRequest<TRoute, TQuery, TResponse> request,
+    public async Task<ProblemOr<TResponse>> DeleteAsync<TResponse>(
+        DeleteRequest<TResponse> request,
         CancellationToken cancellationToken = default)
-        where TRoute : IRequestRoute
-        where TQuery : IRequestQuery
         where TResponse : notnull
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
@@ -77,12 +67,9 @@ public class HttpSender
         return await HandleHttpResponse<TResponse>(response, cancellationToken);
     }
 
-    public async Task<ProblemOr<TResponse>> PatchAsync<TRoute, TQuery, TBody, TResponse>(
-        PatchRequest<TRoute, TQuery, TBody, TResponse> request,
+    public async Task<ProblemOr<TResponse>> PatchAsync<TResponse>(
+        PatchRequest<TResponse> request,
         CancellationToken cancellationToken = default)
-        where TRoute : IRequestRoute
-        where TQuery : IRequestQuery
-        where TBody : IRequestBody
         where TResponse : notnull
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
@@ -123,7 +110,7 @@ public class HttpSender
     private Uri CreateUri<TResponse>(IRequest<TResponse> request, Uri? baseAddress = null)
         where TResponse : notnull
     {
-        var routeUri = new Uri(request.GetRouteWithParams(), UriKind.RelativeOrAbsolute);
+        var routeUri = new Uri(request.GetRoute(), UriKind.RelativeOrAbsolute);
         var builderUri = routeUri.IsAbsoluteUri ? routeUri : new Uri(baseAddress!, routeUri);
         var builder = new UriBuilder(builderUri);
         builder.Query = request.GetQueryString();

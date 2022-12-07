@@ -6,12 +6,14 @@ using static Mari.Contracts.Releases.PostRequests.CreateReleaseFromDraftRequest;
 
 namespace Mari.Contracts.Releases.PostRequests;
 
-public class CreateReleaseFromDraftRequest : PostRequest<Route, EmptyQuery, EmptyBody, VoidResponse>
+public class CreateReleaseFromDraftRequest : PostRequest<VoidResponse>
 {
-    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/from_draft/{{ReleaseId}}";
-    public override string RouteTemplate => $"{ServerRoutes.Controllers.Release}/from_draft/{RouteParams.ReleaseId}";
+    private new Route RouteParams => (Route)base.RouteParams;
 
-    public CreateReleaseFromDraftRequest(Route body) : base(body, new(), new())
+    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/from_draft/{{{nameof(Route.ReleaseId)}}}";
+    public override string RouteTemplate => ConstRouteTemplate;
+
+    public CreateReleaseFromDraftRequest(Route route) : base(route: route)
     {
     }
 

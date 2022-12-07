@@ -22,13 +22,18 @@ internal class CreateReleaseCommandHandler : IRequestHandler<CreateReleaseComman
 
     public async Task<ErrorOr<Created>> Handle(CreateReleaseCommand request, CancellationToken cancellationToken)
     {
-        var platformCreateResult = Platform.Create(request.PlatformName);
+        var platform = await _releaseRepository.GetPlatformByName(request.PlatformName, cancellationToken);
 
-        if (platformCreateResult.IsError) return platformCreateResult.Errors;
+        if (platform is null)
+        {
+            var platformCreateResult = Platform.Create(request.PlatformName);
+            if (platformCreateResult.IsError) return platformCreateResult.Errors;
+            platform = platformCreateResult.Value;
+        }
 
         var releaseCreateResult = Release.Create(
             mainIssue: request.MainIssue,
-            platform: platformCreateResult.Value,
+            platform: platform,
             completeDate: request.CompleteDate,
             version: request.Version,
             description: request.Description,

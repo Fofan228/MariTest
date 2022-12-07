@@ -1,4 +1,5 @@
 using ErrorOr;
+using Mari.Application.Releases.Dto;
 using Mari.Domain.Releases.ValueObjects;
 using MediatR;
 
@@ -10,15 +11,13 @@ public record CreateReleaseCommand : IRequest<ErrorOr<Created>>
         string mainIssue,
         DateTime completeDate,
         string platformName,
-        int versionMajor,
-        int versionMinor,
-        int versionPatch,
+        VersionDto version,
         string description)
     {
         MainIssue = Issue.Create(mainIssue);
         CompleteDate = ReleaseCompleteDate.Create(completeDate);
         PlatformName = PlatformName.Create(platformName);
-        Version = ReleaseVersion.Create(versionMajor, versionMinor, versionPatch);
+        Version = ReleaseVersion.Create(version.Major, version.Minor, version.Patch);
         Description = ReleaseDescription.Create(description);
     }
 

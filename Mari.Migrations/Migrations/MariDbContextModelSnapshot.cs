@@ -17,7 +17,7 @@ namespace Mari.Migrations.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -25,6 +25,7 @@ namespace Mari.Migrations.Migrations
             modelBuilder.Entity("Mari.Domain.Comments.Comment", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -69,8 +70,11 @@ namespace Mari.Migrations.Migrations
             modelBuilder.Entity("Mari.Domain.Releases.Entities.Platform", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -79,14 +83,19 @@ namespace Mari.Migrations.Migrations
                         .HasColumnName("name");
 
                     b.HasKey("Id")
-                        .HasName("pk_platforms");
+                        .HasName("pk_platform");
 
-                    b.ToTable("platforms", (string)null);
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_platform_name");
+
+                    b.ToTable("platform", (string)null);
                 });
 
             modelBuilder.Entity("Mari.Domain.Releases.Release", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
@@ -129,8 +138,11 @@ namespace Mari.Migrations.Migrations
             modelBuilder.Entity("Mari.Domain.Users.User", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean")
@@ -176,7 +188,7 @@ namespace Mari.Migrations.Migrations
                         .HasForeignKey("PlatformId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_releases_platforms_platform_temp_id");
+                        .HasConstraintName("fk_releases_platform_platform_temp_id");
 
                     b.OwnsOne("Mari.Domain.Releases.ValueObjects.ReleaseVersion", "Version", b1 =>
                         {
@@ -184,16 +196,16 @@ namespace Mari.Migrations.Migrations
                                 .HasColumnType("uuid")
                                 .HasColumnName("id");
 
-                            b1.Property<long>("Major")
-                                .HasColumnType("bigint")
+                            b1.Property<int>("Major")
+                                .HasColumnType("integer")
                                 .HasColumnName("version_major");
 
-                            b1.Property<long>("Minor")
-                                .HasColumnType("bigint")
+                            b1.Property<int>("Minor")
+                                .HasColumnType("integer")
                                 .HasColumnName("version_minor");
 
-                            b1.Property<long>("Patch")
-                                .HasColumnType("bigint")
+                            b1.Property<int>("Patch")
+                                .HasColumnType("integer")
                                 .HasColumnName("version_patch");
 
                             b1.HasKey("ReleaseId");

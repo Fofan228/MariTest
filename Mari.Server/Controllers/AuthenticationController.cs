@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using Mari.Server.Controllers.Common;
 using Microsoft.AspNetCore.Mvc;
-using Mari.Contracts.Common;
 using Microsoft.AspNetCore.Authorization;
 using Mari.Server.Authentication.Configurations;
 using MediatR;
@@ -14,6 +13,7 @@ using ErrorOr;
 using Mari.Server.Settings;
 using Microsoft.Extensions.Options;
 using Mari.Contracts.Common.Routes.Server;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Mari.Server.Controllers;
 
@@ -31,7 +31,9 @@ public class AuthorizationController : ApiController
 
     [HttpGet(AuthenticationRequest.ConstRouteTemplate)]
     [Authorize(AuthenticationSchemes = $"{CookieConfig.AuthenticationScheme}, {OAuthConfig.AuthenticationScheme}")]
-    public async Task<ActionResult> GetToken([FromQuery] AuthenticationRequest.Query query)
+    public async Task<ActionResult> GetToken(
+        [FromQuery] AuthenticationRequest.Query query,
+        CancellationToken cancellationToken)
     {
         var userIdClaim = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
@@ -47,17 +49,25 @@ public class AuthorizationController : ApiController
         if (existsResult.Value)
         {
             var loginQuery = new LoginQuery(userId);
-            authResult = await _sender.Send(loginQuery);
+            authResult = await _sender.Send(loginQuery, cancellationToken);
             if (authResult.IsError) return Problem(authResult.Errors);
         }
         else
         {
             var registrationCommand = new RegistrationCommand(userId, userName);
-            authResult = await _sender.Send(registrationCommand);
+            authResult = await _sender.Send(registrationCommand, cancellationToken);
             if (authResult.IsError) return Problem(authResult.Errors);
         }
         var builder = new UriBuilder(query.RedirectUri) { Query = $"token={authResult.Value.Token}" };
 
         return Redirect(builder.Uri.ToString());
+    }
+
+    [HttpGet(LogoutRequest.ConstRouteTemplate)]
+    [Authorize(AuthenticationSchemes = CookieConfig.AuthenticationScheme)]
+    public async Task<ActionResult> Logout([FromQuery] LogoutRequest.Query query)
+    {
+        await HttpContext.SignOutAsync(CookieConfig.AuthenticationScheme);
+        return Redirect(query.RedirectUri);
     }
 }

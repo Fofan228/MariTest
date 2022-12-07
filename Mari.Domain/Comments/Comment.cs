@@ -15,11 +15,9 @@ public class Comment : AggregateRoot<CommentId>
         ReleaseId releaseId,
         CommentContent content,
         CommentCreateDate createDate,
-        bool isSystem = false,
-        CommentId? id = null)
+        bool isSystem = false)
     {
         return new Comment(
-            id: id,
             userId: userId,
             releaseId: releaseId,
             content: content,
@@ -27,17 +25,16 @@ public class Comment : AggregateRoot<CommentId>
             isSystem: isSystem);
     }
 
-    private Comment() : base(default!)
+    private Comment()
     {
     }
 
     private Comment(
-        CommentId? id,
         UserId userId,
         ReleaseId releaseId,
         CommentContent content,
         CommentCreateDate createDate,
-        bool isSystem) : base(id)
+        bool isSystem)
     {
         UserId = userId;
         ReleaseId = releaseId;
@@ -52,8 +49,7 @@ public class Comment : AggregateRoot<CommentId>
         ReleaseId releaseId,
         SystemAction action,
         CommentCreateDate createDate,
-        string? additionalInfo = null,
-        CommentId? id = null)
+        string? additionalInfo = null)
     {
         additionalInfo = string.IsNullOrWhiteSpace(additionalInfo)
             ? string.Empty
@@ -66,8 +62,7 @@ public class Comment : AggregateRoot<CommentId>
             releaseId: releaseId,
             content: contentCreateResult,
             createDate: createDate,
-            isSystem: true,
-            id: id);
+            isSystem: true);
     }
 
     public CommentContent Content { get; private set; } = null!;

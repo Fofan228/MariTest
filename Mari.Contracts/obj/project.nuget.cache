@@ -1,18 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "meKmvpUpAvg6azGD98LibVyWTWPBMAV0mMxTMbj0hP0v/JQ/4gtRY1qP/NoiO/ZouCoFDx9x/uL+1O/NDiVzxg==",
+  "dgSpecHash": "4fYocZ+r82u12eSfkKetTz4m2ibQXZju0iBKTIJC2TSM3VYZQUxwUXH6nVJojSnim9A/WKdRZC4h1MLdh66AiA==",
   "success": true,
-  "projectFilePath": "/home/nanoster/projects/MariTest/Mari.Contracts/Mari.Contracts.csproj",
+  "projectFilePath": "/var/home/nanoster/Projects/MariTest/Mari.Contracts/Mari.Contracts.csproj",
   "expectedPackageFiles": [
-    "/home/nanoster/.nuget/packages/microsoft.extensions.dependencyinjection/7.0.0/microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/7.0.0/microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/microsoft.extensions.http/7.0.0/microsoft.extensions.http.7.0.0.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/microsoft.extensions.logging/7.0.0/microsoft.extensions.logging.7.0.0.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/microsoft.extensions.logging.abstractions/7.0.0/microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/microsoft.extensions.options/7.0.0/microsoft.extensions.options.7.0.0.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/microsoft.extensions.primitives/7.0.0/microsoft.extensions.primitives.7.0.0.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/oneof/3.0.216/oneof.3.0.216.nupkg.sha512",
-    "/home/nanoster/.nuget/packages/throw/1.3.1/throw.1.3.1.nupkg.sha512"
+    "/var/home/nanoster/.nuget/packages/microsoft.extensions.dependencyinjection/7.0.0/microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
+    "/var/home/nanoster/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/7.0.0/microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
+    "/var/home/nanoster/.nuget/packages/microsoft.extensions.http/7.0.0/microsoft.extensions.http.7.0.0.nupkg.sha512",
+    "/var/home/nanoster/.nuget/packages/microsoft.extensions.logging/7.0.0/microsoft.extensions.logging.7.0.0.nupkg.sha512",
+    "/var/home/nanoster/.nuget/packages/microsoft.extensions.logging.abstractions/7.0.0/microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
+    "/var/home/nanoster/.nuget/packages/microsoft.extensions.options/7.0.0/microsoft.extensions.options.7.0.0.nupkg.sha512",
+    "/var/home/nanoster/.nuget/packages/microsoft.extensions.primitives/7.0.0/microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "/var/home/nanoster/.nuget/packages/oneof/3.0.216/oneof.3.0.216.nupkg.sha512",
+    "/var/home/nanoster/.nuget/packages/throw/1.3.1/throw.1.3.1.nupkg.sha512"
   ],
   "logs": []
 }

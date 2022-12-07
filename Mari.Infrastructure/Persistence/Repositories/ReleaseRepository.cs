@@ -1,3 +1,4 @@
+using System.Numerics;
 using LinqSpecs;
 using Mari.Application.Common.Interfaces.Persistence;
 using Mari.Domain.Releases;
@@ -23,9 +24,17 @@ public class ReleaseRepository : Repository<Release, ReleaseId>, IReleaseReposit
             .AsAsyncEnumerable();
     }
 
+    public async Task<Platform?> GetPlatformByName(PlatformName name, CancellationToken token = default)
+    {
+        return await Set
+            .Select(r => r.Platform)
+            .Where(p => p.Name == name)
+            .FirstOrDefaultAsync();
+    }
+
     public Task<ReleaseVersion> GetMaxVersion(
         Specification<Release> specification,
-        CancellationToken token)
+        CancellationToken token = default)
     {
         return Set.AsNoTracking()
             .Where(specification)

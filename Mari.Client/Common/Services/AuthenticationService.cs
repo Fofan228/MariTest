@@ -29,7 +29,7 @@ public class AuthenticationService : IAuthenticationService
         var request = new AuthenticationRequest(query);
         var builder = new UriBuilder(_navigationManager.BaseUri)
         {
-            Path = request.GetRouteWithParams(),
+            Path = request.GetRoute(),
             Query = request.GetQueryString()
         };
         _navigationManager.NavigateTo(builder.Uri.ToString(), true);
@@ -44,5 +44,13 @@ public class AuthenticationService : IAuthenticationService
     {
         await _localStorage.RemoveItemAsync(LocalStorageKeys.Authentication.Token);
         _authenticationStateProvider.UpdateAuthenticationState();
+        var query = new LogoutRequest.Query(_navigationManager.Uri);
+        var request = new LogoutRequest(query);
+        var builder = new UriBuilder(_navigationManager.BaseUri)
+        {
+            Path = request.GetRoute(),
+            Query = request.GetQueryString()
+        };
+        _navigationManager.NavigateTo(builder.Uri.ToString(), true);
     }
 }

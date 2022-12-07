@@ -1,8 +1,8 @@
-using Mari.Http.Common.Classes;
+using Mari.Http.Common.Interfaces;
 
 namespace Mari.Http.Models;
 
-public record EmptyRoute : RequestRoute
+public record EmptyRoute : IRequestRoute
 {
-    public override string GetRoute(string routeTemplate) => routeTemplate;
+    public string GetRouteString(string routeTemplate) => routeTemplate;
 }

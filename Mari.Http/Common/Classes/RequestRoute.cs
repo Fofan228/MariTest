@@ -5,7 +5,7 @@ namespace Mari.Http.Common.Classes;
 
 public abstract record RequestRoute : IRequestRoute
 {
-    public virtual string GetRoute(string routeTemplate)
+    public virtual string GetRouteString(string routeTemplate)
     {
         var route = new StringBuilder(routeTemplate);
         var properties = GetType().GetProperties();

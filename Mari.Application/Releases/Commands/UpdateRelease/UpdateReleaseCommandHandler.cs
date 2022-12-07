@@ -43,7 +43,7 @@ public class UpdateReleaseCommandHandler : IRequestHandler<UpdateReleaseCommand,
         if (release is null) return Errors.Release.ReleaseNotFound;
 
         var currentDateTime = _dateTimeProvider.UtcNow;
-
+        //TODO Complete и Developing из Plannig - не его зона ответственности
         errors.AddRange(release.ChangeVersion(request.Version, currentDateTime).Errors);
         errors.AddRange(release.ChangeStatus((ReleaseStatus)request.Status, currentDateTime).Errors);
         errors.AddRange(release.ChangeCompleteDate(request.CompleteDate, currentDateTime).Errors);

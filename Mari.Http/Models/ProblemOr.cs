@@ -8,12 +8,12 @@ public class ProblemOr<TResponse>
         ProblemDetails? problem = null)
     {
         HttpResponse = httpResponse;
-        Response = response;
-        Problem = problem;
+        Response = response!;
+        Problem = problem!;
     }
 
     public bool IsSuccess => Problem is null;
-    public TResponse? Response { get; }
-    public ProblemDetails? Problem { get; }
+    public TResponse Response { get; }
+    public ProblemDetails Problem { get; }
     public HttpResponseMessage HttpResponse { get; }
 }

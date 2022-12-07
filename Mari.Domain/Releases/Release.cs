@@ -15,14 +15,12 @@ public class Release : AggregateRoot<ReleaseId>
         ReleaseCompleteDate? completeDate,
         ReleaseStatus? status = null,
         ReleaseDescription? description = null,
-        ReleaseVersion? version = null,
-        ReleaseId? id = null)
+        ReleaseVersion? version = null)
     {
         if (status is not ReleaseStatus.Draft and not ReleaseStatus.Planning)
             return Errors.Release.NewReleaseStatusMustBeDraftOrPlanning;
 
         var release = new Release(
-            id: id,
             mainIssue: mainIssue,
             platform: platform,
             completeDate: completeDate,
@@ -37,19 +35,18 @@ public class Release : AggregateRoot<ReleaseId>
         return release;
     }
 
-    private Release() : base(default!)
+    private Release()
     {
     }
 
     private Release(
-        ReleaseId? id,
         Issue? mainIssue,
         ReleaseVersion version,
         Platform? platform,
         ReleaseCompleteDate? completeDate,
         ReleaseUpdateDate updateDate,
         ReleaseStatus status,
-        ReleaseDescription description) : base(id)
+        ReleaseDescription description)
     {
         Version = version;
         Platform = platform!;

@@ -8,20 +8,19 @@ namespace Mari.Domain.Users;
 
 public class User : AggregateRoot<UserId>
 {
-    public static ErrorOr<User> Create(Username username, UserRole role = UserRole.Guest, UserId? id = null)
+    public static ErrorOr<User> Create(Username username, UserRole role = UserRole.Guest)
     {
         return new User(
-            id: id,
             name: username,
             role: role
         );
     }
 
-    private User() : base(default!)
+    private User()
     {
     }
 
-    private User(UserId? id, Username name, UserRole role) : base(id)
+    private User(Username name, UserRole role)
     {
         Username = name;
         Role = role;

@@ -6,19 +6,18 @@ namespace Mari.Domain.Releases.Entities;
 
 public class Platform : Entity<PlatformId>
 {
-    public static ErrorOr<Platform> Create(PlatformName name, PlatformId? id = null)
+    public static ErrorOr<Platform> Create(PlatformName name)
     {
         return new Platform(
-            id: id,
             name: name
         );
     }
 
-    private Platform() : base(default!)
+    private Platform()
     {
     }
 
-    private Platform(PlatformId? id, PlatformName name) : base(id)
+    private Platform(PlatformName name)
     {
         Name = name;
     }
