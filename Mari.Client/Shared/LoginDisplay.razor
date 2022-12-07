@@ -2,7 +2,6 @@
 
 <AuthorizeView>
     <Authorized>
-        <MudText Typo="Typo.h1">Hello, @context.User.Identity?.Name!</MudText>
         <button class="nav-link btn btn-link" @onclick="BeginLogout">Log out</button>
     </Authorized>
     <NotAuthorized>

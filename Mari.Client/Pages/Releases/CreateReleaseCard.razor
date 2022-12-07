@@ -89,12 +89,13 @@
     private ReleaseCreateModel ReleaseCreate { get; set; } = new ReleaseCreateModel();
     private IList<PlatformResponse> Platforms { get; set; } 
 
-    private string[] AllNamePlatforms { get; set; } 
+    private string[] AllNamePlatforms { get; set; }  
     
     public async  Task ClickOnCreateRelease()
     {
         await ReleaseManager.Create(ReleaseCreate);
-
+        Platforms = new List<PlatformResponse>();
+        AllNamePlatforms = null;
         SwitchDimmingAdd();
     }
     
@@ -124,14 +125,14 @@
         //ProblemHandler1.DefaultProblemEvent += new Action<ProblemDetails>(OnButtonClicked) ;
         
         
-         //Platforms = await ReleaseManager.GetAllPlatforms();
+         Platforms = await ReleaseManager.GetAllPlatforms();
         
         // TODO Тестовые данные
-            Platforms = new List<PlatformResponse>()
+            /*Platforms = new List<PlatformResponse>()
             {
                 new PlatformResponse("Android", 1, 1, 1),
                 new PlatformResponse("Ios", 1, 1, 1)
-            };
+            };*/
         // конец
 
             AllNamePlatforms = Platforms.ToList().Select(x => x.Name).ToArray();

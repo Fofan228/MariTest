@@ -126,9 +126,9 @@
     private void SwitchDimmingAdd()
     {
         SwitchDimming();
-       // Platforms = ReleaseManager.GetAllPlatforms().Result;
-      //  if(Platforms is not null)
-        //    AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
+        Platforms = ReleaseManager.GetAllPlatforms().Result;
+        if(Platforms is not null)
+            AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
         StateHasChanged();
     }
     
@@ -148,7 +148,7 @@
     protected override async Task OnInitializedAsync()
     {
         Releases = await ReleaseManager.GetPlannedReleases() ;
-        //Platforms = await ReleaseManager.GetAllPlatforms();
+        Platforms = await ReleaseManager.GetAllPlatforms();
         
     // TODO Тестовые данные
         // Releases = new List<ReleaseModel>()
@@ -239,9 +239,25 @@
         return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(_searchString);
     }
     
-    private void Trans(ReleaseModel model)
+    [Inject] private IDialogService DialogService { get; set; }
+
+
+    
+    private async Task Trans(ReleaseModel model)
     {
-        Releases = ReleaseManager.TransInWork(model);
-        StateHasChanged();
+        if (model.PlatformName != null && model.Major != null && model.Minor != null && model.Patch != null && model.MainIssue != null
+            && model.CompleteDate != null && model.UpdateDate != null)
+        {
+            Releases = ReleaseManager.TransInWork(model);
+            StateHasChanged();
+        }
+        else
+        {
+            bool? result = await DialogService.ShowMessageBox(
+                "Внимание", 
+                "Пожалуйста, заполните все данные релиза перед отправкой в работу!", 
+                yesText:"Хорошо");
+            StateHasChanged();
+        }
     }
 }

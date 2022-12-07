@@ -5,11 +5,11 @@
                 <NotAuthorized>
                     @if (context.User.Identity?.IsAuthenticated != true)
                     {
-                        <RedirectToLogin />
+                        <RedirectToLogin/>
                     }
                     else
                     {
-                        <NotAuthorizedPage />
+                        <NotAuthorizedPage/>
                     }
                 </NotAuthorized>
             </AuthorizeRouteView>

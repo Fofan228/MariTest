@@ -185,7 +185,7 @@
     }
     
     
-    private void Trans(ReleaseModel model)
+    private async Task Trans(ReleaseModel model)
     {
         Releases = ReleaseManager.TransInCurrent(model);
         StateHasChanged();

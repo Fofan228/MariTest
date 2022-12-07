@@ -14,12 +14,23 @@
         <NavMenu />
     </MudDrawer>
 
-   
-    @*<CascadingValue Value="ShowError">*@
-        <MudMainContent Class="pt-0">
-            @Body
-        </MudMainContent>
-      @*</CascadingValue >*@
+    <MudMainContent Class="pt-0">
+        @*<AuthorizeView>
+            <Authorized>*@
+                    @Body
+            @*</Authorized>*@
+            @*<NotAuthorized>
+                <NotAuthorizedPage />
+            </NotAuthorized>*@
+        @*</AuthorizeView>*@
+     </MudMainContent>
+    
+    @*<CascadingValue Value="ShowError">#1#
+        
+      </CascadingValue >#1#*@
+ 
+    
+    
 </MudLayout>
 
 @code
@@ -30,26 +41,5 @@
     {
         IsDrawerOpened = !IsDrawerOpened;
     }
-    
-    /*[Inject] private IDialogService DialogService { get; set; }
-    
-    public async void ShowError(string title, string message)
-    {
-        bool? result = await DialogService.ShowMessageBox(
-            title, 
-            message, 
-            yesText:"Ok");
-        
-        StateHasChanged();
-    }
-    
-    public async void ShowErrorTest()
-    {
-        bool? result = await DialogService.ShowMessageBox(
-            "title", 
-            "Код ошибки 404, идите нахуй, вы мне тут не нужны  Press F ", 
-            yesText:"Ok");
-        
-        StateHasChanged();
-    }*/
+
 }

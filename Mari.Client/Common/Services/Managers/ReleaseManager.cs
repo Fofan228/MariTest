@@ -23,7 +23,11 @@ public class ReleaseManager : IReleaseManager
     private List<ReleaseModel> CurrentList = new List<ReleaseModel>();
     private List<ReleaseModel> PlannedList = new List<ReleaseModel>();
     private List<ReleaseModel> InWorkList = new List<ReleaseModel>();
-    private List<PlatformResponse> Platforms = new List<PlatformResponse>();
+    private List<PlatformResponse> Platforms = new List<PlatformResponse>()
+    {
+        new PlatformResponse("Android",1,1,1),
+        new PlatformResponse("IOS",1,1,1)
+    };
     public ReleaseManager(HttpSender httpSender, IMapper mapper)
     {
         _httpSender = httpSender;
@@ -35,8 +39,17 @@ public class ReleaseManager : IReleaseManager
         PlannedList.Add(new ReleaseModel(Guid.NewGuid(),model.Major,
             model.Minor,model.Patch,model.PlatformName,"Planing",
             model.CompleteDate,DateTime.Now, model.MainIssue, model.Description));
+
         
         Platforms.Add(new PlatformResponse( model.PlatformName, model.Major, model.Minor,model.Patch));
+        /*bool a = false;
+        foreach (var VARIABLE in Platforms)
+        {
+            if(VARIABLE.Name == model.PlatformName) a = true;
+
+        }
+        if(a)
+            Platforms.Add(new PlatformResponse( model.PlatformName, model.Major, model.Minor,model.Patch));*/
          
         /*var body = _mapper.Map<CreateReleaseRequest.Body>(model);
         var request = new CreateReleaseRequest(body);
@@ -169,14 +182,7 @@ public class ReleaseManager : IReleaseManager
 
     public IList<ReleaseModel> TransInWork(ReleaseModel model)
     {
-        if (model.PlatformName == null) return PlannedList;
-        if (model.Major == null) return PlannedList;
-        if (model.Minor == null) return PlannedList;
-        if (model.Patch == null) return PlannedList;
-        if (model.MainIssue == null) return PlannedList;
-        if (model.CompleteDate == null) return PlannedList;
-        if (model.UpdateDate == null) return PlannedList;
-        
+
         for (int i = 0; i < PlannedList.Count; i++)
         {
             if (PlannedList[i].Equals(model))
