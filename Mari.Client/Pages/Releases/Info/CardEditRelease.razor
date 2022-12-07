@@ -1,4 +1,4 @@
-﻿@* @using Mari.Contracts.Releases
+﻿@using Mari.Contracts.Releases
 @using System.Data
 @using Mari.Client.Models.Releases
 @using Mari.Contracts.Releases.Responses
@@ -33,11 +33,11 @@
                 
                    <MudContainer Class="flex-row d-flex align-end px-0 flex-grow-1 gap-1">
                         <MudText >Версия: </MudText>
-                        <MudTextField @bind-Value="EditRelease.Major"  Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true" Required RequiredError="@String.Empty"/>
+                        <MudTextField @bind-Value="EditRelease.Version.Major"  Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true" Required RequiredError="@String.Empty"/>
                         <MudText >.</MudText>
-                        <MudTextField @bind-Value="EditRelease.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true" Required RequiredError="@String.Empty"/>
+                        <MudTextField @bind-Value="EditRelease.Version.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true" Required RequiredError="@String.Empty"/>
                         <MudText>.</MudText>
-                        <MudTextField @bind-Value="EditRelease.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true" Required RequiredError="@String.Empty"/>
+                        <MudTextField @bind-Value="EditRelease.Version.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true" Required RequiredError="@String.Empty"/>
                     </MudContainer>
                
                 
@@ -67,7 +67,7 @@
     private MudForm _form;
     private bool _success;
     
-    private IList<PlatformResponse> Platforms { get; set; }
+    private IList<PlatformModel> Platforms { get; set; }
     private string[] AllNamePlatforms { get; set; }
 
     [Parameter]
@@ -97,19 +97,18 @@
         // конец*/
         
         AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
-        
-        EditRelease = new ReleaseModel(
-            Release.Id,
-            Release.Major,
-            Release.Minor,
-            Release.Patch,
-            Release.PlatformName,
-            Release.Status,
-            Release.CompleteDate,
-            Release.UpdateDate,
-            Release.MainIssue,
-            Release.Description
-            );
+
+        EditRelease = new ReleaseModel
+        {
+           Id = Release.Id,
+           Version = Release.Version,
+           PlatformName = Release.PlatformName,
+           Status = Release.Status,
+           CompleteDate = Release.CompleteDate,
+           UpdateDate = Release.UpdateDate,
+           MainIssue = Release.MainIssue,
+           Description = Release.Description
+        };
     }
 
     private async Task<IEnumerable<string>> SearchPlatform(string value)
@@ -122,7 +121,7 @@
     
     public async void ClickOnEditRelease()
     {
-        await ReleaseManager.UpdateRelease(EditRelease);
+        await ReleaseManager.Update(EditRelease);
         GetUpdateUser();
         StateHasChanged();
     }

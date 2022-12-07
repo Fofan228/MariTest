@@ -27,7 +27,7 @@
             <MudContainer MaxWidth="MaxWidth.Medium" Class="my-5" Style="display: flex; flex-direction: row;">
 
                 <MudContainer Class="px-0" MaxWidth="MaxWidth.Medium" Style="display: flex; flex-direction: column;">
-                    <MudText>Версия: @($"{Release.Major.ToString()}.{Release.Minor.ToString()}.{Release.Patch.ToString()}")</MudText>
+                    <MudText>Версия: @($"{Release.Version.Major.ToString()}.{Release.Version.Minor.ToString()}.{Release.Version.Patch.ToString()}")</MudText>
                       <MudLink Href="@Release.MainIssue">Релиз задача: Ссылка</MudLink>
                     <MudText>Статус: @Release.Status</MudText>
                 </MudContainer>
@@ -79,7 +79,7 @@
     
     public async void GetUpdateUser()
     {
-        Release = await ReleaseManager.Get(Guid.Parse(Id));
+        Release = await ReleaseManager.GetById(Guid.Parse(Id));
         IsRightDrawerOpened = false;
         openEditingRelease = false;
         StateHasChanged();
@@ -102,11 +102,11 @@
     
     protected override async Task OnInitializedAsync()
     {
-        Release = await ReleaseManager.Get(Guid.Parse(Id));
+        Release = await ReleaseManager.GetById(Guid.Parse(Id));
 
         //Todo Тестовые данные
         //Release = new ReleaseModel(Guid.NewGuid(), 1, 1, 1, "Android", "Testing", 
          //   new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "http","GG");
     }
     
-} *@
+}

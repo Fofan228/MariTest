@@ -4,4 +4,4 @@ namespace Mari.Contracts.Releases.Responses;
 
 public record PlatformResponse(
     string Name,
-    ReleaseVersionDto Version);
+    ReleaseVersionDto LastVersion);

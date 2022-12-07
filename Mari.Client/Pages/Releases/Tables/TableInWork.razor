@@ -1,4 +1,4 @@
-﻿@* 
+﻿
 @using Contracts.Releases
 @using Mari.Client.Models.Enums
 @using Mari.Client.Models.Releases
@@ -42,7 +42,7 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
-        <MudTd DataLabel="Version">@($"{context.Major.ToString()}.{context.Minor.ToString()}.{context.Patch.ToString()}")</MudTd>
+        <MudTd DataLabel="Version">@($"{context.Version.Major.ToString()}.{context.Version.Minor.ToString()}.{context.Version.Patch.ToString()}")</MudTd>
         <MudTd DataLabel="ReleaseTask">
             <div @onclick:stopPropagation="true">
                 <MudLink Href="@context.MainIssue">@context.MainIssue</MudLink>
@@ -65,7 +65,7 @@
             @context.PlatformName
         </MudTd>
         <MudTd DataLabel="Version">
-            @($"{context.Major.ToString()}.{context.Minor.ToString()}.{context.Patch.ToString()}")
+            @($"{context.Version.Major.ToString()}.{context.Version.Minor.ToString()}.{context.Version.Patch.ToString()}")
         </MudTd>
         <MudTd DataLabel="ReleaseTask">
             @context.MainIssue
@@ -104,12 +104,12 @@
     private ReleaseModel elementBeforeEdit;
     
     private IList<ReleaseModel> Releases { get; set; }
-    private IList<PlatformResponse> Platforms { get; set; }
+    private IList<PlatformModel> Platforms { get; set; }
 
     
     protected override async Task OnInitializedAsync()
     {
-        Releases = await ReleaseManager.GetInWorkReleases();
+        Releases = await ReleaseManager.GetInWork();
         Platforms = await ReleaseManager.GetAllPlatforms();
        
     /*// TODO Тестовые данные
@@ -133,29 +133,27 @@
         }
     }
 
-    private void BackupItem(object release)
+    private void BackupItem(object obj)
     {
+        var release = (ReleaseModel)obj;
+
         elementBeforeEdit = new ReleaseModel
-        (
-             ((ReleaseModel)release).Id,
-             ((ReleaseModel)release).Major,
-             ((ReleaseModel)release).Minor,
-             ((ReleaseModel)release).Patch,
-             ((ReleaseModel)release).PlatformName,
-             ((ReleaseModel)release).Status,
-             ((ReleaseModel)release).CompleteDate,
-             ((ReleaseModel)release).UpdateDate,
-             ((ReleaseModel)release).MainIssue,
-             ((ReleaseModel)release).Description
-        );
+        {
+            Id = release.Id,
+            Version = release.Version,
+            PlatformName = release.PlatformName,
+            Status = release.Status,
+            CompleteDate = release.CompleteDate,
+            UpdateDate =release.UpdateDate,
+            MainIssue = release.MainIssue,
+            Description =release.Description
+        };
         StateHasChanged();
     }
 
     private void ResetItemToOriginalValues(object release)
     {
-        ((ReleaseModel)release).Major = elementBeforeEdit.Major;
-        ((ReleaseModel)release).Minor = elementBeforeEdit.Minor;
-        ((ReleaseModel)release).Patch = elementBeforeEdit.Patch;
+        ((ReleaseModel)release).Version = elementBeforeEdit.Version;
         ((ReleaseModel)release).PlatformName = elementBeforeEdit.PlatformName;
         ((ReleaseModel)release).Status = elementBeforeEdit.Status;
         ((ReleaseModel)release).MainIssue = elementBeforeEdit.MainIssue;
@@ -165,8 +163,8 @@
 
     private async void ItemHasBeenCommitted(object release)
     {
-        await ReleaseManager.UpdateRelease((ReleaseModel)release);
-        Releases = await ReleaseManager.GetInWorkReleases() ;
+        await ReleaseManager.Update((ReleaseModel)release);
+        Releases = await ReleaseManager.GetInWork() ;
         
         StateHasChanged();
     }
@@ -187,7 +185,8 @@
     
     private async Task Trans(ReleaseModel model)
     {
-        Releases = ReleaseManager.TransInCurrent(model);
+        await ReleaseManager.SetCompleteStatus(model.Id);
+        Releases =await ReleaseManager.GetInWork();
         StateHasChanged();
     }
 }

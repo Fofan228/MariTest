@@ -1,4 +1,4 @@
-﻿@* @using Mari.Contracts.Releases
+﻿ @using Mari.Contracts.Releases
 @using Mari.Contracts.Releases.Responses
 @using Mari.Client.Models.Releases
 @inject IReleaseManager ReleaseManager
@@ -29,7 +29,7 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
-        <MudTd DataLabel="Version">@($"{context.Major.ToString()}.{context.Minor.ToString()}.{context.Patch.ToString()}")</MudTd>
+        <MudTd DataLabel="Version">@($"{context.Version.Major.ToString()}.{context.Version.Minor.ToString()}.{context.Version.Patch.ToString()}")</MudTd>
         <MudTd DataLabel="ReleaseTask">
             <div @onclick:stopPropagation="true">
                 <MudLink Href="#">@context.MainIssue</MudLink>
@@ -48,7 +48,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-       Releases = await ReleaseManager.GetCurrentReleases();
+       Releases = await ReleaseManager.GetCurrent();
         
         
     /*// TODO Тестовые данные
@@ -82,4 +82,4 @@
             return true;
         return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(_searchString);
     }
-} *@
+} 

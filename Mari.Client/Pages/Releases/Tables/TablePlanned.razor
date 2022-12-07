@@ -1,9 +1,4 @@
-﻿@* 
-@using Contracts.Releases
-@using Mari.Client.Models.Releases
-@using System.Text
-@using Mari.Client.Models.Enums
-@using Mari.Contracts.Releases.Responses
+﻿@using Mari.Client.Models.Releases
 @using Microsoft.AspNetCore.Components
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
@@ -42,7 +37,7 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
-        <MudTd DataLabel="Version">@($"{context.Major.ToString()}.{context.Minor.ToString()}.{context.Patch.ToString()}")</MudTd>
+        <MudTd DataLabel="Version">@($"{context.Version.Major.ToString()}.{context.Version.Minor.ToString()}.{context.Version.Patch.ToString()}")</MudTd>
         <MudTd DataLabel="ReleaseTask">
             <div @onclick:stopPropagation="true">
                 <MudLink Href="@context.MainIssue">@context.MainIssue</MudLink>
@@ -68,11 +63,11 @@
         <MudTd DataLabel="Version">
 
             <MudContainer  Class="flex-row d-flex align-end px-0 flex-grow-1 gap-1" >
-                <MudTextField @bind-Value="@context.Major" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true" Required="true" RequiredError="@String.Empty"/> 
+                <MudTextField @bind-Value="@context.Version.Major" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true" Required="true" RequiredError="@String.Empty"/> 
                 <MudText >.</MudText>
-                <MudTextField @bind-Value="@context.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  Required="true" RequiredError="@String.Empty"/> 
+                <MudTextField @bind-Value="@context.Version.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  Required="true" RequiredError="@String.Empty"/> 
                 <MudText>.</MudText>
-                <MudTextField @bind-Value="@context.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  Required="true" RequiredError="@String.Empty"/> 
+                <MudTextField @bind-Value="@context.Version.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  Required="true" RequiredError="@String.Empty"/> 
             </MudContainer>
 
         </MudTd>
@@ -115,7 +110,7 @@
     public bool IsDimming { get; set; }
 
     [Parameter]
-    public Action SwitchDimming { get; set; }
+    public Func<Task> SwitchDimming { get; set; }
 
     private void Switch()
     {
@@ -123,10 +118,10 @@
         StateHasChanged();
     }
 
-    private void SwitchDimmingAdd()
+    private async Task SwitchDimmingAdd()
     {
         SwitchDimming();
-        Platforms = ReleaseManager.GetAllPlatforms().Result;
+        Platforms = await ReleaseManager.GetAllPlatforms();
         if(Platforms is not null)
             AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
         StateHasChanged();
@@ -142,12 +137,12 @@
     
     private IList<ReleaseModel> Releases { get; set; }
     
-    private IList<PlatformResponse> Platforms { get; set; }
+    private IList<PlatformModel> Platforms { get; set; }
     private string[] AllNamePlatforms { get; set; }
     
     protected override async Task OnInitializedAsync()
     {
-        Releases = await ReleaseManager.GetPlannedReleases() ;
+        Releases = await ReleaseManager.GetPlanned() ;
         Platforms = await ReleaseManager.GetAllPlatforms();
         
     // TODO Тестовые данные
@@ -161,10 +156,28 @@
         //         new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "http","GG")
         // };
         
-       Platforms = new List<PlatformResponse>()
+       Platforms = new List<PlatformModel>()
         {
-            new PlatformResponse("Android",1,1,1),
-            new PlatformResponse("Ios",1,1,1)
+            new PlatformModel
+            {
+                Name = "Android",
+                LastVersion = new VersionModel
+                    {
+                        Major = 1,
+                        Minor = 1,
+                        Patch =1
+                    }
+            },
+            new PlatformModel
+            {
+                Name = "IOS",
+                LastVersion = new VersionModel
+                {
+                    Major = 1,
+                    Minor = 1,
+                    Patch =1
+                }
+            },
         };
     // конец
         
@@ -188,29 +201,27 @@
     }
 
     
-    private void BackupItem(object release)
+    private void BackupItem(object obj)
     {
+        var release = (ReleaseModel)obj;
+
         elementBeforeEdit = new ReleaseModel
-            (
-            ((ReleaseModel)release).Id,
-            ((ReleaseModel)release).Major,
-            ((ReleaseModel)release).Minor,
-            ((ReleaseModel)release).Patch,
-            ((ReleaseModel)release).PlatformName,
-            ((ReleaseModel)release).Status,
-            ((ReleaseModel)release).CompleteDate,
-            ((ReleaseModel)release).UpdateDate,
-            ((ReleaseModel)release).MainIssue,
-            ((ReleaseModel)release).Description
-            );
+        {
+            Id = release.Id,
+            Version = release.Version,
+            PlatformName = release.PlatformName,
+            Status = release.Status,
+            CompleteDate = release.CompleteDate,
+            UpdateDate =release.UpdateDate,
+            MainIssue = release.MainIssue,
+            Description =release.Description
+        };
         StateHasChanged();
     }
 
     private void ResetItemToOriginalValues(object release)
     {
-        ((ReleaseModel)release).Major = elementBeforeEdit.Major;
-        ((ReleaseModel)release).Minor = elementBeforeEdit.Minor;
-        ((ReleaseModel)release).Patch = elementBeforeEdit.Patch;
+        ((ReleaseModel)release).Version = elementBeforeEdit.Version;
         ((ReleaseModel)release).PlatformName = elementBeforeEdit.PlatformName;
         ((ReleaseModel)release).Status = elementBeforeEdit.Status;
         ((ReleaseModel)release).MainIssue = elementBeforeEdit.MainIssue;
@@ -220,8 +231,8 @@
     
     private async void ItemHasBeenCommitted(object release)
     {
-        await ReleaseManager.UpdateRelease((ReleaseModel)release);
-        Releases = await ReleaseManager.GetPlannedReleases() ;
+        await ReleaseManager.Update((ReleaseModel)release);
+        Releases = await ReleaseManager.GetPlanned() ;
         
         StateHasChanged();
     }
@@ -245,10 +256,11 @@
     
     private async Task Trans(ReleaseModel model)
     {
-        if (model.PlatformName != null && model.Major != null && model.Minor != null && model.Patch != null && model.MainIssue != null
+        if (model.PlatformName != null && model.MainIssue != null
             && model.CompleteDate != null && model.UpdateDate != null)
         {
-            Releases = ReleaseManager.TransInWork(model);
+            await ReleaseManager.SetInWorkStatus(model.Id);
+            Releases = await ReleaseManager.GetPlanned();
             StateHasChanged();
         }
         else

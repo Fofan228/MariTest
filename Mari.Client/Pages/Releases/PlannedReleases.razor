@@ -13,7 +13,7 @@
   
     private bool IsDimming { get; set; }
 
-    private void SwitchDimming()
+    private async Task SwitchDimming()
     {
         IsDimming = !IsDimming;
         StateHasChanged();
