@@ -5,11 +5,11 @@ using Mari.Domain.Releases.ValueObjects;
 
 namespace Mari.Application.Releases.Queries.GetRelease;
 
-internal class GetReleaseQueryValidator : AbstractValidator<GetReleaseQuery>
+internal class GetReleaseByIdQueryValidator : AbstractValidator<GetReleaseByIdQuery>
 {
-    public GetReleaseQueryValidator(IValidator<ReleaseId> releaseIdValidator)
+    public GetReleaseByIdQueryValidator(IValidator<ReleaseId> releaseIdValidator)
     {
-        RuleFor(query => query.Id)
+        RuleFor(query => query.ReleaseId)
             .SetValidator(releaseIdValidator);
     }
 }

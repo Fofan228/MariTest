@@ -6,18 +6,18 @@ using Mari.Domain.Common;
 
 namespace Mari.Application.Releases.Queries.GetRelease;
 
-internal class GetReleaseQueryHandler : IRequestHandler<GetReleaseQuery, ErrorOr<ReleaseResult>>
+internal class GetReleaseByIdQueryHandler : IRequestHandler<GetReleaseByIdQuery, ErrorOr<ReleaseResult>>
 {
     private readonly IReleaseRepository _releaseRepository;
 
-    public GetReleaseQueryHandler(IReleaseRepository releaseRepository)
+    public GetReleaseByIdQueryHandler(IReleaseRepository releaseRepository)
     {
         _releaseRepository = releaseRepository;
     }
 
-    public async Task<ErrorOr<ReleaseResult>> Handle(GetReleaseQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<ReleaseResult>> Handle(GetReleaseByIdQuery request, CancellationToken cancellationToken)
     {
-        var release = await _releaseRepository.GetById(request.Id, cancellationToken);
+        var release = await _releaseRepository.GetById(request.ReleaseId, cancellationToken);
         if (release is null) return Errors.Release.ReleaseNotFound;
         return ReleaseResult.FromRelease(release);
     }

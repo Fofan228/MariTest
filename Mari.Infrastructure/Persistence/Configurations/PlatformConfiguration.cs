@@ -18,6 +18,6 @@ public class PlatformConfiguration : IEntityTypeConfiguration<Platform>
             .IsStringWrapper()
             .IsRequired();
 
-        builder.HasAlternateKey(p => p.Name);
+        builder.HasIndex(p => p.Name).IsUnique();
     }
 }

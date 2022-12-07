@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 
 var builder = WebApplication.CreateBuilder(args);
 {
-    //StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
+    StaticWebAssetsLoader.UseStaticWebAssets(builder.Environment, builder.Configuration);
 
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
@@ -30,15 +30,15 @@ var app = builder.Build();
     {
         app.UseSwagger();
         app.UseSwaggerUI();
-        //app.UseWebAssemblyDebugging();
+        app.UseWebAssemblyDebugging();
     }
     else
     {
         app.UseExceptionHandler(ServerRoutes.Controllers.Error);
     }
 
-    //app.UseBlazorFrameworkFiles();
-    //app.UseStaticFiles();
+    app.UseBlazorFrameworkFiles();
+    app.UseStaticFiles();
 
     app.UseAuthentication();
     app.UseAuthorization();

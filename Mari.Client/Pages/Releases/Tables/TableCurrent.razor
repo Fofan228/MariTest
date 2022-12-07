@@ -1,4 +1,4 @@
-﻿@using Mari.Contracts.Releases
+﻿@* @using Mari.Contracts.Releases
 @using Mari.Contracts.Releases.Responses
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
@@ -80,4 +80,4 @@
             return true;
         return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(_searchString);
     }
-}
+} *@

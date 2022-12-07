@@ -1,4 +1,4 @@
-﻿@using Mari.Contracts.Releases
+﻿@* @using Mari.Contracts.Releases
 @using System.Data
 @using Mari.Client.Models.Releases
 @using Mari.Contracts.Releases.Responses
@@ -113,4 +113,4 @@
         return string.IsNullOrEmpty(value) ? AllNamePlatforms
             : AllNamePlatforms.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
-}
+} *@

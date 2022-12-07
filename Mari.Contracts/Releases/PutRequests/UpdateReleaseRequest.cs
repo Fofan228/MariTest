@@ -1,4 +1,5 @@
 using Mari.Contracts.Common.Routes.Server;
+using Mari.Contracts.Releases.Dto;
 using Mari.Http.Common.Classes;
 using Mari.Http.Requests;
 
@@ -15,9 +16,7 @@ public class UpdateReleaseRequest : PutRequest
 
     public record Body(
         Guid Id,
-        int VersionMajor,
-        int VersionMinor,
-        int VersionPatch,
+        VersionDto Version,
         string PlatformName,
         int Status,
         DateTime CompleteDate,

@@ -1,4 +1,5 @@
 using Mari.Contracts.Common.Routes.Server;
+using Mari.Contracts.Releases.Dto;
 using Mari.Http.Common.Classes;
 using Mari.Http.Requests;
 
@@ -15,13 +16,11 @@ public class UpdateDraftReleaseRequest : PutRequest
 
     public record Body(
         Guid Id,
-        int VersionMajor,
-        int VersionMinor,
-        int VersionPatch,
-        string PlatformName,
-        int Status,
-        DateTime CompleteDate,
-        string MainIssue,
-        string Description)
+        VersionDto? Version,
+        string? PlatformName,
+        int? Status,
+        DateTime? CompleteDate,
+        string? MainIssue,
+        string? Description)
         : RequestBody;
 }

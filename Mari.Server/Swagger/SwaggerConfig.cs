@@ -19,13 +19,13 @@ public static class SwaggerConfig
 
         options.SwaggerDoc("v1", new OpenApiInfo
         {
-            Title = "MiniBank",
-            Description = "Веб проект в рамках курса Тинькофф Финтех",
-            Version = assemblyName.Version?.ToString() ?? "Without version",
+            Title = "Mari",
+            Description = "Веб проект в рамках задания от компании \"Интерсвязь\"",
+            Version = assemblyName.Version?.ToString() ?? "Без версии",
             Contact = new OpenApiContact
             {
-                Name = "Nebytov Daniil",
-                Url = new Uri("https://github.com/Nanoster1")
+                Name = "Небытов Даниил, Соколов Данил, Ефимов Иван",
+                Url = new Uri("https://github.com/Nanoster1/MariTest.git")
             }
         });
 

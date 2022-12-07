@@ -10,9 +10,7 @@ public class ReleaseModel
         DateTime? completeDate, DateTime? updateDate, string mainIssue, string description)
     {
         Id = id;
-        Major = major;
-        Minor = minor;
-        Patch = patch;
+        Version = new VersionModel { Major = major, Minor = minor, Patch = patch };
         PlatformName = platformName;
         Status = status;
         CompleteDate = completeDate;
@@ -22,9 +20,7 @@ public class ReleaseModel
     }
 
     public Guid Id { get; set; }
-    public int Major { get; set; }
-    public int Minor { get; set; }
-    public int Patch { get; set; }
+    public VersionModel Version { get; set; }
     public string PlatformName { get; set; }
     public string Status { get; set; }
     public DateTime? CompleteDate { get; set; }

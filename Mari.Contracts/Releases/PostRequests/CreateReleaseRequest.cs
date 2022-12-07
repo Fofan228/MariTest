@@ -1,4 +1,5 @@
 using Mari.Contracts.Common.Routes.Server;
+using Mari.Contracts.Releases.Dto;
 using Mari.Http.Common.Classes;
 using Mari.Http.Models;
 using Mari.Http.Requests;
@@ -19,9 +20,7 @@ public class CreateReleaseRequest : PostRequest<VoidResponse>
         string MainIssue,
         DateTime CompleteDate,
         string PlatformName,
-        int VersionMajor,
-        int VersionMinor,
-        int VersionPatch,
+        VersionDto Version,
         string Description)
         : RequestBody;
 }

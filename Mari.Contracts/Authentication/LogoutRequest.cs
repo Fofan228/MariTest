@@ -4,12 +4,13 @@ using Mari.Http.Models;
 using Mari.Http.Requests;
 
 namespace Mari.Contracts.Authentication;
-public class AuthenticationRequest : GetRequest<VoidResponse>
+
+public class LogoutRequest : GetRequest<VoidResponse>
 {
-    public const string ConstRouteTemplate = ServerRoutes.Controllers.Authentication;
+    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Authentication}/logout";
     public override string RouteTemplate => ConstRouteTemplate;
 
-    public AuthenticationRequest(Query query) : base(query: query)
+    public LogoutRequest(Query query) : base(query: query)
     {
     }
 

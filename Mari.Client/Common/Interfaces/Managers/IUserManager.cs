@@ -1,11 +1,7 @@
-﻿
-
-using Mari.Contracts.Users.Response;
-
-namespace Mari.Client.Common.Interfaces.Managers;
+﻿namespace Mari.Client.Common.Interfaces.Managers;
 
 public interface IUserManager
 {
-    Task<IList<UserResponse>> GetAll(CancellationToken token = default);
-    Task Update(UserResponse model,CancellationToken token = default);
+    Task<IList<object>> GetAll(CancellationToken token = default);
+    Task Update(object model, CancellationToken token = default);
 }

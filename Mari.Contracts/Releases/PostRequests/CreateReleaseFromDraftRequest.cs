@@ -10,7 +10,7 @@ public class CreateReleaseFromDraftRequest : PostRequest<VoidResponse>
 {
     private new Route RouteParams => (Route)base.RouteParams;
 
-    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/from_draft/{{ReleaseId}}";
+    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/from_draft/{{{nameof(Route.ReleaseId)}}}";
     public override string RouteTemplate => ConstRouteTemplate;
 
     public CreateReleaseFromDraftRequest(Route route) : base(route: route)
