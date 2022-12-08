@@ -3,7 +3,7 @@ using Throw;
 
 namespace Mari.Domain.Releases.ValueObjects;
 
-public record ReleaseVersion : ValueObject, IEquatable<ReleaseVersion>, IComparable<ReleaseVersion>
+public record ReleaseVersion : ValueObject, IComparable<ReleaseVersion>
 {
     #region Constants
     public const int MaxMajor = int.MaxValue - 1;
