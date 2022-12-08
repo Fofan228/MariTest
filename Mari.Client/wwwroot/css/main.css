@@ -55,7 +55,7 @@
 }
 
 .paper-edit-release {
-    width: 100%;
+    width: 100%; 
     height: 100vh;
     position: absolute;
     background: rgba(0,0,0,.5);
