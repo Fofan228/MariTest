@@ -7,7 +7,7 @@ namespace Mari.Contracts.Comments.PostRequests;
 
 public class CreateCommentRequest : PostRequest<VoidResponse>
 {
-    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Comment}";
+    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Comment}/create_comment";
     public override string RouteTemplate => ConstRouteTemplate;
 
     public CreateCommentRequest(Body body) : base(body: body)

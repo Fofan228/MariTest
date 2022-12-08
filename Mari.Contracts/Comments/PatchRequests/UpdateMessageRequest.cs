@@ -7,7 +7,7 @@ namespace Mari.Contracts.Comments.PatchRequests;
 
 public class UpdateMessageRequest : PatchRequest<VoidResponse>
 {
-    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Comment}";
+    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Comment}/update_comment";
     public override string RouteTemplate => ConstRouteTemplate;
 
     public UpdateMessageRequest(Body body) : base(body: body)
