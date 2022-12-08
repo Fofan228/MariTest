@@ -133,6 +133,7 @@
     private async Task SwitchDimmingAdd()
     {
         SwitchDimming();
+        Releases = await ReleaseManager.GetPlanned();
         Platforms = await ReleaseManager.GetAllPlatforms();
         if(Platforms is not null)
             AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
