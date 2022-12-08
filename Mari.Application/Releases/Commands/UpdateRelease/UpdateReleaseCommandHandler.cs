@@ -43,6 +43,7 @@ public class UpdateReleaseCommandHandler : IRequestHandler<UpdateReleaseCommand,
             {
                 var platformCreateResult = Platform.Create(request.PlatformName);
                 if (platformCreateResult.IsError) errors.AddRange(platformCreateResult.Errors);
+                platform = platformCreateResult.Value;
             }
         }
 
