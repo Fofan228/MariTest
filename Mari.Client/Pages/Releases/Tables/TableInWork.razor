@@ -11,10 +11,9 @@
 
 <MudTable Items="@Releases" Hover="true" T="ReleaseModel" Class="my-8" CanCancelEdit="true"
           RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted"
-          CommitEditTooltip="Сохранить" CancelEditTooltip="Отменить"
+          CommitEditTooltip="Сохранить" CancelEditTooltip="Отменить" RowsPerPage="5"
           EditTrigger="@editTrigger" Filter="new Func<ReleaseModel,bool>(FilterFunc)"
-          OnCommitEditClick="@(() => { Snackbar.Add("Изменения сохранены"); 
-                                         _clickOnRow = true; })"
+          OnCommitEditClick="@(() => { Snackbar.Add("Изменения сохранены"); _clickOnRow = true; })"
           OnCancelEditClick="@(() => { Snackbar.Add("Отменено"); _clickOnRow = true; })"
           OnPreviewEditClick="@(() => _clickOnRow = false)" OnRowClick="RowClicked"> 
     <ToolBarContent>
@@ -87,6 +86,9 @@
                            Disabled="true" Size="@Size.Medium" Color="Color.Primary"/>
         </MudTd>
     </RowEditingTemplate>
+    <PagerContent>
+        <MudTablePager HideRowsPerPage="true"/>
+    </PagerContent>
     <EditButtonContent Context="button">
         <MudTooltip Text="Изменить">
             <MudIconButton Size="@Size.Medium" Icon="@Icons.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled"/>
