@@ -5,7 +5,7 @@ using Mari.Http.Requests;
 
 namespace Mari.Contracts.Users.PutRequests;
 
-public class UpdateUserRequest: PostRequest<VoidResponse>
+public class UpdateUserRequest: PutRequest
 {
     public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.User}/update_user";
     public override string RouteTemplate => ConstRouteTemplate;

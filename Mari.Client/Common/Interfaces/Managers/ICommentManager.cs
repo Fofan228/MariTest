@@ -1,10 +1,12 @@
-﻿namespace Mari.Client.Common.Interfaces.Managers;
+﻿using Mari.Client.Models.Comments;
+
+namespace Mari.Client.Common.Interfaces.Managers;
 
 public interface ICommentManager
 {
-    Task Create(object comment, CancellationToken token = default);
-    Task<IList<object>> GetAllUserComment(Guid releaseId, CancellationToken token = default);
-    Task<IList<object>> GetAllSystemComment(Guid releaseId, CancellationToken token = default);
-    Task UpdateComments(object comment, CancellationToken token = default);
-    Task DeleteComments(Guid commmentId, CancellationToken token = default);
+    Task Create(CommentModel comment, CancellationToken token = default);
+    Task<IList<CommentModel>> GetAllUserComment(Guid releaseId, CancellationToken token = default);
+    Task<IList<CommentModel>> GetAllSystemComment(Guid releaseId, CancellationToken token = default);
+    Task UpdateComment(CommentModel comment, CancellationToken token = default);
+    Task DeleteComment(Guid commmentId, CancellationToken token = default);
 }
