@@ -1,4 +1,6 @@
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text.Json;
 using Mari.Http.Common;
 using Mari.Http.Common.Interfaces;
 using Mari.Http.Models;
@@ -44,7 +46,7 @@ public class HttpSender
         where TResponse : notnull
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
-        var response = await Client.PostAsJsonAsync(absoluteRoute, request.BodyContent, cancellationToken);
+        var response = await Client.PostAsync(absoluteRoute, request.BodyContent.GetBody(), cancellationToken);
         return await HandleHttpResponse<TResponse>(response, cancellationToken);
     }
 
@@ -53,7 +55,7 @@ public class HttpSender
         CancellationToken cancellationToken = default)
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
-        var response = await Client.PutAsJsonAsync(absoluteRoute, request.BodyContent, cancellationToken);
+        var response = await Client.PutAsync(absoluteRoute, request.BodyContent.GetBody(), cancellationToken);
         return await HandleHttpResponse<VoidResponse>(response, cancellationToken);
     }
 
@@ -73,7 +75,7 @@ public class HttpSender
         where TResponse : notnull
     {
         var absoluteRoute = CreateUri(request, Client.BaseAddress);
-        var response = await Client.PatchAsJsonAsync(absoluteRoute, request.BodyContent, cancellationToken);
+        var response = await Client.PatchAsync(absoluteRoute, request.BodyContent.GetBody(), cancellationToken);
         return await HandleHttpResponse<TResponse>(response, cancellationToken);
     }
 

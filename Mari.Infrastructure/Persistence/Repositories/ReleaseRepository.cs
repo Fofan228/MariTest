@@ -36,13 +36,13 @@ public class ReleaseRepository : Repository<Release, ReleaseId>, IReleaseReposit
         Specification<Release> specification,
         CancellationToken token = default)
     {
-        return Set.AsNoTracking()
+        return await Set.AsNoTracking()
             .Where(specification)
             .OrderByDescending(r => r.Version.Major)
             .ThenBy(r => r.Version.Minor)
             .ThenBy(r => r.Version.Patch)
             .Select(r => r.Version)
-            .FirstOrDefault();
+            .FirstOrDefaultAsync();
     }
 
     public IAsyncEnumerable<Release> GetCurrentReleases(Range range)

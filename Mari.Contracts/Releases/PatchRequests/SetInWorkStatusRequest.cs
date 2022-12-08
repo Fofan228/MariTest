@@ -7,12 +7,12 @@ namespace Mari.Contracts.Releases.PatchRequests;
 
 public class SetInWorkStatusRequest : PatchRequest<VoidResponse>
 {
-    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/in_work/{{{nameof(Route.Id)}}}";
+    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/in_work/{{{nameof(Route.ReleaseId)}}}";
     public override string RouteTemplate => ConstRouteTemplate;
 
     public SetInWorkStatusRequest(Route route) : base(route: route)
     {
     }
 
-    public record Route(Guid Id) : RequestRoute;
+    public record Route(Guid ReleaseId) : RequestRoute;
 }

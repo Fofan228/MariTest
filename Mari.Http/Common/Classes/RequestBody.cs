@@ -5,5 +5,5 @@ namespace Mari.Http.Common.Classes;
 
 public abstract record RequestBody : IRequestBody
 {
-    public virtual JsonContent? GetBody() => JsonContent.Create(this);
+    public virtual JsonContent? GetBody() => JsonContent.Create((object)this);
 }

@@ -18,6 +18,7 @@ public static class DependencyInjection
     {
         services.Configure<JwtSettings>(configuration.GetSection(JwtSettings.SectionName));
 
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         services.AddDbContext<MariDbContext>(options => options
             .UseNpgsql(configuration.GetConnectionString(MariDbContext.ConnectionString))
             .UseSnakeCaseNamingConvention());

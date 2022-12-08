@@ -7,12 +7,12 @@ namespace Mari.Contracts.Releases.PatchRequests;
 
 public class SetCompleteStatusRequest : PatchRequest<VoidResponse>
 {
-    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/complete/{{{nameof(Route.Id)}}}";
+    public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Release}/complete/{{{nameof(Route.ReleaseId)}}}";
     public override string RouteTemplate => ConstRouteTemplate;
 
     public SetCompleteStatusRequest(Route route) : base(route: route)
     {
     }
 
-    public record Route(Guid Id) : RequestRoute;
+    public record Route(Guid ReleaseId) : RequestRoute;
 }

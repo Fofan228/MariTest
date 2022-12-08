@@ -8,5 +8,5 @@ public class UserModel
     public string Username { get; set; } = null!;
     public UserRole Role { get; set; }
     public List<string> Notifications { get; set; } = null!;
-    public bool IsActive { get; set; } 
+    public bool IsActive { get; set; }
 }

@@ -44,9 +44,14 @@
     
     private async Task ShowError(ProblemDetails problemDetails)
     {
-        bool? result = await DialogService.ShowMessageBox(
+        var message = $"Статусный код: {problemDetails.Status}";
+        message += !string.IsNullOrWhiteSpace(problemDetails.Detail)
+            ? $"<br/>Ошибка: {problemDetails.Detail}"
+            : string.Empty;
+
+        await DialogService.ShowMessageBox(
             problemDetails.Title, 
-            $"Статусный код: {problemDetails.Status}\nОшибка: {problemDetails.Detail}", 
+            (MarkupString) message, 
             yesText:"Ok!");
         
     }
@@ -61,8 +66,6 @@
     {
         ProblemHandler.ErrorProblemEvent -= ShowError;
     }
-    
-    
     
     private bool IsDrawerOpened { get; set; }
 

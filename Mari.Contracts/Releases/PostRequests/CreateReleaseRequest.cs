@@ -3,7 +3,6 @@ using Mari.Contracts.Releases.Dto;
 using Mari.Http.Common.Classes;
 using Mari.Http.Models;
 using Mari.Http.Requests;
-using static Mari.Contracts.Releases.PostRequests.CreateReleaseRequest;
 
 namespace Mari.Contracts.Releases.PostRequests;
 
