@@ -1,20 +1,23 @@
 ﻿<MudTabs Class="tabs mb-16" Elevation="4" Rounded="true" Centered="true">
-    <MudTabPanel Class="tabsItem" Text="Текущий релиз">
-        <MudMainContent Class="main-content ml-0">
+    <MudTabPanel Class="tabsItem" Text="Текущие релизы">
+        <MudContainer  Style="margin: auto;
+                                                   max-width: 100%;" Class="mt-16 main-content ml-0">
             <CurrentReleases />
-        </MudMainContent>
+        </MudContainer>
     </MudTabPanel>
 
-    <MudTabPanel Class="tabsItem" Text="Релиз в работе">
-        <MudMainContent Class="main-content ml-0">
+    <MudTabPanel Class="tabsItem" Text="Релизы в работе">
+        <MudContainer  Style="margin: auto;
+                                                  max-width: 100%;" Class="main-content mt-16 ml-0">
             <InProgressReleases />
-        </MudMainContent>
+        </MudContainer>
     </MudTabPanel>
 
-    <MudTabPanel Class="tabsItem" Text="Запланированный релиз">
-        <MudMainContent Class="main-content ml-0">
+    <MudTabPanel Class="tabsItem" Text="Запланированные релизы">
+        <MudContainer  Style="margin: auto;
+                             max-width: 100%;"  Class="main-content mt-16 ml-0">
             <PlannedReleases  />
-        </MudMainContent>
+        </MudContainer>
     </MudTabPanel>
 </MudTabs>
 
