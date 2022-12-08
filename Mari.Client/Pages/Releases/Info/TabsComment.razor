@@ -41,7 +41,7 @@
             </MudPaper>
             <MudForm>
                 <MudTextField @bind-Value="@Text" Lines="3" Label="Введите текст" Variant="Variant.Filled" Clearable="true"/>
-                <MudButton Class="mt-2" OnClick="AddComment(    @context.User.Claims.First( c => c.Type == ReleaseId).Value)" Variant="Variant.Filled" Color="Color.Primary">Отправить</MudButton>
+                <MudButton Class="mt-2" OnClick="AddComment" Variant="Variant.Filled" Color="Color.Primary">Отправить</MudButton>
             </MudForm>
         </MudPaper>
     </Authorized>
@@ -80,9 +80,9 @@
     string Name { get; set; } = "Ахимат";
     string Text { get; set; }
 
-    private void AddComment(string ReleaseId)
+    private void AddComment()
     {
-        NewCommnet.ReleaseId = new Guid(ReleaseId);
+        //NewCommnet.ReleaseId = new Guid(ReleaseId);
       //  NewCommnet.UserId = userId;
         
         Text = null;

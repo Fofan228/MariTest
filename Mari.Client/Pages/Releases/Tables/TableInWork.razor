@@ -41,10 +41,14 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
-        <MudTd DataLabel="Version">@($"{context.Version.Major.ToString()}.{context.Version.Minor.ToString()}.{context.Version.Patch.ToString()}")</MudTd>
+        <MudTd DataLabel="Version">
+            @($"{context.Version.Major.ToString()}." +
+              $"{context.Version.Minor.ToString()}." +
+              $"{context.Version.Patch.ToString()}")
+        </MudTd>
         <MudTd DataLabel="ReleaseTask">
             <div @onclick:stopPropagation="true">
-                <MudLink Href="@context.MainIssue">@context.MainIssue</MudLink>
+                <MudLink Href="@context.MainIssue">@_url</MudLink>
             </div>
         </MudTd>
         <MudTd DataLabel="Status">@context.Status</MudTd>
@@ -53,8 +57,9 @@
         <MudTd>
             <div @onclick:stopPropagation="true">
                 <MudTooltip Text="Завершить">
-                   <MudIconButton Class="pa-0" OnClick="@(() => Trans(context))" Icon="@Icons.Filled.CancelScheduleSend"
-                                  Size="@Size.Medium" Color="Color.Primary"/>
+                    <MudIconButton Class="pa-0" OnClick="@(() => Trans(context))"
+                                   Icon="@Icons.Filled.CancelScheduleSend"
+                                   Size="@Size.Medium" Color="Color.Primary"/>
                 </MudTooltip>
             </div>
         </MudTd>
@@ -64,7 +69,9 @@
             @context.PlatformName
         </MudTd>
         <MudTd DataLabel="Version">
-            @($"{context.Version.Major.ToString()}.{context.Version.Minor.ToString()}.{context.Version.Patch.ToString()}")
+            @($"{context.Version.Major.ToString()}." +
+              $"{context.Version.Minor.ToString()}." +
+              $"{context.Version.Patch.ToString()}")
         </MudTd>
         <MudTd DataLabel="ReleaseTask">
             @context.MainIssue
@@ -91,7 +98,8 @@
     </PagerContent>
     <EditButtonContent Context="button">
         <MudTooltip Text="Изменить">
-            <MudIconButton Size="@Size.Medium" Icon="@Icons.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled"/>
+            <MudIconButton Size="@Size.Medium" Icon="@Icons.Outlined.Edit" Class="pa-0"
+                           OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled"/>
         </MudTooltip>
     </EditButtonContent>
 </MudTable>
@@ -100,6 +108,7 @@
 {
     //Todo отправить изменение
     
+    private string _url = "Ссылка на задачу";
     bool _clickOnRow = true;
     private string _searchString = "";
     private TableEditTrigger editTrigger = TableEditTrigger.EditButton;
