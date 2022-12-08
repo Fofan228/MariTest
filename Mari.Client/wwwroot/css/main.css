@@ -44,7 +44,7 @@
 
 .paper-create-release {
     width: 100%;
-    height: 90vh;
+    height: 91vh;
     position: absolute;
     background: rgba(0,0,0,.5);
     top: 0;
@@ -56,7 +56,7 @@
 
 .paper-edit-release {
     width: 100%; 
-    height: 90vh;
+    height: 95vh;
     position: absolute;
     background: rgba(0,0,0,.5);
     top: 0;

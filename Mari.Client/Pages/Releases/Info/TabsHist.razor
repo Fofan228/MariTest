@@ -1,5 +1,4 @@
-﻿@* @using Mari.Client.Models.Comments
-@using Mari.Contracts.Comments.Responses
+﻿ @using Mari.Client.Models.Comments
 @inject ICommentManager CommentManager
 
 <MudPaper Elevation="0" Class="pt-2">
@@ -28,8 +27,8 @@
 
     [Parameter]
     public string ReleaseId { get; set; } = null!;
-    
-    List<CommentResponse> SystemComments { get; set; }
+
+    List<CommentModel> SystemComments { get; set; } = new List<CommentModel>();
 
 
     protected override async Task OnInitializedAsync()
@@ -37,13 +36,13 @@
         //SystemComments = await CommentManager.GetAllSystemComment(Guid.Parse(Id));
         
     // TODO Тестовые данные
-        SystemComments = new List<CommentResponse>()
+        /*SystemComments = new List<CommentModel>()
         {
-            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "", "15.11.2022", false),
-            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "", "15.11.2022", false),
-            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "", "15.11.2022", false),
-            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "", "15.11.2022", false),
+            new CommentModel(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "", "15.11.2022", false),
+            new CommentModel(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "", "15.11.2022", false),
+            new CommentModel(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "", "15.11.2022", false),
+            new CommentModel(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "", "15.11.2022", false),
 
-        };
+        };*/
     }
-} *@
+} 

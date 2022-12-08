@@ -106,13 +106,11 @@
     private ReleaseModel elementBeforeEdit;
     
     private IList<ReleaseModel> Releases { get; set; }
-    private IList<PlatformModel> Platforms { get; set; }
 
     
     protected override async Task OnInitializedAsync()
     {
         Releases = await ReleaseManager.GetInWork();
-        Platforms = await ReleaseManager.GetAllPlatforms();
        
     /*// TODO Тестовые данные
         Releases = new List<ReleaseModel>()

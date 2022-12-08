@@ -74,12 +74,12 @@
     public Action SwitchEditRelease { get; set; } = () => { };
     
     [Parameter]
-    public Action GetUpdateUser { get; set; } 
-        
+    public Action GetUpdateUser { get; set; }
+
     [Parameter]
-    public ReleaseModel Release { get; set;  }
+    public ReleaseModel Release { get; set; } = new ReleaseModel();
     
-    public ReleaseModel EditRelease { get; set; }
+    public ReleaseModel EditRelease { get; set; } = new ReleaseModel();
     
 	MudDatePicker DatePicker;
 

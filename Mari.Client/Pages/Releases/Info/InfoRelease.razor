@@ -3,7 +3,7 @@
 @attribute [Route(ClientRoutes.Pages.ReleasesInfo)]
 @inject IReleaseManager ReleaseManager
 
-<MudPaper Elevation="3" Height="100vh">
+<MudPaper Elevation="0" Height="100%">
 
     <MudContainer Class="my-auto" MaxWidth="MaxWidth.Medium" Style="display: flex; flex-direction: row;">
      
@@ -68,8 +68,8 @@
 
     private bool IsRightDrawerOpened { get; set; } = false;
     private bool openEditingRelease { get; set; } = false;
-    
-    private ReleaseModel Release { get; set; }
+
+    private ReleaseModel Release { get; set; } = new ReleaseModel();
 
     public async void SwitchEditRelease()
     {
