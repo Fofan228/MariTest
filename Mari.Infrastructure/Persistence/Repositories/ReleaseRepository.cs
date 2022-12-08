@@ -24,8 +24,7 @@ public class ReleaseRepository : Repository<Release, ReleaseId>, IReleaseReposit
 
     public async Task<Platform?> GetPlatformByName(PlatformName name, CancellationToken token = default)
     {
-        return await Set
-            .Select(r => r.Platform)
+        return await Context.Set<Platform>()
             .Where(p => p.Name == name)
             .FirstOrDefaultAsync();
     }
