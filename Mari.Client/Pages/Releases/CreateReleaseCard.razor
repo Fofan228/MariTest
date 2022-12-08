@@ -51,7 +51,7 @@
 
             <MudCardActions>
                 <MudButton @onclick="ClickOnCreateRelease" Variant="Variant.Filled"
-                           Color="Color.Primary" Class="mx-auto" Disabled="@(!_success)">
+                           Color="Color.Primary" Class="mx-auto">
                     Добавить
                 </MudButton>
             </MudCardActions>
@@ -93,12 +93,27 @@
 
     private string[] AllNamePlatforms { get; set; }
 
+    [Inject] private IDialogService DialogService { get; set; }
+    
     public async Task ClickOnCreateRelease()
     {
-        await ReleaseManager.Create(Release);
-        Platforms = new List<PlatformModel>();
-        AllNamePlatforms = null;
-        SwitchDimmingAdd();
+        if (Release.PlatformName is not null &&
+            (Release.Version.Major != 0 ||
+             Release.Version.Patch != 0 ||
+             Release.Version.Minor != 0))
+        {
+            await ReleaseManager.Create(Release);
+            Platforms = new List<PlatformModel>();
+            AllNamePlatforms = null;
+            SwitchDimmingAdd();    
+        }
+        else
+        {
+            bool? result = await DialogService.ShowMessageBox(
+                "Внимание", 
+                "Пожалуйста, заполните поля \"Платформа\" и \"Версия\"", 
+                yesText:"Хорошо");
+        }
     }
 
     private async Task<IEnumerable<string>> SearchPlatform(string value)
