@@ -36,10 +36,14 @@
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
-        <MudTd DataLabel="Version">@($"{context.Version.Major.ToString()}.{context.Version.Minor.ToString()}.{context.Version.Patch.ToString()}")</MudTd>
+        <MudTd DataLabel="Version">
+            @($"{context.Version.Major.ToString()}." +
+              $"{context.Version.Minor.ToString()}." +
+              $"{context.Version.Patch.ToString()}")
+        </MudTd>
         <MudTd DataLabel="ReleaseTask">
             <div @onclick:stopPropagation="true">
-                <MudLink Href="@context.MainIssue">@context.MainIssue</MudLink>
+                <MudLink Href="@context.MainIssue">@_url</MudLink>
             </div>
         </MudTd>
         <MudTd DataLabel="Status">@context.Status</MudTd>
@@ -62,11 +66,17 @@
         <MudTd DataLabel="Version">
 
             <MudContainer  Class="flex-row d-flex align-end px-0 flex-grow-1 gap-1" >
-                <MudTextField @bind-Value="@context.Version.Major" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true" Required="true" RequiredError="@String.Empty"/> 
+                <MudTextField @bind-Value="@context.Version.Major" Class="flex-none" Style="max-width: 28px"
+                              Variant="Variant.Text"  MaxLength="2"  Immediate="true"
+                              Required="true" RequiredError="@String.Empty"/> 
                 <MudText >.</MudText>
-                <MudTextField @bind-Value="@context.Version.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  Required="true" RequiredError="@String.Empty"/> 
+                <MudTextField @bind-Value="@context.Version.Minor" Class="flex-none" Style="max-width: 28px"
+                              Variant="Variant.Text"  MaxLength="2"  Immediate="true"
+                              Required="true" RequiredError="@String.Empty"/> 
                 <MudText>.</MudText>
-                <MudTextField @bind-Value="@context.Version.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text"  MaxLength="2"  Immediate="true"  Required="true" RequiredError="@String.Empty"/> 
+                <MudTextField @bind-Value="@context.Version.Patch" Class="flex-none" Style="max-width: 28px"
+                              Variant="Variant.Text"  MaxLength="2"  Immediate="true"
+                              Required="true" RequiredError="@String.Empty"/> 
             </MudContainer>
 
         </MudTd>
@@ -128,9 +138,9 @@
             AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
         StateHasChanged();
     }
-    
-    
-    
+
+
+    private string _url = "Ссылка на задачу";
     bool _clickOnRow = true;
     MudDatePicker _picker;
     private string _searchString = "";

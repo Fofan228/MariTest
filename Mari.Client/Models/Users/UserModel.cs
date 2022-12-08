@@ -1,6 +1,4 @@
-﻿using Mari.Client.Models.Enums;
-
-namespace Mari.Client.Models.Users;
+﻿namespace Mari.Client.Models.Users;
 
 public class UserModel
 {
