@@ -1,6 +1,5 @@
-﻿ @*@using Contracts.Releases
-@using Mari.Client.Models.Enums
-@using Mari.Client.Models.Users
+﻿ @using Contracts.Releases
+ @using Mari.Client.Models.Users
 @using Mari.Contracts.Releases.Responses
 @using Microsoft.AspNetCore.Components
 @inject IReleaseManager ReleaseManager
@@ -85,14 +84,14 @@
 
     private void BackupItem(object user)
     {
-        elementBeforeEdit = new UserModel
+        /*elementBeforeEdit = new UserModel
         (
             ((UserModel)user).Id,
             ((UserModel)user).Username,
              ((UserModel)user).Role,
             new List<string>(((UserModel)user).Notifications),
              ((UserModel)user).IsActive
-        );
+        );*/
         Selected = new List<string>(((UserModel)user).Notifications);
         
         StateHasChanged();
@@ -119,8 +118,8 @@
             return true;
         if (user.Username.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-        if (user.Role.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
+       // if (user.Role.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        //    return true;
         if ($"{user.Username} {user.Role}".Contains(searchString))
             return true;
         return false;
@@ -165,4 +164,4 @@
     }
 
 
-} *@
+} 
