@@ -1,4 +1,5 @@
 @using Mari.Contracts.Common.Routes.Client
+@using System.Security.Claims
 <AuthorizeView>
             <Authorized>
                    <MudDrawerHeader>
@@ -18,11 +19,11 @@
                    <MudPaper Elevation="0">
                        <MudContainer Class="py-4" MaxWidth="MaxWidth.Medium">
                            <MudText Align="Align.Center">
-                               @context.User.Identity.
+                              Имя пользователя: @context.User.Identity?.Name
                            </MudText>
                    
                            <MudText Align="Align.Center">
-                               @context.User.Identity?.Name!
+                               Роль: @context.User.Claims.First( c => c.Type == ClaimTypes.Role).Value
                            </MudText>
                        </MudContainer>
                    </MudPaper>

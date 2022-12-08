@@ -6,19 +6,19 @@ namespace Mari.Client.Common.Http.ProblemsHandling;
 
 public class ProblemHandler
 {
-    public event Action<ProblemDetails> DefaultProblemEvent;
-    public event Action<ProblemDetails> ValidationProblemEvent;
-    public event Action<ProblemDetails> UnauthorizedProblemEvent;
-    public event Action<ProblemDetails> NotFoundProblemEvent;
-    public event Action<ProblemDetails> ErrorProblemEvent;
+    public event Func<ProblemDetails, Task> DefaultProblemEvent;
+    public event Func<ProblemDetails, Task> ValidationProblemEvent;
+    public event Func<ProblemDetails, Task>UnauthorizedProblemEvent;
+    public event Func<ProblemDetails, Task> NotFoundProblemEvent;
+    public event Func<ProblemDetails, Task> ErrorProblemEvent;
 
     public ProblemHandler(ProblemHandlerOptions options)
     {
-        DefaultProblemEvent = options.DefaultProblemEvent ?? (_ => { });
-        ValidationProblemEvent = options.ValidationProblemEvent ?? (_ => { });
-        UnauthorizedProblemEvent = options.UnauthorizedProblemEvent ?? (_ => { });
-        NotFoundProblemEvent = options.NotFoundProblemEvent ?? (_ => { });
-        ErrorProblemEvent = options.ErrorProblemEvent ?? (_ => { });
+        DefaultProblemEvent = options.DefaultProblemEvent ?? (_ => Task.CompletedTask);
+        ValidationProblemEvent = options.ValidationProblemEvent ?? (_ => Task.CompletedTask);
+        UnauthorizedProblemEvent = options.UnauthorizedProblemEvent ?? (_ => Task.CompletedTask);
+        NotFoundProblemEvent = options.NotFoundProblemEvent ?? (_ => Task.CompletedTask);
+        ErrorProblemEvent = options.ErrorProblemEvent ?? (_ => Task.CompletedTask);
     }
 
     public void HandleProblem(ProblemDetails problem)

@@ -1,6 +1,6 @@
-﻿@* @using System.ComponentModel.DataAnnotations
+﻿ @using System.ComponentModel.DataAnnotations
+@using System.Security.Claims
 @using Mari.Client.Models.Comments
-@using Mari.Contracts.Comments.Responses
 @inject ICommentManager CommentManager
 
 <MudPaper Elevation="0" Class="pt-2"> 
@@ -17,7 +17,7 @@
                     </MudPaper>
 
                     <MudPaper Class="pt-2" Elevation="0">
-                        <MudText>@comment.CreateDate</MudText>
+                        <MudText>@comment.CreateDate.ToString()</MudText>
                     </MudPaper>
 
                     <MudPaper Class="pt-2" Elevation="0">
@@ -27,43 +27,52 @@
             }
     </MudStack>
 </MudPaper>
-
-<MudPaper Elevation="3" Square="true" Class="border-b px-4 py-4 d-flex flex-column" Style="bottom: 0; position: sticky;">
-    <MudPaper Class="d-flex" Elevation="0">
-        <MudAvatar Color="Color.Primary">M</MudAvatar>
-        <MudPaper Class="d-flex align-center pl-4" Elevation="0">
-            <MudText>@Name</MudText>
+ 
+ 
+<AuthorizeView>
+    <Authorized>
+         <MudPaper Elevation="3" Square="true" Class="border-b px-4 py-4 d-flex flex-column" Style="bottom: 0; position: sticky;">
+            <MudPaper Class="d-flex" Elevation="0">
+                <MudAvatar Color="Color.Primary">M</MudAvatar>
+                <MudPaper Class="d-flex align-center pl-4" Elevation="0">
+                    <MudText>@context.User.Identity?.Name</MudText>
+                </MudPaper>
+            </MudPaper>
+            <MudForm>
+                <MudTextField @bind-Value="@Text" Lines="3" Label="Введите текст" Variant="Variant.Filled" Clearable="true"/>
+                <MudButton Class="mt-2" OnClick="AddComment" Variant="Variant.Filled" Color="Color.Primary">Отправить</MudButton>
+            </MudForm>
         </MudPaper>
-    </MudPaper>
-    <MudForm>
-        <MudTextField @bind-Value="@Text" Lines="3" Label="Введите текст" Variant="Variant.Filled" Clearable="true"/>
-        <MudButton Class="mt-2" OnClick="AddComment" Variant="Variant.Filled" Color="Color.Primary">Отправить</MudButton>
-    </MudForm>
-</MudPaper>
-
-
+    </Authorized>
+</AuthorizeView>
+ 
+    
 @code {
 
     [Parameter]
     public string ReleaseId { get; set; } = null!;
 
-    private List<CommentResponse> UserComments { get; set; } = new List<CommentResponse>();
+    private List<CommentModel> UserComments { get; set; } = new List<CommentModel>();
 
-    private CommentCreateModel newCommnet { get; set; } = new CommentCreateModel();
+    private CommentCreateModel NewCommnet { get; set; } = new CommentCreateModel();
 
     protected override async Task OnInitializedAsync()
     {
-        
        // UserComments = await CommentManager.GetAllUserComment(Guid.Parse(Id));
         
     // TODO Тестовые данные
-     /*UserComments = new List<CommentResponse>()
+        /*UserComments = new List<CommentModel>
         {
-            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
-            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
-            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
-            new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, "Араб", "GG", "15.11.2022", false),
-
+            new CommentModel()
+            {
+                CommentId = Guid.NewGuid(),
+                ReleaseId = Guid.NewGuid(),
+                UserId = 1,
+                UserName = Name,
+                Message = Text,
+                CreateDate = DateTime.Now,
+                IsEdit = false
+            }
         };*/
     }
 
@@ -73,8 +82,9 @@
     private void AddComment()
     {
         
-        UserComments.Add(new CommentResponse(Guid.NewGuid(), Guid.NewGuid(), 1, Name, Text, DateTime.UtcNow.ToString(), false));
-
+        NewCommnet.ReleaseId = new Guid(ReleaseId);
+      //  NewCommnet.UserId = userId;
+        
         Text = null;
      // CommentManager.Post(newCommnet); 
     // Comments = await CommentManager.GetAllUserComment(Guid.Parse(Id));
@@ -82,4 +92,3 @@
     }
 }
 
- *@

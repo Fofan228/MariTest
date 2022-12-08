@@ -5,11 +5,11 @@ namespace Mari.Client.Common.Http.ProblemsHandling;
 public class ProblemHandlerOptions
 {
     public ProblemHandlerOptions(
-        Action<ProblemDetails>? defaultProblemEvent = null,
-        Action<ProblemDetails>? validationProblemEvent = null,
-        Action<ProblemDetails>? unauthorizedProblemEvent = null,
-        Action<ProblemDetails>? notFoundProblemEvent = null,
-        Action<ProblemDetails>? errorProblemEvent = null)
+        Func<ProblemDetails, Task>? defaultProblemEvent = null,
+        Func<ProblemDetails, Task>? validationProblemEvent = null,
+        Func<ProblemDetails, Task>? unauthorizedProblemEvent = null,
+        Func<ProblemDetails, Task>? notFoundProblemEvent = null,
+        Func<ProblemDetails, Task>? errorProblemEvent = null)
     {
         DefaultProblemEvent = defaultProblemEvent;
         ValidationProblemEvent = validationProblemEvent;
@@ -18,9 +18,9 @@ public class ProblemHandlerOptions
         ErrorProblemEvent = errorProblemEvent;
     }
 
-    public Action<ProblemDetails>? DefaultProblemEvent { get; set; }
-    public Action<ProblemDetails>? ValidationProblemEvent { get; set; }
-    public Action<ProblemDetails>? UnauthorizedProblemEvent { get; set; }
-    public Action<ProblemDetails>? NotFoundProblemEvent { get; set; }
-    public Action<ProblemDetails>? ErrorProblemEvent { get; set; }
+    public Func<ProblemDetails, Task>? DefaultProblemEvent { get; set; }
+    public Func<ProblemDetails, Task>? ValidationProblemEvent { get; set; }
+    public Func<ProblemDetails, Task>? UnauthorizedProblemEvent { get; set; }
+    public Func<ProblemDetails, Task>? NotFoundProblemEvent { get; set; }
+    public Func<ProblemDetails, Task>? ErrorProblemEvent { get; set; }
 }

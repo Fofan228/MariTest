@@ -4,8 +4,8 @@ namespace Mari.Client.Models.Comments;
 public class CommentCreateModel
 {
 
-    public string ReleaseId { get;  set; } = null!;
-    public string UserId { get;  set; } = null!;
+    public Guid? ReleaseId { get;  set; } = null!;
+    public int UserId { get;  set; }
     public string Message { get; set; } = null!;
 
 

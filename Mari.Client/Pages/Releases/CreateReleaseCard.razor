@@ -50,15 +50,6 @@
             </MudCardContent>
 
             <MudCardActions>
-                @* @if (!string.IsNullOrWhiteSpace(ReleaseCreate.PlatformName) && *@
-                @*      !string.IsNullOrWhiteSpace(ReleaseCreate.Minor.ToString()) && *@
-                @*      !string.IsNullOrWhiteSpace(ReleaseCreate.Major.ToString()) && *@
-                @*      !string.IsNullOrWhiteSpace(ReleaseCreate.Patch.ToString()) *@
-                @*     ) *@
-                @* { *@
-                @*     <MudButton @onclick="ClickOnCreateRelease" Variant="Variant.Filled" Color="Color.Primary" *@
-                @*                Class="mx-auto">Добавить</MudButton> *@
-                @* } *@
                 <MudButton @onclick="ClickOnCreateRelease" Variant="Variant.Filled"
                            Color="Color.Primary" Class="mx-auto" Disabled="@(!_success)">
                     Добавить
@@ -79,21 +70,20 @@
         {
             Release.PlatformName = value;
             var version = Platforms.FirstOrDefault(p => p.Name == value)?.LastVersion;
-            if(version is not null) Release.Version = version;
+            if (version is not null) Release.Version = version;
         }
     }
-    
 
     private MudForm _form;
     private bool _success;
     private MudDatePicker DatePicker;
 
     [Parameter]
-    public Action OnAddRelease { get; set;  } 
-    
+    public Action OnAddRelease { get; set; }
+
     [Parameter]
     public Action SwitchDimming { get; set; }
-    
+
     [Parameter]
     public Func<Task> SwitchDimmingAdd { get; set; }
 
@@ -101,45 +91,27 @@
     private ReleaseModel Release { get; set; } = new();
     private IList<PlatformModel> Platforms { get; set; } 
 
-    private string[] AllNamePlatforms { get; set; }  
-    
-    public async  Task ClickOnCreateRelease()
+    private string[] AllNamePlatforms { get; set; }
+
+    public async Task ClickOnCreateRelease()
     {
         await ReleaseManager.Create(Release);
         Platforms = new List<PlatformModel>();
         AllNamePlatforms = null;
         SwitchDimmingAdd();
     }
-    
+
     private async Task<IEnumerable<string>> SearchPlatform(string value)
     {
-        return  string.IsNullOrEmpty(value) ? AllNamePlatforms
+        return string.IsNullOrEmpty(value) ? AllNamePlatforms
             : AllNamePlatforms.Where(x => x.Contains(value, StringComparison.InvariantCultureIgnoreCase));
     }
-    
-   // DialogOptions maxWidth = new DialogOptions() { MaxWidth = MaxWidth.Medium, FullWidth = true };
 
-  //  [Inject] private IDialogService DialogService { get; set; }
-    
-    
-    /*private async void OnButtonClicked(ProblemDetails obj)
-    {
-        bool? result = await DialogService.ShowMessageBox(
-            obj.Title, 
-            "Deleting can not be undone!", 
-            yesText:"Delete!", cancelText:"Cancel");
-        StateHasChanged();
-    }*/
-    
     protected override async Task OnInitializedAsync()
     {
-      //  StateHasChanged();
-        //ProblemHandler1.DefaultProblemEvent += new Action<ProblemDetails>(OnButtonClicked) ;
+        Platforms = await ReleaseManager.GetAllPlatforms();
         
-        
-         Platforms = await ReleaseManager.GetAllPlatforms();
-        
-        // TODO Тестовые данные
+    // TODO Тестовые данные
             /*Platforms = new List<PlatformResponse>()
             {
                 new PlatformResponse("Android", 1, 1, 1),

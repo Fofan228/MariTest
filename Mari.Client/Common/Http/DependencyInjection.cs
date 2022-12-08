@@ -16,11 +16,11 @@ public static class DependencyInjection
 
         services.AddProblemHandler(new()
         {
-            DefaultProblemEvent = problem => Console.WriteLine(problem.Title),
-            ValidationProblemEvent = problem => Console.WriteLine(problem.Title),
-            UnauthorizedProblemEvent = problem => Console.WriteLine(problem.Title),
-            NotFoundProblemEvent = problem => Console.WriteLine(problem.Title),
-            ErrorProblemEvent = problem => Console.WriteLine(problem.Title)
+            DefaultProblemEvent = _ => Task.CompletedTask,
+            ValidationProblemEvent = _ => Task.CompletedTask,
+            UnauthorizedProblemEvent = _ => Task.CompletedTask,
+            NotFoundProblemEvent = _ => Task.CompletedTask,
+            ErrorProblemEvent = _ => Task.CompletedTask
         });
 
         services.AddTransient<ApiAuthorizationHeaderHandler>();
