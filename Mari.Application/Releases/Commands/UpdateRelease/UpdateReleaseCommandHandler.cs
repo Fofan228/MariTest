@@ -32,8 +32,8 @@ public class UpdateReleaseCommandHandler : IRequestHandler<UpdateReleaseCommand,
 
         var errors = new List<Error>();
 
-        Platform? platform = null;
-        if (request.PlatformName is not null)
+        var platform = await _releaseRepository.GetPlatformByName(request.PlatformName);
+        if (platform is null)
         {
             var platformCreateResult = Platform.Create(request.PlatformName);
             if (platformCreateResult.IsError) errors.AddRange(platformCreateResult.Errors);
@@ -44,12 +44,41 @@ public class UpdateReleaseCommandHandler : IRequestHandler<UpdateReleaseCommand,
 
         var currentDateTime = _dateTimeProvider.UtcNow;
         //TODO Complete и Developing из Plannig - не его зона ответственности
-        errors.AddRange(release.ChangeVersion(request.Version, currentDateTime).Errors);
-        errors.AddRange(release.ChangeStatus((ReleaseStatus)request.Status, currentDateTime).Errors);
-        errors.AddRange(release.ChangeCompleteDate(request.CompleteDate, currentDateTime).Errors);
-        errors.AddRange(release.ChangeMainIssue(request.MainIssue, currentDateTime).Errors);
-        errors.AddRange(release.ChangeDescription(request.Description, currentDateTime).Errors);
-        if (platform is not null) errors.AddRange(release.ChangePlatform(platform, currentDateTime).Errors);
+        if (request.Version != release.Version)
+        {
+            var result = release.ChangeVersion(request.Version, currentDateTime);
+            if (result.IsError) errors.AddRange(result.Errors);
+        }
+
+        if (request.Status != release.Status)
+        {
+            var result = release.ChangeStatus((ReleaseStatus)request.Status, currentDateTime);
+            if (result.IsError) errors.AddRange(result.Errors);
+        }
+
+        if (request.CompleteDate != release.CompleteDate)
+        {
+            var result = release.ChangeCompleteDate(request.CompleteDate, currentDateTime);
+            if (result.IsError) errors.AddRange(result.Errors);
+        }
+
+        if (request.MainIssue != release.MainIssue)
+        {
+            var result = release.ChangeMainIssue(request.MainIssue, currentDateTime);
+            if (result.IsError) errors.AddRange(result.Errors);
+        }
+
+        if (request.Description != release.Description)
+        {
+            var result = release.ChangeDescription(request.Description, currentDateTime);
+            if (result.IsError) errors.AddRange(result.Errors);
+        }
+
+        if (platform is not null && platform != release.Platform)
+        {
+            var result = release.ChangePlatform(platform, currentDateTime);
+            if (result.IsError) errors.AddRange(result.Errors);
+        }
 
         if (errors.Count > 0) return errors;
         await _releaseRepository.Update(release, cancellationToken);

@@ -25,8 +25,8 @@ public class GetAllPlatformsQueryHandler : IRequestHandler<GetAllPlatformsQuery,
         foreach (var platform in platforms)
         {
             var platformSpec = ReleaseSpecs.PlatformIn(platform);
-            var version = await _releaseRepository.GetMaxVersion(platformSpec, token);
-            result.Add(new PlatformResult(platform.Name, ReleaseVersionDto.FromVersion(version!)));
+            var version = await _releaseRepository.GetMaxVersion(platformSpec, token) ?? ReleaseVersion.MinValue;
+            result.Add(new PlatformResult(platform.Name, ReleaseVersionDto.FromVersion(version)));
         }
 
         return result;

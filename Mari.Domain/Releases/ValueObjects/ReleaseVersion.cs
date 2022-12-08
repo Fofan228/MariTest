@@ -1,11 +1,9 @@
-using System.Diagnostics;
 using Mari.Domain.Common.Models;
 using Throw;
 
 namespace Mari.Domain.Releases.ValueObjects;
 
-[DebuggerDisplay($"{{{nameof(ToString)}()}}")]
-public record ReleaseVersion : ValueObject, IComparable<ReleaseVersion>
+public record ReleaseVersion : ValueObject, IEquatable<ReleaseVersion>, IComparable<ReleaseVersion>
 {
     #region Constants
     public const int MaxMajor = int.MaxValue - 1;
@@ -55,6 +53,5 @@ public record ReleaseVersion : ValueObject, IComparable<ReleaseVersion>
     public static bool operator <(ReleaseVersion left, ReleaseVersion right) => left.CompareTo(right) < 0;
     public static bool operator <=(ReleaseVersion left, ReleaseVersion right) => left.CompareTo(right) <= 0;
     public static bool operator >=(ReleaseVersion left, ReleaseVersion right) => left.CompareTo(right) >= 0;
-
     #endregion
 }

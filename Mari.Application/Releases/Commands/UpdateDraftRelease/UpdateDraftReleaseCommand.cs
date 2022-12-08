@@ -1,4 +1,5 @@
 using ErrorOr;
+using Mari.Application.Releases.Dto;
 using Mari.Domain.Releases.Enums;
 using Mari.Domain.Releases.ValueObjects;
 using MediatR;
@@ -9,9 +10,7 @@ public record UpdateDraftReleaseCommand : IRequest<ErrorOr<Updated>>
 {
     public UpdateDraftReleaseCommand(
         Guid id,
-        int? versionMajor,
-        int? versionMinor,
-        int? versionPatch,
+        ReleaseVersionDto? version,
         string? platformName,
         DateTime? completeDate,
         string? mainIssue,
@@ -19,8 +18,8 @@ public record UpdateDraftReleaseCommand : IRequest<ErrorOr<Updated>>
     {
         Id = ReleaseId.Create(id);
 
-        if (versionMajor is not null && versionMinor is not null && versionPatch is not null)
-            Version = ReleaseVersion.Create(versionMajor.Value, versionMinor.Value, versionPatch.Value);
+        if (version is not null)
+            Version = ReleaseVersion.Create(version.Value.Major, version.Value.Minor, version.Value.Patch);
 
         if (platformName is not null)
             PlatformName = PlatformName.Create(platformName);

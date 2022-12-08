@@ -18,15 +18,13 @@ public class ReleaseRepository : Repository<Release, ReleaseId>, IReleaseReposit
 
     public IAsyncEnumerable<Platform> GetAllPlatforms()
     {
-        return Set.AsNoTracking()
-            .Select(r => r.Platform)
-            .Distinct()
+        return Context.Set<Platform>()
             .AsAsyncEnumerable();
     }
 
     public async Task<Platform?> GetPlatformByName(PlatformName name, CancellationToken token = default)
     {
-        return await Set
+        return await Set.AsNoTracking()
             .Select(r => r.Platform)
             .Where(p => p.Name == name)
             .FirstOrDefaultAsync();
