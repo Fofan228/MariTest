@@ -4,7 +4,7 @@
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
 
-<MudTable Class="mt-8" Items="@Releases" Hover="true" T="ReleaseModel"
+<MudTable Class="my-8" Items="@Releases" Hover="true" T="ReleaseModel"
           OnRowClick="RowClicked" Filter="new Func<ReleaseModel, bool>(FilterFunc)">
     <ToolBarContent>
           <MudText Typo="Typo.h6">Настройки</MudText>

@@ -4,7 +4,7 @@
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
 
-<MudTable Items="@Releases" Hover="true" T="ReleaseModel" Class="mt-8" CanCancelEdit="true"
+<MudTable Items="@Releases" Hover="true" T="ReleaseModel" Class="my-8" CanCancelEdit="true"
           RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted"
           CommitEditTooltip="Сохранить" CancelEditTooltip="Отменить"
           EditTrigger="@editTrigger" Filter="new Func<ReleaseModel,bool>(FilterFunc)"
