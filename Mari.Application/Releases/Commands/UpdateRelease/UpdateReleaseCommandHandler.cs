@@ -32,15 +32,19 @@ public class UpdateReleaseCommandHandler : IRequestHandler<UpdateReleaseCommand,
 
         var errors = new List<Error>();
 
-        var platform = await _releaseRepository.GetPlatformByName(request.PlatformName);
-        if (platform is null)
-        {
-            var platformCreateResult = Platform.Create(request.PlatformName);
-            if (platformCreateResult.IsError) errors.AddRange(platformCreateResult.Errors);
-        }
-
         var release = await _releaseRepository.GetById(request.Id);
         if (release is null) return Errors.Release.ReleaseNotFound;
+
+        Platform? platform = null;
+        if (request.PlatformName != release.Platform.Name)
+        {
+            platform = await _releaseRepository.GetPlatformByName(request.PlatformName);
+            if (platform is null)
+            {
+                var platformCreateResult = Platform.Create(request.PlatformName);
+                if (platformCreateResult.IsError) errors.AddRange(platformCreateResult.Errors);
+            }
+        }
 
         var currentDateTime = _dateTimeProvider.UtcNow;
         //TODO Complete и Developing из Plannig - не его зона ответственности

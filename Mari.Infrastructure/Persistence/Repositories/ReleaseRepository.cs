@@ -24,7 +24,7 @@ public class ReleaseRepository : Repository<Release, ReleaseId>, IReleaseReposit
 
     public async Task<Platform?> GetPlatformByName(PlatformName name, CancellationToken token = default)
     {
-        return await Set.AsNoTracking()
+        return await Set
             .Select(r => r.Platform)
             .Where(p => p.Name == name)
             .FirstOrDefaultAsync();

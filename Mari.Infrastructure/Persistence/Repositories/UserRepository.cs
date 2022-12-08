@@ -2,7 +2,6 @@ using Mari.Application.Common.Interfaces.Persistence;
 using Mari.Domain.Users;
 using Mari.Domain.Users.ValueObjects;
 using Mari.Infrastructure.Persistence.Shared;
-using Microsoft.EntityFrameworkCore;
 
 namespace Mari.Infrastructure.Persistence.Repositories;
 
