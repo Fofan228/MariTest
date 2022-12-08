@@ -30,6 +30,7 @@
         <col style="width: 20%;"/>
         <col style="width: 20%;"/>
         <col/>
+        <col/>
     </ColGroup>
     <HeaderContent>
         <MudTh>Платформа</MudTh>
@@ -38,7 +39,8 @@
         <MudTh>Статус релиза</MudTh>
         <MudTh>Дата изменения</MudTh>
         <MudTh>Дата завершения</MudTh>
-        <MudTh></MudTh>
+        <MudTh/>
+        <MudTh/>
     </HeaderContent>
     <RowTemplate>
         <MudTd DataLabel="PlatformName">@context.PlatformName</MudTd>
@@ -61,6 +63,15 @@
                     <MudIconButton Class="pa-0" OnClick="@(() => Trans(context))"
                                    Icon="@Icons.Filled.CancelScheduleSend"
                                    Size="@Size.Medium" Color="Color.Primary"/>
+                </MudTooltip>
+            </div>
+        </MudTd>
+        <MudTd>
+            <div @onclick:stopPropagation="true">
+                <MudTooltip Text="Удалить">
+                    <MudIconButton Class="pa-0" OnClick="@(() => DeleteRelease(context))" Icon="@Icons.Filled.Delete"
+                                   Size="@Size.Medium" Color="Color.Error">
+                    </MudIconButton>
                 </MudTooltip>
             </div>
         </MudTd>
@@ -92,6 +103,11 @@
         <MudTd>
             <MudIconButton Class="pa-0" Icon="@Icons.Filled.CancelScheduleSend"
                            Disabled="true" Size="@Size.Medium" Color="Color.Primary"/>
+        </MudTd>
+        <MudTd>
+            <MudIconButton Class="pa-0" Icon="@Icons.Filled.Delete"
+                           Disabled="true" Size="@Size.Medium" Color="Color.Error">
+            </MudIconButton>
         </MudTd>
     </RowEditingTemplate>
     <PagerContent>
@@ -197,6 +213,13 @@
     {
         await ReleaseManager.SetCompleteStatus(model.Id);
         Releases =await ReleaseManager.GetInWork();
+        StateHasChanged();
+    }
+    
+    private async Task DeleteRelease(ReleaseModel model)
+    {
+        await ReleaseManager.Delete(model.Id);
+        Releases = await ReleaseManager.GetInWork();
         StateHasChanged();
     }
     

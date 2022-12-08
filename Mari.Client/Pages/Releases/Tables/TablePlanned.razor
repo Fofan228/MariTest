@@ -24,7 +24,8 @@
         <col style="width: 20%;"/>
         <col style="width: 16%;"/>
         <col style="width: 16%;"/>
-        <col>
+        <col/>
+        <col/>
     </ColGroup>
     <HeaderContent>
         <MudTh>Платформа</MudTh>
@@ -33,6 +34,7 @@
         <MudTh>Статус релиза</MudTh>
         <MudTh>Дата изменения</MudTh>
         <MudTh>Дата завершения</MudTh>
+        <MudTh/>
         <MudTh/>
     </HeaderContent>
     <RowTemplate>
@@ -55,6 +57,15 @@
                 <MudTooltip Text="Отправить в работу">
                     <MudIconButton Class="pa-0" OnClick="@(() => Trans(context))" Icon="@Icons.Filled.ScheduleSend"
                                    Size="@Size.Medium" Color="Color.Primary"/>
+                </MudTooltip>
+            </div>
+        </MudTd>
+        <MudTd>
+            <div @onclick:stopPropagation="true">
+                <MudTooltip Text="Удалить">
+                    <MudIconButton Class="pa-0" OnClick="@(() => DeleteRelease(context))" Icon="@Icons.Filled.Delete"
+                                   Size="@Size.Medium" Color="Color.Error">
+                    </MudIconButton>
                 </MudTooltip>
             </div>
         </MudTd>
@@ -94,8 +105,13 @@
             <MudDatePicker @bind-Date="@context.CompleteDate" PickerVariant="PickerVariant.Dialog" />
         </MudTd>
         <MudTd>
-            <MudIconButton Class="pa-0"Icon="@Icons.Filled.ScheduleSend"
+            <MudIconButton Class="pa-0" Icon="@Icons.Filled.ScheduleSend"
                            Disabled="true" Size="@Size.Medium" Color="Color.Primary"/>
+        </MudTd>
+        <MudTd>
+            <MudIconButton Class="pa-0" Icon="@Icons.Filled.Delete"
+                           Disabled="true" Size="@Size.Medium" Color="Color.Error">
+            </MudIconButton>
         </MudTd>
     </RowEditingTemplate>
     <PagerContent>
@@ -289,8 +305,14 @@
                 yesText:"Хорошо");
         }
     }
-    
-    
+
+    private async Task DeleteRelease(ReleaseModel model)
+    {
+        await ReleaseManager.Delete(model.Id);
+        Releases = await ReleaseManager.GetPlanned();
+        StateHasChanged();
+    }
+
     private async Task Refresh()
     {
         Releases = await ReleaseManager.GetPlanned();
