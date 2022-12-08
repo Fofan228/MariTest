@@ -1,6 +1,7 @@
 ﻿ @using System.ComponentModel.DataAnnotations
 @using System.Security.Claims
 @using Mari.Client.Models.Comments
+@using Microsoft.IdentityModel.JsonWebTokens
 @inject ICommentManager CommentManager
 
 <MudPaper Elevation="0" Class="pt-2"> 
@@ -40,7 +41,7 @@
             </MudPaper>
             <MudForm>
                 <MudTextField @bind-Value="@Text" Lines="3" Label="Введите текст" Variant="Variant.Filled" Clearable="true"/>
-                <MudButton Class="mt-2" OnClick="AddComment" Variant="Variant.Filled" Color="Color.Primary">Отправить</MudButton>
+                <MudButton Class="mt-2" OnClick="AddComment(    @context.User.Claims.First( c => c.Type == ReleaseId).Value)" Variant="Variant.Filled" Color="Color.Primary">Отправить</MudButton>
             </MudForm>
         </MudPaper>
     </Authorized>
@@ -54,7 +55,7 @@
 
     private List<CommentModel> UserComments { get; set; } = new List<CommentModel>();
 
-    private CommentCreateModel NewCommnet { get; set; } = new CommentCreateModel();
+    private CommentModel NewCommnet { get; set; } = new CommentModel();
 
     protected override async Task OnInitializedAsync()
     {
@@ -79,9 +80,8 @@
     string Name { get; set; } = "Ахимат";
     string Text { get; set; }
 
-    private void AddComment()
+    private void AddComment(string ReleaseId)
     {
-        
         NewCommnet.ReleaseId = new Guid(ReleaseId);
       //  NewCommnet.UserId = userId;
         
