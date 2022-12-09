@@ -1,5 +1,6 @@
 ﻿@using Mari.Client.Models.Releases
 @using Microsoft.AspNetCore.Components
+@using Humanizer
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
@@ -22,7 +23,7 @@
         <col style="width: 16%;"/>
         <col style="width: 16%;"/>
         <col style="width: 20%;"/>
-        <col style="width: 16%;"/>
+        <col style="width: 18%;"/>
         <col style="width: 16%;"/>
         <col/>
         <col/>
@@ -50,11 +51,19 @@
             </div>
         </MudTd>
         <MudTd DataLabel="Status">@context.Status</MudTd>
-        <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
-        <MudTd DataLabel="CompleteDate">@context.CompleteDate.ToString()</MudTd>
+        <MudTd DataLabel="UpdateDate">
+                <MudTooltip Text="@context.UpdateDate.ToString()">
+                        <MudText>@context.UpdateDate.Humanize()</MudText>
+                </MudTooltip>
+        </MudTd>
+        <MudTd DataLabel="CompleteDate">
+            <MudTooltip Text="@context.CompleteDate?.ToString("dd.MM.yyyy")">
+                <MudText>@context.CompleteDate.Humanize()</MudText>
+            </MudTooltip>
+        </MudTd>
         <MudTd>
             <div @onclick:stopPropagation="true">
-                <MudTooltip Text="Отправить в работу">
+                <MudTooltip Class="tooltip-date" Text="Отправить в работу">
                     <MudIconButton Class="pa-0" OnClick="@(() => Trans(context))" Icon="@Icons.Filled.ScheduleSend"
                                    Size="@Size.Medium" Color="Color.Primary"/>
                 </MudTooltip>

@@ -4,6 +4,7 @@
 @using Mari.Contracts.Releases.Responses
 @using Microsoft.AspNetCore.Components
 @using System.Xml.Linq
+@using Humanizer
 @using Mari.Client.Models.Comments
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
@@ -55,8 +56,16 @@
             </div>
         </MudTd>
         <MudTd DataLabel="Status">@context.Status</MudTd>
-        <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
-        <MudTd DataLabel="CompleteDate">@context.CompleteDate.ToString()</MudTd>
+         <MudTd DataLabel="UpdateDate">
+                <MudTooltip Text="@context.UpdateDate.ToString()">
+                        <MudText>@context.UpdateDate.Humanize()</MudText>
+                </MudTooltip>
+        </MudTd>
+        <MudTd DataLabel="CompleteDate">
+            <MudTooltip Text="@context.CompleteDate?.ToString("dd.MM.yyyy")">
+                <MudText>@context.CompleteDate.Humanize()</MudText>
+            </MudTooltip>
+        </MudTd>
         <MudTd>
             <div @onclick:stopPropagation="true">
                 <MudTooltip Text="Завершить">

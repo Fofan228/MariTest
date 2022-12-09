@@ -5,7 +5,7 @@
     padding: 0;
 }
 
-.tabsItem {
+.tabsItem .mud-tooltip-root.mud-tooltip-inline  {
     color: black;
 }
 
@@ -14,9 +14,10 @@
     width: 100%;
 }
 
-.tabs .mud-tooltip-root.mud-tooltip-inline {
+.tabs .mud-tabs-toolbar.mud-tabs-rounded.mud-elevation-4 .mud-tooltip-root.mud-tooltip-inline {
     width: 33%;
 }
+
 
 .text-size-6 {
     font-size: 12px;
@@ -83,4 +84,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+
+.tooltip-date{
+    width: 100%;
 }
