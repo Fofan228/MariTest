@@ -1,6 +1,5 @@
 ﻿using Mari.Contracts.Common.Routes.Server;
 using Mari.Http.Common.Classes;
-using Mari.Http.Models;
 using Mari.Http.Requests;
 
 namespace Mari.Contracts.Users.PutRequests;

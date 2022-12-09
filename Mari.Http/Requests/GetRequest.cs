@@ -1,6 +1,5 @@
 using Mari.Http.Common.Classes;
 using Mari.Http.Common.Interfaces;
-using Mari.Http.Models;
 
 namespace Mari.Http.Requests;
 

@@ -1,6 +1,4 @@
-using System.Data;
 using FluentValidation;
-using Mari.Application.Common.Shared.Paging;
 using Mari.Domain.Releases.ValueObjects;
 
 namespace Mari.Application.Releases.Queries.GetRelease;

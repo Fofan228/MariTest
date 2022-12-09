@@ -1,10 +1,14 @@
 ﻿ @using System.ComponentModel.DataAnnotations
 @using System.Security.Claims
+@using System.Text.RegularExpressions
+@using System.Web
 @using Humanizer
+@using Mari.Client.Common.Interfaces.Formatters
 @using Mari.Client.Models.Comments
 @using Microsoft.IdentityModel.JsonWebTokens
 @inject ICommentManager CommentManager
-
+@inject IDescriptionFormatter DescriptionFormatter
+ @inject IDateFormatter DateFormatter
 <MudPaper Elevation="0" Class="pt-2"> 
     <MudStack > <!--TODO убрать дублирование кода-->
         @foreach (var comment in UserComments)
@@ -18,13 +22,16 @@
                         </MudPaper>
                     </MudPaper>
 
-                    <MudPaper Class="pt-2" Elevation="0">
-                          <MudText>@comment.CreateDate.ToString()</MudText>
-                        <MudText>@comment.CreateDate.Humanize()</MudText>
+                    <MudPaper Class="pt-1"   Elevation="0">
+                         <MudTooltip Text="@DateFormatter.FormatDate(comment.CreateDate)">
+                            <MudText Style="font-size: 14px;">@DateFormatter.Humanize(comment.CreateDate)</MudText>
+                        </MudTooltip>
                     </MudPaper>
 
                     <MudPaper Class="pt-2" Elevation="0">
-                        <MudText>@comment.Message</MudText>
+                        <MudText>
+                           @DescriptionFormatter.Format(comment.Content)
+                        </MudText>
                     </MudPaper>
                 </MudPaper>
             }
@@ -43,7 +50,14 @@
             </MudPaper>
             <MudForm>
                 <MudTextField @bind-Value="@Text" Lines="3" Label="Введите текст" Variant="Variant.Filled" Clearable="true"/>
-                <MudButton Class="mt-2" OnClick="AddComment" Variant="Variant.Filled" Color="Color.Primary">Отправить</MudButton>
+                <MudPaper Class="d-flex tooltip-comment" Elevation="0">
+                    <MudTooltip Text="Обновить" Style="width: auto">
+                        <MudIconButton Icon="@Icons.Filled.Refresh" OnClick="Refresh"/>
+                    </MudTooltip>
+                    <MudButton Class="my-2" OnClick="AddComment" Variant="Variant.Filled" Color="Color.Primary" Style="right: -50%">
+                        Отправить
+                    </MudButton>
+                </MudPaper>
             </MudForm>
         </MudPaper>
     </Authorized>
@@ -64,7 +78,7 @@
        // UserComments = await CommentManager.GetAllUserComment(Guid.Parse(Id));
         
     // TODO Тестовые данные
-        /*UserComments = new List<CommentModel>
+        UserComments = new List<CommentModel>
         {
             new CommentModel()
             {
@@ -72,11 +86,11 @@
                 ReleaseId = Guid.NewGuid(),
                 UserId = 1,
                 UserName = Name,
-                Message = Text,
+                Content = "Пошли на хуй \n Пидорасы",
                 CreateDate = DateTime.Now,
-                IsEdit = false
+                IsRedact = false
             }
-        };*/
+        };
     }
 
     string Name { get; set; } = "Ахимат";
@@ -91,6 +105,12 @@
      // CommentManager.Post(newCommnet); 
     // Comments = await CommentManager.GetAllUserComment(Guid.Parse(Id));
         StateHasChanged();
+    }
+    
+    private async Task Refresh()
+    {
+        // await UpdateReleases();
+        // StateHasChanged();
     }
 }
 

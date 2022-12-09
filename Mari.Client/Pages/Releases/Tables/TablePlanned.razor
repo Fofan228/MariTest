@@ -1,9 +1,10 @@
 ﻿@using Mari.Client.Models.Releases
 @using Microsoft.AspNetCore.Components
-@using Humanizer
+@using Mari.Client.Common.Interfaces.Formatters
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
+@inject IDateFormatter DateFormatter
 
 <MudTable Items="@Releases" Hover="true" T="ReleaseModel" Class="my-8" CanCancelEdit="true"
           RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted"
@@ -14,7 +15,9 @@
           OnPreviewEditClick="@(() => _clickOnRow = false)" OnRowClick="RowClicked"
           LoadingProgressColor="Color.Primary" Loading="_loading"> 
     <ToolBarContent>
-        <MudIconButton Icon="@Icons.Filled.Refresh" OnClick="Refresh"></MudIconButton>
+        <MudTooltip Text="Обновить">
+            <MudIconButton Icon="@Icons.Filled.Refresh" OnClick="Refresh"/>
+        </MudTooltip>
         <MudSpacer/>
         <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, релизной задаче, статусу и датам"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"/>
@@ -52,16 +55,16 @@
             </div>
         </MudTd>
         <MudTd DataLabel="Status">@context.Status</MudTd>
-        <MudTd DataLabel="UpdateDate">
-                <MudTooltip Text="@context.UpdateDate.ToString()">
-                        <MudText>@context.UpdateDate.Humanize()</MudText>
+      <MudTd DataLabel="UpdateDate">
+                    <MudTooltip Text="@DateFormatter.FormatDateTime(context.UpdateDate)">
+                            <MudText>@DateFormatter.Humanize( context.UpdateDate)</MudText>
+                    </MudTooltip>
+            </MudTd>
+            <MudTd DataLabel="CompleteDate">
+                <MudTooltip Text="@DateFormatter.FormatDate(context.CompleteDate)">
+                    <MudText>@DateFormatter.Humanize(context.CompleteDate)</MudText>
                 </MudTooltip>
-        </MudTd>
-        <MudTd DataLabel="CompleteDate">
-            <MudTooltip Text="@context.CompleteDate?.ToString("dd.MM.yyyy")">
-                <MudText>@context.CompleteDate.Humanize()</MudText>
-            </MudTooltip>
-        </MudTd>
+            </MudTd>
         <MudTd>
             <div @onclick:stopPropagation="true">
                 <MudTooltip Class="tooltip-date" Text="Отправить в работу">
@@ -112,7 +115,15 @@
             @context.UpdateDate.ToString()
         </MudTd>
         <MudTd DataLabel="CompleteDate">
-            <MudDatePicker @bind-Date="@context.CompleteDate" PickerVariant="PickerVariant.Dialog" />
+            <MudDatePicker Context="_picker" @bind-Date="@context.CompleteDate" @ref="_datePicker"
+                           PickerVariant="PickerVariant.Dialog">
+                <PickerActions>
+                    <MudButton Class="mr-auto align-self-start" OnClick="@(() => _datePicker.Clear())">Очистить</MudButton>
+                    <MudButton OnClick="@(() => _datePicker.Close(false))">Закрыть</MudButton>
+                    <MudButton Color="Color.Primary" OnClick="@(() => _datePicker.Close())">Сохранить</MudButton>
+                </PickerActions>
+            </MudDatePicker>
+            @* <MudDatePicker @bind-Date="@context.CompleteDate" PickerVariant="PickerVariant.Dialog" /> *@
         </MudTd>
         <MudTd>
             <MudIconButton Class="pa-0" Icon="@Icons.Filled.ScheduleSend"
@@ -167,7 +178,7 @@
         StateHasChanged();
     }
 
-
+    private MudDatePicker _datePicker;
     private string _url = "Ссылка на задачу";
     bool _clickOnRow = true;
     private bool _loading;

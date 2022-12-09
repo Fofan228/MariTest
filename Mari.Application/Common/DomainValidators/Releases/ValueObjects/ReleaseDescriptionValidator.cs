@@ -1,4 +1,3 @@
-using FluentValidation;
 using Mari.Application.Common.DomainValidators.Shared;
 using Mari.Domain.Releases.ValueObjects;
 

@@ -1,6 +1,5 @@
 using ErrorOr;
 using Mari.Application.Releases.Dto;
-using Mari.Domain.Releases.Enums;
 using Mari.Domain.Releases.ValueObjects;
 using MediatR;
 

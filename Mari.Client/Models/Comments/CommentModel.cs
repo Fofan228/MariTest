@@ -7,6 +7,6 @@ public class CommentModel
     public int UserId { get;  set; }
     public string UserName { get; set; } = null!;
     public DateTime? CreateDate { get; set; } = null!;
-    public string Message { get; set; } = null!;
-    public bool IsEdit { get; set; } = false;
+    public string Content { get; set; } = null!;
+    public bool IsRedact { get; set; } = false;
 }
