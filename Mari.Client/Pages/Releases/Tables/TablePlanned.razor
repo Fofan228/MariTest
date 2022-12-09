@@ -113,7 +113,15 @@
             @context.UpdateDate.ToString()
         </MudTd>
         <MudTd DataLabel="CompleteDate">
-            <MudDatePicker @bind-Date="@context.CompleteDate" PickerVariant="PickerVariant.Dialog" />
+            <MudDatePicker Context="_picker" @bind-Date="@context.CompleteDate" @ref="_datePicker"
+                           PickerVariant="PickerVariant.Dialog">
+                <PickerActions>
+                    <MudButton Class="mr-auto align-self-start" OnClick="@(() => _datePicker.Clear())">Очистить</MudButton>
+                    <MudButton OnClick="@(() => _datePicker.Close(false))">Закрыть</MudButton>
+                    <MudButton Color="Color.Primary" OnClick="@(() => _datePicker.Close())">Сохранить</MudButton>
+                </PickerActions>
+            </MudDatePicker>
+            @* <MudDatePicker @bind-Date="@context.CompleteDate" PickerVariant="PickerVariant.Dialog" /> *@
         </MudTd>
         <MudTd>
             <MudIconButton Class="pa-0" Icon="@Icons.Filled.ScheduleSend"
@@ -168,7 +176,7 @@
         StateHasChanged();
     }
 
-
+    private MudDatePicker _datePicker;
     private string _url = "Ссылка на задачу";
     bool _clickOnRow = true;
     private bool _loading;

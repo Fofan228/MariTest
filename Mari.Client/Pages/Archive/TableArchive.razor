@@ -7,7 +7,8 @@
 @inject IDateFormatter DateFormatter
 
 <MudTable Class="my-8" Items="@Releases" Hover="true" T="ReleaseModel" RowsPerPage="5"
-          OnRowClick="RowClicked" Filter="new Func<ReleaseModel, bool>(FilterFunc)">
+          OnRowClick="RowClicked" Filter="new Func<ReleaseModel, bool>(FilterFunc)"
+          LoadingProgressColor="Color.Primary" Loading="_loading">
     <ToolBarContent>
           <MudText Typo="Typo.h6">Настройки</MudText>
           <MudSpacer />
@@ -48,10 +49,12 @@
 </MudTable>
 
 @code {
-    
+
+    private bool _loading;
     private string _url = "Ссылка на задачу";
     private string searchString = "";
-    private List<ReleaseModel> Releases { get; set; }
+    private List<ReleaseModel> Releases { get; set; } = new List<ReleaseModel>();
+    
 
     protected override async Task OnInitializedAsync()
     {
@@ -99,9 +102,7 @@
 
     private void RowClicked(TableRowClickEventArgs<ReleaseModel> _)
     {
-    
         NavigationManager.NavigateTo($"/info/{_.Item.Id}");
-        
     }
     
     private bool FilterFunc(ReleaseModel answer)

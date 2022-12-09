@@ -20,9 +20,9 @@
                 
                 <MudDatePicker @bind-Date="EditRelease.CompleteDate" @ref="DatePicker"  Label="Дата Завершения">
                     <PickerActions>
-                        <MudButton Class="mr-auto align-self-start" OnClick="@(() => DatePicker.Clear())">Clear</MudButton>
-                        <MudButton OnClick="@(() => DatePicker.Close(false))">Cancel</MudButton>
-                        <MudButton Color="Color.Primary" OnClick="@(() => DatePicker.Close())">Ok</MudButton>
+                        <MudButton Class="mr-auto align-self-start" OnClick="@(() => DatePicker.Clear())">Очистить</MudButton>
+                        <MudButton OnClick="@(() => DatePicker.Close(false))">Закрыть</MudButton>
+                        <MudButton Color="Color.Primary" OnClick="@(() => DatePicker.Close())">Сохранить</MudButton>
                     </PickerActions>
                 </MudDatePicker>
                 
@@ -33,18 +33,24 @@
                 
                    <MudContainer Class="flex-row d-flex align-end px-0 flex-grow-1 gap-1">
                         <MudText >Версия: </MudText>
-                        <MudTextField @bind-Value="EditRelease.Version.Major"  Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true" Required RequiredError="@String.Empty"/>
+                       <MudTextField @bind-Value="EditRelease.Version.Major"  Class="flex-none" Style="max-width: 28px"
+                                     Variant="Variant.Text" MaxLength="2" Immediate="true"
+                                     Required RequiredError="@String.Empty"/>
                         <MudText >.</MudText>
-                        <MudTextField @bind-Value="EditRelease.Version.Minor" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true" Required RequiredError="@String.Empty"/>
+                       <MudTextField @bind-Value="EditRelease.Version.Minor" Class="flex-none" Style="max-width: 28px"
+                                     Variant="Variant.Text" MaxLength="2" Immediate="true"
+                                     Required RequiredError="@String.Empty"/>
                         <MudText>.</MudText>
-                        <MudTextField @bind-Value="EditRelease.Version.Patch" Class="flex-none" Style="max-width: 28px" Variant="Variant.Text" MaxLength="2" Immediate="true" Required RequiredError="@String.Empty"/>
+                       <MudTextField @bind-Value="EditRelease.Version.Patch" Class="flex-none" Style="max-width: 28px"
+                                     Variant="Variant.Text" MaxLength="2" Immediate="true"
+                                     Required RequiredError="@String.Empty"/>
                     </MudContainer>
                
                 
                 <MudTextField @bind-Value="EditRelease.Status" Disabled="true" Immediate="true" Label="Статус" />
 
                 <MudTextField @bind-Value="EditRelease.MainIssue"   Immediate="true"
-                              Label="Ссылка на релиз задачу" />
+                              Label="Ссылка на релиз задачу"/>
 
                 <MudTextField @bind-Value="EditRelease.Description"  Immediate="true"
                     Variant="Variant.Filled" Lines="5" Label="Информация" />

@@ -1,15 +1,16 @@
 ﻿ @using Contracts.Releases
+ @using Mari.Client.Models.Releases
  @using Mari.Client.Models.Users
-@using Mari.Contracts.Releases.Responses
-@using Microsoft.AspNetCore.Components
+ @using Mari.Contracts.Releases.Responses
+ @using Microsoft.AspNetCore.Components
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
 @inject IUserManager UserManager
 
-<MudTable Class="mt-8" CanCancelEdit="true"
+ <MudTable Class="mt-8" CanCancelEdit="true"
           RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted"
-          CommitEditTooltip="Сохранить"
+          CommitEditTooltip="Сохранить" LoadingProgressColor="Color.Primary" Loading="_loading"
           Filter="new Func<UserModel,bool>(FilterFunc)"
           OnCommitEditClick="@(() => Snackbar.Add("Изменения сохранены"))"
           EditTrigger="@editTrigger"
@@ -41,9 +42,9 @@
         <MudTd DataLabel="Role">
            <div @onclick:stopPropagation="true" @onclick:preventDefault="true">
                <MudSelect @bind-Value="@context.Role" Required>
-                   @foreach (var item in Enum.GetValues(typeof(UserRole)))
+                   @foreach (var item in Enum.GetValues<UserRole>())
                    {
-                       <MudSelectItem Value="@Convert.ToString(item)">@item</MudSelectItem>
+                       <MudSelectItem Value="@item">@item</MudSelectItem>
                    }
                </MudSelect>
            </div>
@@ -76,12 +77,16 @@
 
 @code
 {
+    private bool _loading;
     private TableEditTrigger editTrigger = TableEditTrigger.EditButton;
     private UserModel elementBeforeEdit;
     private string searchString = "";
 
-
-
+    private IList<UserModel> Users { get; set; } = new List<UserModel>();
+    private string value { get; set; } = "Ничего не выбрано";
+    private IList<PlatformModel> Platforms { get; set; } = new List<PlatformModel>();
+    private IEnumerable<string> Selected { get; set; } = new List<string>() { };
+    
     private void BackupItem(object user)
     {
         /*elementBeforeEdit = new UserModel
@@ -125,35 +130,45 @@
         return false;
     }
 
-
-    private IList<UserModel> Users { get; set; } = new List<UserModel>();
-    
-    private string value { get; set; } = "Ничего не выбрано";
-    private IList<PlatformResponse> Platforms { get; set; } = new List<PlatformResponse>();
-    private IEnumerable<string> Selected { get; set; } = new List<string>() {  };
-    
-    
     protected override async Task OnInitializedAsync()
     {
+        
     // Users = await UserManager.GetAll();
     //   Platforms = await PlatformManager.GetAll();
         
         
     // TODO Тестовые данные
-     /*Users = new List<UserModel>()
-        {
-            new UserModel(0,"Putin","ReleaseManager",new List<string>(){
-                "Android","IOS"},true),
-            
-            new UserModel(0,"Ахимат","ReleaseManager",new List<string>(){
-                "Android"} ,true)
-        };
-        
-        Platforms = new List<PlatformResponse>()
-        {
-            new PlatformResponse("Android",1,1,1),
-            new PlatformResponse("IOS",1,1,1)
-        };*/
+        Users = new List<UserModel>()
+            {
+                new UserModel()
+                {
+                    Id = 0,
+                    Username = "Putin",
+                    Role = UserRole.ReleaseManager,
+                    Notifications = new List<string>()
+                    {
+                        "Android",
+                        "IOS"
+                    
+                    },
+                    IsActive = true
+                },
+                
+                new UserModel()
+                {
+                    Id = 1,
+                    Username = "Abeme",
+                    Role = UserRole.Guest,
+                    Notifications = new List<string>()
+                    {
+                        "Android",
+                        "IOS"
+                    
+                    },
+                    IsActive = true
+                },
+            };
+        Platforms = await ReleaseManager.GetAllPlatforms();
     // конец
 
     }
@@ -162,6 +177,11 @@
     {
         return $"Уведомления приходят по {selectedValues.Count} {(selectedValues.Count == 1 ? "платформе" : "платформам")}";
     }
-
-
+    
+    // private async Task UpdateReleases()
+    // {
+    //     _loading = true;
+    //     Releases = await ReleaseManager.GetPlanned();
+    //     _loading = false;
+    // }
 } 
