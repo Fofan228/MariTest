@@ -5,9 +5,4 @@ namespace Mari.Application.Common.DomainValidators.Releases.ValueObjects;
 
 public class PlatformIdValidator : AbstractValidator<PlatformId>
 {
-    public PlatformIdValidator()
-    {
-        RuleFor(pi => pi.Value)
-            .NotEmpty();
-    }
 }

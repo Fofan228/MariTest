@@ -5,9 +5,4 @@ namespace Mari.Application.Common.DomainValidators.Releases.ValueObjects;
 
 public class ReleaseUpdateDateValidator : AbstractValidator<ReleaseUpdateDate>
 {
-    public ReleaseUpdateDateValidator()
-    {
-        RuleFor(rud => rud.Value)
-            .NotEmpty();
-    }
 }

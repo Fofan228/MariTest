@@ -6,9 +6,4 @@ namespace Mari.Application.Common.DomainValidators.Releases.ValueObjects;
 
 public class IssueValidator : StringAbstractValidator<Issue>
 {
-    public IssueValidator() : base()
-    {
-        RuleFor(i => i.Value)
-            .Must(i => Uri.IsWellFormedUriString(i, UriKind.Absolute));
-    }
 }

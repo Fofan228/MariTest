@@ -5,9 +5,4 @@ namespace Mari.Application.Common.DomainValidators.Users.ValueObjects;
 
 public class UserIdValidator : AbstractValidator<UserId>
 {
-    public UserIdValidator()
-    {
-        RuleFor(ui => ui.Value)
-            .NotEmpty();
-    }
 }
