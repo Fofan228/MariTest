@@ -1,4 +1,5 @@
-namespace Mari.Client.Common.LocalStorageKeys;
+// ReSharper disable once CheckNamespace
+namespace Mari.Client.Common;
 
 public static partial class LocalStorageKeys
 {
