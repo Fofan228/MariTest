@@ -19,6 +19,6 @@ public class DateFormatter : IDateFormatter
     }
     public string Humanize(DateTime? dateTime)
     {
-        return dateTime?.Humanize() ?? string.Empty;
+        return dateTime?.Humanize(true) ?? string.Empty;
     }
 }

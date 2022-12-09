@@ -10,10 +10,10 @@
 @inject IDescriptionFormatter DescriptionFormatter
  @inject IDateFormatter DateFormatter
 <MudPaper Elevation="0" Class="pt-2"> 
-    <MudStack > <!--TODO убрать дублирование кода-->
+    <MudStack > 
         @foreach (var comment in UserComments)
             {
-                <MudPaper Class="border-b pl-4 pb-4" Elevation="0" Height="20vh">
+                <MudPaper Class="border-b pl-4 pb-4" Elevation="0">
                         
                     <MudPaper Class=" d-flex" Elevation="0">
                         <MudAvatar Color="Color.Primary">M</MudAvatar>
@@ -28,8 +28,9 @@
                         </MudTooltip>
                     </MudPaper>
 
-                    <MudPaper Class="pt-2" Elevation="0">
-                        <MudText>
+                    <MudPaper Width="100%" Class="pt-2" Elevation="0">
+                        <MudText Style="width: 100%;
+                                            word-wrap: break-word;">
                            @DescriptionFormatter.Format(comment.Content)
                         </MudText>
                     </MudPaper>
@@ -49,7 +50,7 @@
                 </MudPaper>
             </MudPaper>
             <MudForm>
-                <MudTextField @bind-Value="@Text" Lines="3" Label="Введите текст" Variant="Variant.Filled" Clearable="true"/>
+                <MudTextField @bind-Value="@NewCommnet.Content" Lines="3" Label="Введите текст" Variant="Variant.Filled" Clearable="true"/>
                 <MudPaper Class="d-flex tooltip-comment" Elevation="0">
                     <MudTooltip Text="Обновить" Style="width: auto">
                         <MudIconButton Icon="@Icons.Filled.Refresh" OnClick="Refresh"/>
@@ -69,48 +70,34 @@
     [Parameter]
     public string ReleaseId { get; set; } = null!;
 
-    private List<CommentModel> UserComments { get; set; } = new List<CommentModel>();
+    private IList<CommentModel> UserComments { get; set; } = new List<CommentModel>();
 
     private CommentModel NewCommnet { get; set; } = new CommentModel();
 
     protected override async Task OnInitializedAsync()
     {
-       // UserComments = await CommentManager.GetAllUserComment(Guid.Parse(Id));
+        UserComments = await CommentManager.GetAllUserComment(Guid.Parse(ReleaseId));
         
-    // TODO Тестовые данные
-        UserComments = new List<CommentModel>
-        {
-            new CommentModel()
-            {
-                CommentId = Guid.NewGuid(),
-                ReleaseId = Guid.NewGuid(),
-                UserId = 1,
-                UserName = Name,
-                Content = "Пошли на хуй \n Пидорасы",
-                CreateDate = DateTime.Now,
-                IsRedact = false
-            }
-        };
     }
+    
 
-    string Name { get; set; } = "Ахимат";
-    string Text { get; set; }
-
-    private void AddComment()
+    private async Task AddComment()
     {
-        //NewCommnet.ReleaseId = new Guid(ReleaseId);
-      //  NewCommnet.UserId = userId;
+        NewCommnet.ReleaseId = new Guid(ReleaseId);
+        NewCommnet.UserId = 54712435;
         
-        Text = null;
-     // CommentManager.Post(newCommnet); 
-    // Comments = await CommentManager.GetAllUserComment(Guid.Parse(Id));
+        
+        await CommentManager.Create(NewCommnet); 
+        UserComments = await CommentManager.GetAllUserComment(Guid.Parse(ReleaseId));
+        
+        NewCommnet.Content = String.Empty;
         StateHasChanged();
     }
     
     private async Task Refresh()
     {
-        // await UpdateReleases();
-        // StateHasChanged();
+        UserComments = await CommentManager.GetAllUserComment(Guid.Parse(ReleaseId));
+         StateHasChanged();
     }
 }
 

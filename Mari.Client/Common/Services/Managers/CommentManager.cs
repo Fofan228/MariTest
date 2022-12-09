@@ -39,7 +39,7 @@ public class CommentManager : ICommentManager
         if (!response.IsSuccess)
         {
             _problemHandler.HandleProblem(response.Problem);
-            return new List<CommentModel>();
+            //return new List<CommentModel>();
         }
 
         return _mapper.Map<IList<CommentModel>>(response.Response);

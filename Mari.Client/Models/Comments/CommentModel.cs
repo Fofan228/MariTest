@@ -2,11 +2,12 @@
 
 public class CommentModel
 {
-    public Guid? CommentId { get; set; } = null!;
-    public Guid? ReleaseId { get;  set; } = null!;
+    public Guid CommentId { get; set; } 
+    public Guid ReleaseId { get;  set; } 
     public int UserId { get;  set; }
-    public string UserName { get; set; } = null!;
-    public DateTime? CreateDate { get; set; } = null!;
-    public string Content { get; set; } = null!;
-    public bool IsRedact { get; set; } = false;
+    public string UserName { get; set; } = String.Empty;
+    public string Content { get; set; } = String.Empty;
+    public DateTime? CreateDate { get; set; } = null;
+  
+    public bool IsRedacted { get; set; } = false;
 }
