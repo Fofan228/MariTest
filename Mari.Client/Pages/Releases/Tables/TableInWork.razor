@@ -16,7 +16,8 @@
           EditTrigger="@editTrigger" Filter="new Func<ReleaseModel,bool>(FilterFunc)"
           OnCommitEditClick="@(() => { Snackbar.Add("Изменения сохранены"); _clickOnRow = true; })"
           OnCancelEditClick="@(() => { Snackbar.Add("Отменено"); _clickOnRow = true; })"
-          OnPreviewEditClick="@(() => _clickOnRow = false)" OnRowClick="RowClicked"> 
+          OnPreviewEditClick="@(() => _clickOnRow = false)" OnRowClick="RowClicked"
+          LoadingProgressColor="Color.Primary" Loading="_loading"> 
     <ToolBarContent>
         <MudIconButton Icon="@Icons.Filled.Refresh" OnClick="Refresh"></MudIconButton>
         <MudSpacer/>
@@ -134,30 +135,25 @@
 {
     //Todo отправить изменение
     
+    private bool _loading;
     private string _url = "Ссылка на задачу";
     bool _clickOnRow = true;
     private string _searchString = "";
     private TableEditTrigger editTrigger = TableEditTrigger.EditButton;
     private ReleaseModel elementBeforeEdit;
     
-    private IList<ReleaseModel> Releases { get; set; }
-
+    private IList<ReleaseModel> Releases { get; set; } = new List<ReleaseModel>();
+    
+    private async Task UpdateReleases()
+    {
+        _loading = true;
+        Releases = await ReleaseManager.GetInWork();
+        _loading = false;
+    }
     
     protected override async Task OnInitializedAsync()
     {
-        Releases = await ReleaseManager.GetInWork();
-       
-    /*// TODO Тестовые данные
-        Releases = new List<ReleaseModel>()
-        {
-            new ReleaseModel(Guid.NewGuid(), 1,1,1, "Android", "Testing", 
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "http","GG"),
-            new ReleaseModel(Guid.NewGuid(), 1,1,1, "Android", "Testing", 
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11),"http", "GG"),
-            new ReleaseModel(Guid.NewGuid(), 1,1,1, "Android", "Testing", 
-                new DateTime(2022, 11, 11), new DateTime(2022, 11, 11), "http","GG")
-        };
-    // конец*/
+        await UpdateReleases();
     }
 
     private void RowClicked(TableRowClickEventArgs<ReleaseModel> _)
@@ -199,8 +195,7 @@
     private async void ItemHasBeenCommitted(object release)
     {
         await ReleaseManager.Update((ReleaseModel)release);
-        Releases = await ReleaseManager.GetInWork() ;
-        
+        await UpdateReleases();
         StateHasChanged();
     }
     
@@ -221,20 +216,20 @@
     private async Task Trans(ReleaseModel model)
     {
         await ReleaseManager.SetCompleteStatus(model.Id);
-        Releases =await ReleaseManager.GetInWork();
+        await UpdateReleases();
         StateHasChanged();
     }
     
     private async Task DeleteRelease(ReleaseModel model)
     {
         await ReleaseManager.Delete(model.Id);
-        Releases = await ReleaseManager.GetInWork();
+        await UpdateReleases();
         StateHasChanged();
     }
     
     private async Task Refresh()
     {
-        Releases = await ReleaseManager.GetInWork();
+        await UpdateReleases();
         StateHasChanged();
     }
 }

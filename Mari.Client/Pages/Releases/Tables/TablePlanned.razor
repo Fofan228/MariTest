@@ -11,7 +11,8 @@
           EditTrigger="@editTrigger" Filter="new Func<ReleaseModel,bool>(FilterFunc)"
           OnCommitEditClick="@(() => { Snackbar.Add("Изменения сохранены"); _clickOnRow = true; })"
           OnCancelEditClick="@(() => { Snackbar.Add("Отменено"); _clickOnRow = true; })"
-          OnPreviewEditClick="@(() => _clickOnRow = false)" OnRowClick="RowClicked"> 
+          OnPreviewEditClick="@(() => _clickOnRow = false)" OnRowClick="RowClicked"
+          LoadingProgressColor="Color.Primary" Loading="_loading"> 
     <ToolBarContent>
         <MudIconButton Icon="@Icons.Filled.Refresh" OnClick="Refresh"></MudIconButton>
         <MudSpacer/>
@@ -169,61 +170,28 @@
 
     private string _url = "Ссылка на задачу";
     bool _clickOnRow = true;
+    private bool _loading;
     MudDatePicker _picker;
     private string _searchString = "";
     private TableEditTrigger editTrigger = TableEditTrigger.EditButton;
     private ReleaseModel elementBeforeEdit;
     
-    private IList<ReleaseModel> Releases { get; set; }
+    private IList<ReleaseModel> Releases { get; set; } = new List<ReleaseModel>();
     
     private IList<PlatformModel> Platforms { get; set; }
     private string[] AllNamePlatforms { get; set; }
     
+    private async Task UpdateReleases()
+    {
+        _loading = true;
+        Releases = await ReleaseManager.GetPlanned();
+        _loading = false;
+    }
+    
     protected override async Task OnInitializedAsync()
     {
-        Releases = await ReleaseManager.GetPlanned() ;
+        await UpdateReleases();
         Platforms = await ReleaseManager.GetAllPlatforms();
-        
-    // TODO Тестовые данные
-   // Releases = new List<ReleaseModel>()
-        /*{
-             new ReleaseModel
-            {
-                Id = Guid.NewGuid(),
-                Version = new VersionModel{Major = 1,Minor = 1,Patch = 1},
-                PlatformName = "Android", Status = "Testing",
-                CompleteDate = new DateTime(2022, 11, 11),
-                UpdateDate = new DateTime(2022, 11, 11),
-                MainIssue = "http",
-                Description = "GG"
-           }
-        };*/
-        
-       /*Platforms = new List<PlatformModel>()
-        {
-            new PlatformModel
-            {
-                Name = "Android",
-                LastVersion = new VersionModel
-                    {
-                        Major = 1,
-                        Minor = 1,
-                        Patch =1
-                    }
-            },
-            new PlatformModel
-            {
-                Name = "IOS",
-                LastVersion = new VersionModel
-                {
-                    Major = 1,
-                    Minor = 1,
-                    Patch =1
-                }
-            },
-        };*/
-    // конец
-        
         AllNamePlatforms = Platforms.Select(x => x.Name).ToArray();
     }
     
@@ -275,7 +243,7 @@
     private async void ItemHasBeenCommitted(object release)
     {
         await ReleaseManager.Update((ReleaseModel)release);
-        Releases = await ReleaseManager.GetPlanned() ;
+        await UpdateReleases();
         
         StateHasChanged();
     }
@@ -303,7 +271,7 @@
             && model.CompleteDate != null && model.UpdateDate != null)
         {
             await ReleaseManager.SetInWorkStatus(model.Id);
-            Releases = await ReleaseManager.GetPlanned();
+            await UpdateReleases();
             StateHasChanged();
         }
         else
@@ -318,13 +286,13 @@
     private async Task DeleteRelease(ReleaseModel model)
     {
         await ReleaseManager.Delete(model.Id);
-        Releases = await ReleaseManager.GetPlanned();
+        await UpdateReleases();
         StateHasChanged();
     }
 
     private async Task Refresh()
     {
-        Releases = await ReleaseManager.GetPlanned();
+        await UpdateReleases();
         StateHasChanged();
     }
 }
