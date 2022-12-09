@@ -1,14 +1,14 @@
-﻿
-@using Contracts.Releases
+﻿@using Contracts.Releases
 @using Mari.Client.Models.Releases
 @using Mari.Contracts.Releases.Responses
 @using Microsoft.AspNetCore.Components
 @using System.Xml.Linq
-@using Humanizer
+@using Mari.Client.Common.Interfaces.Formatters
 @using Mari.Client.Models.Comments
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
 @inject ISnackbar Snackbar
+@inject IDateFormatter DateFormatter
 
 <MudTable Items="@Releases" Hover="true" T="ReleaseModel" Class="my-8" CanCancelEdit="true"
           RowEditPreview="BackupItem" RowEditCancel="ResetItemToOriginalValues" RowEditCommit="ItemHasBeenCommitted"
@@ -58,13 +58,13 @@
         </MudTd>
         <MudTd DataLabel="Status">@context.Status</MudTd>
          <MudTd DataLabel="UpdateDate">
-                <MudTooltip Text="@context.UpdateDate.ToString()">
-                        <MudText>@context.UpdateDate.Humanize()</MudText>
+                <MudTooltip Text="@DateFormatter.FormatDateTime(context.UpdateDate)">
+                        <MudText>@DateFormatter.Humanize( context.UpdateDate)</MudText>
                 </MudTooltip>
         </MudTd>
         <MudTd DataLabel="CompleteDate">
-            <MudTooltip Text="@context.CompleteDate?.ToString("dd.MM.yyyy")">
-                <MudText>@context.CompleteDate.Humanize()</MudText>
+            <MudTooltip Text="@DateFormatter.FormatDate(context.CompleteDate)">
+                <MudText>@DateFormatter.Humanize(context.CompleteDate)</MudText>
             </MudTooltip>
         </MudTd>
         <MudTd>

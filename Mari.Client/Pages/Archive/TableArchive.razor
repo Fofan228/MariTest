@@ -1,8 +1,10 @@
 ﻿@using Mari.Contracts.Releases
 @using Mari.Contracts.Releases.Responses
 @using Mari.Client.Models.Releases
+@using Mari.Client.Common.Interfaces.Formatters
 @inject IReleaseManager ReleaseManager
 @inject NavigationManager NavigationManager
+@inject IDateFormatter DateFormatter
 
 <MudTable Class="my-8" Items="@Releases" Hover="true" T="ReleaseModel" RowsPerPage="5"
           OnRowClick="RowClicked" Filter="new Func<ReleaseModel, bool>(FilterFunc)">
@@ -33,8 +35,12 @@
             </div>
         </MudTd>
         <MudTd DataLabel="ReleaseStatus">@context.Status</MudTd>
-         <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
-         <MudTd DataLabel="CompleteDate">@context.CompleteDate?.ToString("dd.MM.yyyy")</MudTd>
+          <MudTd DataLabel="UpdateDate"> @DateFormatter.FormatDateTime(context.UpdateDate)</MudTd>
+                 <MudTd DataLabel="CompleteDate">
+                     <MudContainer>
+                         @DateFormatter.FormatDate(context.CompleteDate)
+                     </MudContainer>
+                 </MudTd>
     </RowTemplate>
     <PagerContent>
         <MudTablePager HideRowsPerPage="true"/>

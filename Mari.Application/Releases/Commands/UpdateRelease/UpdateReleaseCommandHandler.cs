@@ -1,6 +1,5 @@
 using ErrorOr;
 using Mari.Application.Common.Interfaces.Persistence;
-using Mari.Domain.Releases;
 using MediatR;
 using Mari.Domain.Common;
 using Mari.Domain.Releases.Entities;

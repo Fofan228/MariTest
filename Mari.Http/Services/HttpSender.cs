@@ -1,7 +1,4 @@
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using System.Text.Json;
-using Mari.Http.Common;
 using Mari.Http.Common.Interfaces;
 using Mari.Http.Models;
 using Mari.Http.Requests;

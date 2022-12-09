@@ -1,7 +1,4 @@
-using System.Data;
 using FluentValidation;
-using FluentValidation.Results;
-using Mari.Domain.Releases.Enums;
 using Mari.Domain.Releases.ValueObjects;
 
 namespace Mari.Application.Releases.Commands.UpdateRelease;

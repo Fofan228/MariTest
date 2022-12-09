@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Linq.Expressions;
 using LinqSpecs;
 using Mari.Domain.Releases;

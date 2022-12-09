@@ -1,4 +1,3 @@
-using System.Data;
 using FluentValidation;
 using Mari.Application.Common.Interfaces.Persistence;
 using Mari.Domain.Users;

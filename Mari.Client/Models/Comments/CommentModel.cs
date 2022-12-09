@@ -8,5 +8,5 @@ public class CommentModel
     public string UserName { get; set; } = null!;
     public DateTime? CreateDate { get; set; } = null!;
     public string Message { get; set; } = null!;
-    public bool IsEdit { get; set; } = false;
+    public bool IsRedact { get; set; } = false;
 }

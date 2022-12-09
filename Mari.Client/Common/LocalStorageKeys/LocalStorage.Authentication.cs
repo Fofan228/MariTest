@@ -1,4 +1,4 @@
-namespace Mari.Client.Common;
+namespace Mari.Client.Common.LocalStorageKeys;
 
 public static partial class LocalStorageKeys
 {

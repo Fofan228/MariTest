@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using LinqSpecs;
 using Mari.Application.Common.Interfaces.Persistence.Shared;
 using Mari.Domain.Common.Interfaces;
