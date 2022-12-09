@@ -1,4 +1,7 @@
-﻿
+﻿html {
+    overflow-x: hidden;
+}
+
 .width-100 .mud-toolbar.mud-toolbar-gutters.mud-toolbar-appbar {
     display: table;
     height: 100%;

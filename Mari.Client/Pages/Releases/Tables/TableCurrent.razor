@@ -43,7 +43,11 @@
          </MudTd>
          <MudTd DataLabel="ReleaseStatus">@context.Status</MudTd>
          <MudTd DataLabel="UpdateDate">@context.UpdateDate.ToString()</MudTd>
-         <MudTd DataLabel="CompleteDate">@context.CompleteDate?.ToString("dd.MM.yyyy")</MudTd>
+         <MudTd DataLabel="CompleteDate">
+             <MudContainer>
+                 @context.CompleteDate?.ToString("dd.MM.yyyy")
+             </MudContainer>
+         </MudTd>
      </RowTemplate>
      <PagerContent>
          <MudTablePager HideRowsPerPage="true"/>
