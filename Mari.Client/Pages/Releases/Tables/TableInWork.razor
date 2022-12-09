@@ -19,7 +19,9 @@
           OnPreviewEditClick="@(() => _clickOnRow = false)" OnRowClick="RowClicked"
           LoadingProgressColor="Color.Primary" Loading="_loading"> 
     <ToolBarContent>
-        <MudIconButton Icon="@Icons.Filled.Refresh" OnClick="Refresh"></MudIconButton>
+        <MudTooltip Text="Обновить">
+            <MudIconButton Icon="@Icons.Filled.Refresh" OnClick="Refresh"/>
+        </MudTooltip>
         <MudSpacer/>
         <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, релизной задаче, статусу и датам"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"/>

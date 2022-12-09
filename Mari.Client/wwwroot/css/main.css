@@ -27,7 +27,7 @@
     min-width: 33%;
 }
 
-.tabs-in-info .mud-tooltip-root.mud-tooltip-inline {
+.tabs-in-info .mud-tabs-toolbar-wrapper .mud-tooltip-root.mud-tooltip-inline {
     width: 50%;
 }
 
@@ -92,4 +92,8 @@
 
 .tooltip-date{
     width: fit-content;
+}
+
+.tooltip-comment .mud-tooltip-root.mud-tooltip-inline {
+    width: auto;
 }

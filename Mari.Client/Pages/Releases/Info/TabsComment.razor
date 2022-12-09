@@ -50,7 +50,14 @@
             </MudPaper>
             <MudForm>
                 <MudTextField @bind-Value="@Text" Lines="3" Label="Введите текст" Variant="Variant.Filled" Clearable="true"/>
-                <MudButton Class="mt-2" OnClick="AddComment" Variant="Variant.Filled" Color="Color.Primary">Отправить</MudButton>
+                <MudPaper Class="d-flex tooltip-comment" Elevation="0">
+                    <MudTooltip Text="Обновить" Style="width: auto">
+                        <MudIconButton Icon="@Icons.Filled.Refresh" OnClick="Refresh"/>
+                    </MudTooltip>
+                    <MudButton Class="my-2" OnClick="AddComment" Variant="Variant.Filled" Color="Color.Primary" Style="right: -50%">
+                        Отправить
+                    </MudButton>
+                </MudPaper>
             </MudForm>
         </MudPaper>
     </Authorized>
@@ -98,6 +105,12 @@
      // CommentManager.Post(newCommnet); 
     // Comments = await CommentManager.GetAllUserComment(Guid.Parse(Id));
         StateHasChanged();
+    }
+    
+    private async Task Refresh()
+    {
+        // await UpdateReleases();
+        // StateHasChanged();
     }
 }
 
