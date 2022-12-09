@@ -30,7 +30,7 @@
 
                     <MudPaper Class="pt-2" Elevation="0">
                         <MudText>
-                           @DescriptionFormatter.Format(comment.Message)
+                           @DescriptionFormatter.Format(comment.Content)
                         </MudText>
                     </MudPaper>
                 </MudPaper>
@@ -86,7 +86,7 @@
                 ReleaseId = Guid.NewGuid(),
                 UserId = 1,
                 UserName = Name,
-                Message = "Пошли на хуй \n Пидорасы",
+                Content = "Пошли на хуй \n Пидорасы",
                 CreateDate = DateTime.Now,
                 IsRedact = false
             }
