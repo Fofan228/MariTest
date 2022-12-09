@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Mari.Application.Releases.Queries.GetPlannedReleases;
 
-internal class GetPlannedReleasesQueryHandler : IRequestHandler<GetPlannedReleasesQuery, ErrorOr<IEnumerable<ReleaseResult>>>
+internal class GetPlannedReleasesQueryHandler : IRequestHandler<GetPlannedReleasesQuery, ErrorOr<IList<ReleaseResult>>>
 {
     private readonly IReleaseRepository _releaseRepository;
 
@@ -16,11 +16,12 @@ internal class GetPlannedReleasesQueryHandler : IRequestHandler<GetPlannedReleas
         _releaseRepository = releaseRepository;
     }
 
-    public async Task<ErrorOr<IEnumerable<ReleaseResult>>> Handle(GetPlannedReleasesQuery request, CancellationToken cancellationToken)
+    public async Task<ErrorOr<IList<ReleaseResult>>> Handle(GetPlannedReleasesQuery request, CancellationToken cancellationToken)
     {
         var spec = ReleaseSpecs.StatusIn(ReleaseStatus.Planning);
-        return await _releaseRepository.FindMany(spec, request.Range)
-            .Select(release => ReleaseResult.FromRelease(release))
+        var releases = await _releaseRepository.FindMany(spec, request.Range)
             .ToListAsync(cancellationToken);
+        return releases.Select(release => ReleaseResult.FromRelease(release))
+            .ToList();
     }
 }

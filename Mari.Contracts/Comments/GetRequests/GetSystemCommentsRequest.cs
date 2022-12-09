@@ -7,7 +7,6 @@ namespace Mari.Contracts.Comments.GetRequests;
 
 public class GetSystemCommentsRequest : GetRequest<IEnumerable<CommentResponse>>
 {
-
     public const string ConstRouteTemplate = $"{ServerRoutes.Controllers.Comment}/system/{{{nameof(Route.ReleaseId)}}}";
     public override string RouteTemplate => ConstRouteTemplate;
 

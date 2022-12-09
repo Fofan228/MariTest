@@ -4,4 +4,4 @@ using MediatR;
 
 namespace Mari.Application.Releases.Queries.GetAllPlatforms;
 
-public record GetAllPlatformsQuery : IRequest<ErrorOr<IEnumerable<PlatformResult>>>;
+public record GetAllPlatformsQuery : IRequest<ErrorOr<IList<PlatformResult>>>;

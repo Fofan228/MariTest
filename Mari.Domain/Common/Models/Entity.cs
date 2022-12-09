@@ -16,7 +16,7 @@ public abstract class Entity<TId> : IEquatable<Entity<TId>>
     {
         if (ReferenceEquals(other, this)) return true;
         if (other is null) return false;
-        return Id.Equals(other.Id);
+        return Id?.Equals(other.Id) ?? false;
     }
 
     public override bool Equals(object? obj)

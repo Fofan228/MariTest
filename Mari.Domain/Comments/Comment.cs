@@ -14,14 +14,14 @@ public class Comment : AggregateRoot<CommentId>
         UserId userId,
         ReleaseId releaseId,
         CommentContent content,
-        CommentCreateDate createDate,
+        DateTime currentDate,
         bool isSystem = false)
     {
         return new Comment(
             userId: userId,
             releaseId: releaseId,
             content: content,
-            createDate: createDate,
+            createDate: CommentCreateDate.Create(currentDate),
             isSystem: isSystem);
     }
 
@@ -61,7 +61,7 @@ public class Comment : AggregateRoot<CommentId>
             userId: userId,
             releaseId: releaseId,
             content: contentCreateResult,
-            createDate: createDate,
+            currentDate: createDate,
             isSystem: true);
     }
 

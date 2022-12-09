@@ -13,11 +13,10 @@ public class CreateCommentRequest : PostRequest<VoidResponse>
     public CreateCommentRequest(Body body) : base(body: body)
     {
     }
-    
+
     public record Body(
-        Guid releaseId,
-        int userId,
-        string userName,
-        string message
-        ):RequestBody;
+        Guid ReleaseId,
+        int UserId,
+        string Content)
+        : RequestBody;
 }

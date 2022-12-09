@@ -34,8 +34,8 @@ public class CommentManager : ICommentManager
 
     public async Task<IList<CommentModel>> GetAllUserComment(Guid releaseId, CancellationToken token = default)
     {
-        var route = new GetUserCommentsRequest.Route(releaseId);
-        var request = new GetUserCommentsRequest(route);
+        var route = new GetCommentsRequest.Route(releaseId);
+        var request = new GetCommentsRequest(route);
         var response = await _httpSender.GetAsync(request, token);
         if (!response.IsSuccess)
         {

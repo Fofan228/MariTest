@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Mari.Application.Releases.Queries.GetAllPlatforms;
 
-public class GetAllPlatformsQueryHandler : IRequestHandler<GetAllPlatformsQuery, ErrorOr<IEnumerable<PlatformResult>>>
+internal class GetAllPlatformsQueryHandler : IRequestHandler<GetAllPlatformsQuery, ErrorOr<IList<PlatformResult>>>
 {
     private readonly IReleaseRepository _releaseRepository;
 
@@ -17,7 +17,7 @@ public class GetAllPlatformsQueryHandler : IRequestHandler<GetAllPlatformsQuery,
         _releaseRepository = releaseRepository;
     }
 
-    public async Task<ErrorOr<IEnumerable<PlatformResult>>> Handle(GetAllPlatformsQuery request, CancellationToken token)
+    public async Task<ErrorOr<IList<PlatformResult>>> Handle(GetAllPlatformsQuery request, CancellationToken token)
     {
         var platforms = await _releaseRepository.GetAllPlatforms().ToListAsync(token);
         var result = new List<PlatformResult>();

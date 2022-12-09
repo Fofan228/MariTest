@@ -5,6 +5,6 @@ using MediatR;
 
 namespace Mari.Application.Releases.Queries.GetInWorkReleases;
 
-public record GetInWorkReleasesQuery(int? page = null, int pageSize = 0) :
-    PageRequest(page, pageSize),
-    IRequest<ErrorOr<IEnumerable<ReleaseResult>>>;
+public record GetInWorkReleasesQuery(int? Page = null, int PageSize = 0) :
+    PageRequest(Page, PageSize),
+    IRequest<ErrorOr<IList<ReleaseResult>>>;

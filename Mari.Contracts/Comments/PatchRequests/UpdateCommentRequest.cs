@@ -13,11 +13,9 @@ public class UpdateCommentRequest : PatchRequest<VoidResponse>
     public UpdateCommentRequest(Body body) : base(body: body)
     {
     }
-    
+
     public record Body(
         Guid CommentId,
-        string Message,
-        DateTime CreateDate,
-        bool IsEdit
-    ):RequestBody;
+        string Content)
+        : RequestBody;
 }
