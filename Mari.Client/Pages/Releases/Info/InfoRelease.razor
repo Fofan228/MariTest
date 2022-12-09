@@ -1,4 +1,6 @@
 @using Mari.Client.Models.Releases
+@using System.Text.RegularExpressions
+@using System.Web
 
 @attribute [Route(ClientRoutes.Pages.ReleasesInfo)]
 @inject IReleaseManager ReleaseManager
@@ -41,9 +43,12 @@
             <MudContainer MaxWidth="MaxWidth.Medium">
                 <MudText Typo="Typo.h5">Информация о релизе при его создании (Фио создателя релиза)</MudText>
             </MudContainer>
-
-            <MudContainer MaxWidth="MaxWidth.Medium" Style="display: flex; flex-direction: column;" Class="my-3">
-                <MudText>@Release.Description </MudText>
+            <MudContainer MaxWidth="MaxWidth.Medium" Class="my-3">
+                <MudText>
+                    @* ReSharper disable once HeapView.BoxingAllocation *@
+                    @((MarkupString)Regex.Replace(HttpUtility.HtmlEncode(Release.Description),
+                        "\r?\n|\r", "<br />"))
+                 </MudText>
             </MudContainer>
             
             
@@ -102,8 +107,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-     Release = await ReleaseManager.GetById(Guid.Parse(Id));
-
+        Release = await ReleaseManager.GetById(Guid.Parse(Id));
+        
     //Todo Тестовые данные
         /*Release = new ReleaseModel
         {
