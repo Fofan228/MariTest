@@ -1,4 +1,5 @@
 ﻿ @using System.ComponentModel.DataAnnotations
+@using System.ComponentModel.Design
 @using System.Security.Claims
 @using System.Text.RegularExpressions
 @using System.Web
@@ -20,6 +21,9 @@
                         <MudPaper Class="d-flex align-center pl-4" Elevation="0">
                             <MudText>@comment.UserName</MudText>
                         </MudPaper>
+                        <MudSpacer/>
+                        <MudIconButton OnClick="@(async () => { await StartUpdateComment(@comment);})" Icon="@Icons.Filled.Edit" Color="Color.Primary" />
+                        <MudIconButton OnClick="@(async () => { await DeleteComment(@comment.CommentId);})" Icon="@Icons.Filled.Delete" Color="Color.Warning" />
                     </MudPaper>
 
                     <MudPaper Class="pt-1"   Elevation="0">
@@ -55,9 +59,23 @@
                     <MudTooltip Text="Обновить" Style="width: auto">
                         <MudIconButton Icon="@Icons.Filled.Refresh" OnClick="Refresh"/>
                     </MudTooltip>
-                    <MudButton Class="my-2" OnClick="AddComment" Variant="Variant.Filled" Color="Color.Primary" Style="right: -50%">
-                        Отправить
-                    </MudButton>
+                    <MudSpacer/>
+                    @if (!IsEdit)
+                    {
+                        <MudButton Class="my-2" OnClick="AddComment" Variant="Variant.Filled" Color="Color.Primary" Style="width: fit-content">
+                            Отправить
+                        </MudButton>    
+                    }
+                    else
+                    {
+                        <MudButton Class="my-2 mr-1" OnClick="CancelEdit" Variant="Variant.Filled" Color="Color.Primary" Style="width: fit-content" >
+                            Отменить
+                        </MudButton>
+                        <MudButton Class="my-2" OnClick="AddComment" Variant="Variant.Filled" Color="Color.Primary" Style="width: fit-content">
+                            Изменить
+                        </MudButton>    
+                    }
+                    
                 </MudPaper>
             </MudForm>
         </MudPaper>
@@ -70,6 +88,8 @@
     [Parameter]
     public string ReleaseId { get; set; } = null!;
 
+    private bool IsEdit { get; set; } = false;
+    
     private IList<CommentModel> UserComments { get; set; } = new List<CommentModel>();
 
     private CommentModel NewCommnet { get; set; } = new CommentModel();
@@ -83,21 +103,49 @@
 
     private async Task AddComment()
     {
-        NewCommnet.ReleaseId = new Guid(ReleaseId);
-        NewCommnet.UserId = 54712435;
+        if (!IsEdit) 
+        { // добавляем новый
+            NewCommnet.ReleaseId = new Guid(ReleaseId);
+            NewCommnet.UserId = 54712435;
         
-        
-        await CommentManager.Create(NewCommnet); 
+            await CommentManager.Create(NewCommnet);
+        }
+        else
+        {
+            await CommentManager.UpdateComment(NewCommnet);
+            IsEdit = false;
+        }
         UserComments = await CommentManager.GetAllUserComment(Guid.Parse(ReleaseId));
         
         NewCommnet.Content = String.Empty;
         StateHasChanged();
     }
+
+    private async Task DeleteComment(Guid Id)
+    {
+        await CommentManager.DeleteComment(Id);
+        UserComments = await CommentManager.GetAllUserComment(Guid.Parse(ReleaseId));
+        StateHasChanged();
+    }
+
+    private async Task StartUpdateComment(CommentModel commentModel)
+    {
+        IsEdit = true;
+        NewCommnet.CommentId = commentModel.CommentId;
+        NewCommnet.Content = commentModel.Content;
+    }
     
     private async Task Refresh()
     {
-        UserComments = await CommentManager.GetAllUserComment(Guid.Parse(ReleaseId));
+         UserComments = await CommentManager.GetAllUserComment(Guid.Parse(ReleaseId));
          StateHasChanged();
+    }
+
+    private async Task CancelEdit()
+    {
+        IsEdit = false;
+        NewCommnet.Content = String.Empty;
+        
     }
 }
 
