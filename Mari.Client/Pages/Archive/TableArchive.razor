@@ -12,7 +12,7 @@
     <ToolBarContent>
           <MudText Typo="Typo.h6">Настройки</MudText>
           <MudSpacer />
-          <MudTextField @bind-Value="searchString" Placeholder="Поиск по платформе, релизной задаче, статусу и датам"
+          <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, версии и полной дате завершения"
                         Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"/>
     </ToolBarContent>
     <HeaderContent>
@@ -52,7 +52,7 @@
 
     private bool _loading;
     private string _url = "Ссылка на задачу";
-    private string searchString = "";
+    private string _searchString = "";
     private List<ReleaseModel> Releases { get; set; } = new List<ReleaseModel>();
     
 
@@ -107,14 +107,12 @@
     
     private bool FilterFunc(ReleaseModel answer)
     {
-        if (string.IsNullOrEmpty(searchString))
+        if (string.IsNullOrEmpty(_searchString))
             return true;
-        if (answer.PlatformName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (answer.PlatformName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-        if (answer.MainIssue.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (answer.CompleteDate.ToString()!.Contains(_searchString))
             return true;
-        if (answer.Status.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(searchString);
+        return $"{answer.Version.Major}.{answer.Version.Minor}.{answer.Version.Patch}".Contains(_searchString);
     }
 }
