@@ -22,10 +22,14 @@
                             <MudText>@comment.UserName</MudText>
                         </MudPaper>
                         <MudSpacer/>
-                        <MudIconButton OnClick="@(async () => { await StartUpdateComment(@comment);})"
-                                       Icon="@Icons.Filled.Edit" Color="Color.Primary" />
-                        <MudIconButton OnClick="@(async () => { await DeleteComment(@comment.CommentId);})"
-                                       Icon="@Icons.Filled.Delete" Color="Color.Error" />
+                        <MudTooltip Text="Изменить" Style="width: auto">
+                            <MudIconButton OnClick="@(async () => { await StartUpdateComment(@comment);})"
+                                           Icon="@Icons.Filled.Edit" Color="Color.Primary" />
+                        </MudTooltip>
+                        <MudTooltip Text="Удалить" Style="width: auto">
+                            <MudIconButton OnClick="@(async () => { await DeleteComment(@comment.CommentId);})"
+                                           Icon="@Icons.Filled.Delete" Color="Color.Error" />
+                        </MudTooltip>
                     </MudPaper>
 
                     <MudPaper Class="pt-1" Elevation="0">
