@@ -23,21 +23,19 @@ public class MariAuthStateProvider : AuthenticationStateProvider
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        var tokenStr = await _localStorage.GetItemAsync<string>("authToken");
-        if (tokenStr is null) return Anonymous;
-
+        var tokenStr = (await _localStorage.GetItemAsync<string>(LocalStorageKeys.Authentication.Token))
+            .Replace("\"", string.Empty);
         var tokenHandler = new JsonWebTokenHandler();
         if (!tokenHandler.CanReadToken(tokenStr)) return Anonymous;
         var token = tokenHandler.ReadJsonWebToken(tokenStr);
 
-        if (token.ValidTo < DateTime.UtcNow)
+        if (token.ValidTo < DateTimeOffset.UtcNow)
         {
             return Anonymous;
         }
 
         var user = CreateUser(token);
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", tokenStr);
-
         return new AuthenticationState(user);
     }
 
