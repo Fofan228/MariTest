@@ -94,6 +94,18 @@ public class ReleaseManager : IReleaseManager
         return _mapper.Map<IList<ReleaseModel>>(response.Response);
     }
 
+    public async Task<IList<ReleaseModel>> GetObsolete(CancellationToken token = default)
+    {
+        var request = new GetObsoleteReleasesRequest();
+        var response = await _httpSender.GetAsync(request, token);
+        if (!response.IsSuccess)
+        {
+            _problemHandler.HandleProblem(response.Problem);
+            return new List<ReleaseModel>();
+        }
+        return _mapper.Map<IList<ReleaseModel>>(response.Response);
+    }
+
     public async Task<IList<ReleaseModel>> GetInWork(CancellationToken token = default)
     {
         var request = new GetInWorkReleasesRequest();
