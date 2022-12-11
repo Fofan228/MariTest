@@ -10,6 +10,7 @@ using Mari.Application.Releases.Commands.UpdateRelease;
 using Mari.Application.Releases.Queries.GetAllPlatforms;
 using Mari.Application.Releases.Queries.GetCurrentReleases;
 using Mari.Application.Releases.Queries.GetInWorkReleases;
+using Mari.Application.Releases.Queries.GetObsoleteReleases;
 using Mari.Application.Releases.Queries.GetPlannedReleases;
 using Mari.Application.Releases.Queries.GetRelease;
 using Mari.Contracts.Common.Routes.Server;
@@ -67,6 +68,18 @@ public class ReleaseController : ApiController
     public async Task<ActionResult<IEnumerable<ReleaseResponse>>> GetCurrentReleases(CancellationToken token)
     {
         var query = new GetCurrentReleasesQuery();
+        var result = await _sender.Send(query, token);
+
+        if (result.IsError) return Problem(result.Errors);
+        var response = _mapper.Map<IEnumerable<ReleaseResponse>>(result.Value);
+
+        return Ok(response);
+    }
+
+    [HttpGet(GetObsoleteReleasesRequest.ConstRouteTemplate)]
+    public async Task<ActionResult<IEnumerable<ReleaseResponse>>> GetObsoleteReleases(CancellationToken token)
+    {
+        var query = new GetObsoleteReleasesQuery();
         var result = await _sender.Send(query, token);
 
         if (result.IsError) return Problem(result.Errors);
