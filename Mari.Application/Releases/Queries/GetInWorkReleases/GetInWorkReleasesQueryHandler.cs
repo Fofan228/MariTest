@@ -27,7 +27,7 @@ internal class GetInWorkReleasesQueryHandler : IRequestHandler<GetInWorkReleases
             ReleaseStatus.PlannedDocumentApproval);
 
         return await _releaseRepository.FindMany(spec, request.Range)
-            .Select(release => ReleaseResult.FromRelease(release))
+            .Select(ReleaseResult.FromRelease)
             .ToListAsync(cancellationToken);
     }
 }

@@ -23,11 +23,11 @@ public class ReleaseConfiguration : IEntityTypeConfiguration<Release>
             .IsRequired();
 
         builder.Property(r => r.CompleteDate)
-            .IsValueObjectWrapper<DateTime, ReleaseCompleteDate>()
+            .IsValueObjectWrapper<DateTimeOffset, ReleaseCompleteDate>()
             .IsRequired();
 
         builder.Property(r => r.UpdateDate)
-            .IsValueObjectWrapper<DateTime, ReleaseUpdateDate>()
+            .IsValueObjectWrapper<DateTimeOffset, ReleaseUpdateDate>()
             .IsRequired();
 
         builder.Property(r => r.Status)

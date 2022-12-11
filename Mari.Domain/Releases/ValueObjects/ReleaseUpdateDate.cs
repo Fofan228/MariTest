@@ -3,7 +3,7 @@ using Mari.Domain.Common.Models;
 
 namespace Mari.Domain.Releases.ValueObjects;
 
-public record ReleaseUpdateDate : ValueObjectWrapper<DateTime, ReleaseUpdateDate>, IHasDefaultValue<ReleaseUpdateDate>
+public record ReleaseUpdateDate : ValueObjectWrapper<DateTimeOffset, ReleaseUpdateDate>, IHasDefaultValue<ReleaseUpdateDate>
 {
     [Obsolete(PublicConstructorObsoleteMessage, true)]
     public ReleaseUpdateDate() { }

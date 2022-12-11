@@ -35,7 +35,7 @@ namespace Mari.Migrations.Migrations
                         .HasColumnType("character varying(1000)")
                         .HasColumnName("content");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTimeOffset>("CreateDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("create_date");
 
@@ -99,7 +99,7 @@ namespace Mari.Migrations.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("CompleteDate")
+                    b.Property<DateTimeOffset>("CompleteDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("complete_date");
 
@@ -122,7 +122,7 @@ namespace Mari.Migrations.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("status");
 
-                    b.Property<DateTime>("UpdateDate")
+                    b.Property<DateTimeOffset>("UpdateDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("update_date");
 

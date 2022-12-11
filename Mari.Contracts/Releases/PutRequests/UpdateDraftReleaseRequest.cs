@@ -19,7 +19,7 @@ public class UpdateDraftReleaseRequest : PutRequest
         ReleaseVersionDto? Version,
         string? PlatformName,
         string? Status,
-        DateTime? CompleteDate,
+        DateTimeOffset? CompleteDate,
         string? MainIssue,
         string? Description)
         : RequestBody;

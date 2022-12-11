@@ -17,7 +17,7 @@ internal class GetCurrentReleasesQueryHandler : IRequestHandler<GetCurrentReleas
     public async Task<ErrorOr<IList<ReleaseResult>>> Handle(GetCurrentReleasesQuery request, CancellationToken token)
     {
         var currentReleases = _releaseRepository.GetCurrentReleases(request.Range);
-        return await currentReleases.Select(r => ReleaseResult.FromRelease(r))
+        return await currentReleases.Select(ReleaseResult.FromRelease)
             .ToListAsync();
     }
 }

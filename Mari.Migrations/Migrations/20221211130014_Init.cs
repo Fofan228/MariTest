@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Mari.Migrations.Migrations
 {
     /// <inheritdoc />
-    public partial class Test : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,8 +50,8 @@ namespace Mari.Migrations.Migrations
                     versionpatch = table.Column<int>(name: "version_patch", type: "integer", nullable: false),
                     platformid = table.Column<int>(name: "platform_id", type: "integer", nullable: false),
                     status = table.Column<int>(type: "integer", nullable: false),
-                    completedate = table.Column<DateTime>(name: "complete_date", type: "timestamp with time zone", nullable: false),
-                    updatedate = table.Column<DateTime>(name: "update_date", type: "timestamp with time zone", nullable: false),
+                    completedate = table.Column<DateTimeOffset>(name: "complete_date", type: "timestamp with time zone", nullable: false),
+                    updatedate = table.Column<DateTimeOffset>(name: "update_date", type: "timestamp with time zone", nullable: false),
                     description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     mainissue = table.Column<string>(name: "main_issue", type: "text", nullable: false)
                 },
@@ -74,7 +74,7 @@ namespace Mari.Migrations.Migrations
                     content = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     userid = table.Column<int>(name: "user_id", type: "integer", nullable: false),
                     releaseid = table.Column<Guid>(name: "release_id", type: "uuid", nullable: false),
-                    createdate = table.Column<DateTime>(name: "create_date", type: "timestamp with time zone", nullable: false),
+                    createdate = table.Column<DateTimeOffset>(name: "create_date", type: "timestamp with time zone", nullable: false),
                     isredacted = table.Column<bool>(name: "is_redacted", type: "boolean", nullable: false),
                     issystem = table.Column<bool>(name: "is_system", type: "boolean", nullable: false)
                 },
@@ -104,6 +104,12 @@ namespace Mari.Migrations.Migrations
                 name: "ix_comments_user_id",
                 table: "comments",
                 column: "user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_platform_name",
+                table: "platform",
+                column: "name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "ix_releases_platform_id",

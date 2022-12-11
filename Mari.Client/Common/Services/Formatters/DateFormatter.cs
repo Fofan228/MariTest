@@ -5,20 +5,27 @@ namespace Mari.Client.Common.Services.Formatters;
 
 public class DateFormatter : IDateFormatter
 {
-    private const string ConstantFormatDate  = "dd.MM.yyyy";
+    private const string ConstantFormatDate = "dd.MM.yyyy";
     private const string ConstantFormatDateTime = "dd.MM.yyyy hh:mm:ss";
-    
-    public string FormatDate(DateTime? dateTime)
+
+    public string FormatDate(DateTimeOffset? dateTime, bool utcDate = false)
     {
-        return dateTime?.ToString(ConstantFormatDate) ?? string.Empty;
+        return dateTime?.ToLocalTime().ToString(ConstantFormatDate) ?? string.Empty;
     }
 
-    public string FormatDateTime(DateTime? dateTime)
+    public string FormatDateTime(DateTimeOffset? dateTime, bool utcDate = false)
     {
-        return dateTime?.ToString(ConstantFormatDateTime) ?? string.Empty;
+
+        return Convert(dateTime, utcDate)?.ToString(ConstantFormatDateTime) ?? string.Empty;
     }
-    public string Humanize(DateTime? dateTime)
+    public string Humanize(DateTimeOffset? dateTime, bool utcDate = false)
     {
-        return dateTime?.Humanize(true) ?? string.Empty;
+        return Convert(dateTime, utcDate)?.Humanize() ?? string.Empty;
+    }
+
+    public DateTime? Convert(DateTimeOffset? dateTime, bool utcDate = false)
+    {
+        if (dateTime is null) return null;
+        return utcDate ? dateTime.Value.UtcDateTime : dateTime.Value.LocalDateTime;
     }
 }

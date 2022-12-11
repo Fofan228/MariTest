@@ -14,7 +14,7 @@ public class Comment : AggregateRoot<CommentId>
         UserId userId,
         ReleaseId releaseId,
         CommentContent content,
-        DateTime currentDate,
+        DateTimeOffset currentDate,
         bool isSystem = false)
     {
         return new Comment(

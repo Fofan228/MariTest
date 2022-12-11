@@ -54,4 +54,18 @@ public class ReleaseRepository : Repository<Release, ReleaseId>, IReleaseReposit
 
         return query.AsAsyncEnumerable();
     }
+
+    public IAsyncEnumerable<Release> GetObsoleteReleases(Range range)
+    {
+        var query = Set.AsNoTracking()
+            .Where(r1 =>
+                r1.Status == ReleaseStatus.Complete &&
+                r1.UpdateDate != Set
+                    .Where(r2 => r2.Platform == r1.Platform && r2.Status == r1.Status)
+                    .Max(r => r.UpdateDate));
+
+        query = AddRange(query, range);
+
+        return query.AsAsyncEnumerable();
+    }
 }

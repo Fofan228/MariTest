@@ -6,6 +6,6 @@ public record CommentResponse(
     int UserId,
     string UserName,
     string Content,
-    DateTime CreateDate,
+    DateTimeOffset CreateDate,
     bool IsRedacted);
 

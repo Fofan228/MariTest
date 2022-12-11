@@ -115,7 +115,7 @@
             @context.UpdateDate.ToString()
         </MudTd>
         <MudTd DataLabel="CompleteDate">
-            <MudDatePicker Context="_picker" @bind-Date="@context.CompleteDate" @ref="_datePicker"
+            <MudDatePicker Context="_picker" @bind-Date="@context.CompleteDateTime" @ref="_datePicker"
                            PickerVariant="PickerVariant.Dialog">
                 <PickerActions>
                     <MudButton Class="mr-auto align-self-start" OnClick="@(() => _datePicker.Clear())">Очистить</MudButton>

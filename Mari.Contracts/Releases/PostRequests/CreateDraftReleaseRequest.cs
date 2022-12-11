@@ -17,7 +17,7 @@ public class CreateDraftReleaseRequest : PostRequest<VoidResponse>
 
     public record Body(
         string? MainIssue,
-        DateTime? CompleteDate,
+        DateTimeOffset? CompleteDate,
         string? PlatformName,
         ReleaseVersionDto? Version,
         string? Description)

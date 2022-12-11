@@ -4,5 +4,5 @@ namespace Mari.Infrastructure.CommonServices;
 
 public class DateTimeProvider : IDateTimeProvider
 {
-    public DateTime UtcNow => DateTime.UtcNow;
+    public DateTimeOffset UtcNow => DateTimeOffset.UtcNow;
 }

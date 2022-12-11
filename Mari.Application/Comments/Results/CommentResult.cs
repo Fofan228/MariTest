@@ -9,7 +9,7 @@ public record CommentResult(
     int UserId,
     string UserName,
     string Content,
-    DateTime CreateDate,
+    DateTimeOffset CreateDate,
     bool IsRedacted)
 {
     public static CommentResult FromComment(Comment comment, Username username) => new(

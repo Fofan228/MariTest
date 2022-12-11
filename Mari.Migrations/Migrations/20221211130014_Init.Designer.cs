@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Mari.Migrations.Migrations
 {
     [DbContext(typeof(MariDbContext))]
-    [Migration("20221205203101_Test2")]
-    partial class Test2
+    [Migration("20221211130014_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,7 @@ namespace Mari.Migrations.Migrations
                         .HasColumnType("character varying(1000)")
                         .HasColumnName("content");
 
-                    b.Property<DateTime>("CreateDate")
+                    b.Property<DateTimeOffset>("CreateDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("create_date");
 
@@ -88,8 +88,9 @@ namespace Mari.Migrations.Migrations
                     b.HasKey("Id")
                         .HasName("pk_platform");
 
-                    b.HasAlternateKey("Name")
-                        .HasName("ak_platform_name");
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ix_platform_name");
 
                     b.ToTable("platform", (string)null);
                 });
@@ -101,7 +102,7 @@ namespace Mari.Migrations.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("CompleteDate")
+                    b.Property<DateTimeOffset>("CompleteDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("complete_date");
 
@@ -124,7 +125,7 @@ namespace Mari.Migrations.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("status");
 
-                    b.Property<DateTime>("UpdateDate")
+                    b.Property<DateTimeOffset>("UpdateDate")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("update_date");
 

@@ -13,7 +13,7 @@ public record UpdateReleaseCommand : IRequest<ErrorOr<Updated>>
         ReleaseVersionDto version,
         string platformName,
         ReleaseStatus status,
-        DateTime completeDate,
+        DateTimeOffset completeDate,
         string mainIssue,
         string description)
     {

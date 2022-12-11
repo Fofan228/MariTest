@@ -27,7 +27,7 @@ public class CommentConfiguration : IEntityTypeConfiguration<Comment>
             .IsRequired();
 
         builder.Property(c => c.CreateDate)
-            .IsValueObjectWrapper<DateTime, CommentCreateDate>()
+            .IsValueObjectWrapper<DateTimeOffset, CommentCreateDate>()
             .IsRequired();
 
         builder.HasOne<User>()

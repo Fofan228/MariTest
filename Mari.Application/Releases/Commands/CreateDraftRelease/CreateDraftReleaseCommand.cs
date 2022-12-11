@@ -9,7 +9,7 @@ public record CreateDraftReleaseCommand : IRequest<ErrorOr<Created>>
 {
     public CreateDraftReleaseCommand(
         string? mainIssue,
-        DateTime? completeDate,
+        DateTimeOffset? completeDate,
         string? platformName,
         string? description,
         ReleaseVersionDto version)

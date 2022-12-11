@@ -2,8 +2,7 @@
 
 public interface IDateFormatter
 {
-    string FormatDate(DateTime? dateTime);
-    
-    string FormatDateTime(DateTime? dateTime);
-    string Humanize(DateTime? dateTime);
+    string FormatDate(DateTimeOffset? dateTime, bool utcDate = false);
+    string FormatDateTime(DateTimeOffset? dateTime, bool utcDate = false);
+    string Humanize(DateTimeOffset? dateTime, bool utcDate = false);
 }

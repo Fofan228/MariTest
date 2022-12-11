@@ -11,7 +11,7 @@ public record UpdateDraftReleaseCommand : IRequest<ErrorOr<Updated>>
         Guid id,
         ReleaseVersionDto? version,
         string? platformName,
-        DateTime? completeDate,
+        DateTimeOffset? completeDate,
         string? mainIssue,
         string? description)
     {

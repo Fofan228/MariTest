@@ -12,4 +12,5 @@ public interface IReleaseRepository : IRepository<Release, ReleaseId>
     Task<Platform?> GetPlatformByName(PlatformName name, CancellationToken token = default);
     Task<ReleaseVersion?> GetMaxVersion(Specification<Release> specification, CancellationToken token = default);
     IAsyncEnumerable<Release> GetCurrentReleases(Range range);
+    IAsyncEnumerable<Release> GetObsoleteReleases(Range range);
 }

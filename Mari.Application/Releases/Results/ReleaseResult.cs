@@ -8,8 +8,8 @@ public record ReleaseResult(
     ReleaseVersionDto Version,
     string PlatformName,
     string Status,
-    DateTime CompleteDate,
-    DateTime UpdateDate,
+    DateTimeOffset CompleteDate,
+    DateTimeOffset UpdateDate,
     string MainIssue,
     string Description)
 {

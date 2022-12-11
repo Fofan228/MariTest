@@ -67,69 +67,48 @@ public class Release : AggregateRoot<ReleaseId>
 
     public bool IsReadOnly => Status is ReleaseStatus.Complete;
 
-    public ErrorOr<Updated> ChangeMainIssue(Issue mainIssue, DateTime currentDateTime)
+    public ErrorOr<Updated> ChangeMainIssue(Issue mainIssue, DateTimeOffset currentDateTime)
     {
-        if (IsReadOnly) return Errors.Release.ReleaseIsReadOnly;
         MainIssue = mainIssue;
         return ChangeUpdateDate(currentDateTime);
     }
 
-    public ErrorOr<Updated> ChangeDescription(ReleaseDescription description, DateTime currentDateTime)
+    public ErrorOr<Updated> ChangeDescription(ReleaseDescription description, DateTimeOffset currentDateTime)
     {
-        if (IsReadOnly) return Errors.Release.ReleaseIsReadOnly;
         Description = description;
         return ChangeUpdateDate(currentDateTime);
     }
 
-    public ErrorOr<Updated> ChangeVersion(ReleaseVersion version, DateTime currentDateTime)
+    public ErrorOr<Updated> ChangeVersion(ReleaseVersion version, DateTimeOffset currentDateTime)
     {
-        if (IsReadOnly) return Errors.Release.ReleaseIsReadOnly;
-        if (version <= Version)
-            return Errors.Release.VersionMustBeGreaterThanCurrent;
         Version = version;
         return ChangeUpdateDate(currentDateTime);
     }
 
-    public ErrorOr<Updated> ChangeCompleteDate(ReleaseCompleteDate completeDate, DateTime currentDateTime)
+    public ErrorOr<Updated> ChangeCompleteDate(ReleaseCompleteDate completeDate, DateTimeOffset currentDateTime)
     {
-        if (IsReadOnly) return Errors.Release.ReleaseIsReadOnly;
-        if ((DateTime)completeDate <= (DateTime)CompleteDate)
-            return Errors.Release.CompleteDateMustBeGreaterThanCurrent;
         CompleteDate = completeDate;
         return ChangeUpdateDate(currentDateTime);
     }
 
-    public ErrorOr<Updated> ChangePlatform(Platform platform, DateTime currentDateTime)
+    public ErrorOr<Updated> ChangePlatform(Platform platform, DateTimeOffset currentDateTime)
     {
-        if (IsReadOnly) return Errors.Release.ReleaseIsReadOnly;
         Platform = platform;
         return ChangeUpdateDate(currentDateTime);
     }
 
-    public ErrorOr<Updated> ChangeStatus(ReleaseStatus status, DateTime currentDateTime)
+    public ErrorOr<Updated> ChangeStatus(ReleaseStatus status, DateTimeOffset currentDateTime)
     {
-        if (IsReadOnly) return Errors.Release.ReleaseIsReadOnly;
-        var prevStatus = Status;
-        Status = status;
-        var result = CheckDraftStatus();
-        if (result.IsError)
-        {
-            Status = prevStatus;
-            return result.Errors;
-        }
         return ChangeUpdateDate(currentDateTime);
     }
 
     public ErrorOr<Success> CreateFromDraft()
     {
-        if (Status != ReleaseStatus.Draft)
-            return Errors.Release.ReleaseMustBeDraft;
-
         Status = ReleaseStatus.Planning;
         return Result.Success;
     }
 
-    private ErrorOr<Updated> ChangeUpdateDate(DateTime currentDateTime)
+    private ErrorOr<Updated> ChangeUpdateDate(DateTimeOffset currentDateTime)
     {
         UpdateDate = ReleaseUpdateDate.Create(currentDateTime);
         return Result.Updated;
@@ -137,9 +116,6 @@ public class Release : AggregateRoot<ReleaseId>
 
     private ErrorOr<Success> CheckDraftStatus()
     {
-        if (Status == ReleaseStatus.Draft) return Result.Success;
-        if (Platform is null || CompleteDate is null || MainIssue is null)
-            return Errors.Release.NonDraftReleaseFieldsCannotBeNull;
         return Result.Success;
     }
 }
