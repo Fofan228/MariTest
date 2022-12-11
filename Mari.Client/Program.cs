@@ -13,6 +13,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddHttpClient();
+builder.Services.AddOptions();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddMudServices();
 builder.Services.AddBlazoredLocalStorage();

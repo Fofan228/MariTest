@@ -1,4 +1,5 @@
 using ErrorOr;
+using Mari.Application.Common.Interfaces.CommonServices;
 using Mari.Application.Common.Interfaces.Persistence;
 using Mari.Domain.Releases;
 using Mari.Domain.Releases.Entities;
@@ -11,13 +12,16 @@ internal class CreateDraftReleaseCommandHandler : IRequestHandler<CreateDraftRel
 {
     private readonly IReleaseRepository _releaseRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
     public CreateDraftReleaseCommandHandler(
         IReleaseRepository releaseRepository,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IDateTimeProvider dateTimeProvider)
     {
         _releaseRepository = releaseRepository;
         _unitOfWork = unitOfWork;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task<ErrorOr<Created>> Handle(CreateDraftReleaseCommand request, CancellationToken cancellationToken)
@@ -36,6 +40,7 @@ internal class CreateDraftReleaseCommandHandler : IRequestHandler<CreateDraftRel
             mainIssue: request.MainIssue,
             platform: platform,
             completeDate: request.CompleteDate,
+            currentDate: _dateTimeProvider.UtcNow,
             version: request.Version,
             description: request.Description,
             status: ReleaseStatus.Draft);

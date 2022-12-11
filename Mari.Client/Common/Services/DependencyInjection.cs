@@ -15,6 +15,7 @@ public static class DependencyInjection
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IReleaseManager, ReleaseManager>();
         services.AddScoped<IUserManager, UserManager>();
+        services.AddScoped<ICurrentUserManager, CurrentUserManager>();
         services.AddScoped<ICommentManager, CommentManager>();
         services.AddScoped<IDescriptionFormatter, RegexDescriptionFormatter>();
         services.AddScoped<IDateFormatter, DateFormatter>();

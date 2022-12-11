@@ -1,8 +1,10 @@
 using ErrorOr;
+using Mari.Application.Common.Interfaces.CommonServices;
 using Mari.Application.Common.Interfaces.Persistence;
 using Mari.Domain.Releases;
 using Mari.Domain.Releases.Entities;
 using Mari.Domain.Releases.Enums;
+using Mari.Domain.Releases.ValueObjects;
 using MediatR;
 
 namespace Mari.Application.Releases.Commands.CreateRelease;
@@ -11,13 +13,16 @@ internal class CreateReleaseCommandHandler : IRequestHandler<CreateReleaseComman
 {
     private readonly IReleaseRepository _releaseRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IDateTimeProvider _dateTimeProvider;
 
     public CreateReleaseCommandHandler(
         IReleaseRepository releaseRepository,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IDateTimeProvider dateTimeProvider)
     {
         _releaseRepository = releaseRepository;
         _unitOfWork = unitOfWork;
+        _dateTimeProvider = dateTimeProvider;
     }
 
     public async Task<ErrorOr<Created>> Handle(CreateReleaseCommand request, CancellationToken cancellationToken)
@@ -35,6 +40,7 @@ internal class CreateReleaseCommandHandler : IRequestHandler<CreateReleaseComman
             mainIssue: request.MainIssue,
             platform: platform,
             completeDate: request.CompleteDate,
+            currentDate: _dateTimeProvider.UtcNow,
             version: request.Version,
             description: request.Description,
             status: ReleaseStatus.Planning);

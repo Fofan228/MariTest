@@ -13,6 +13,7 @@ public class Release : AggregateRoot<ReleaseId>
         Issue? mainIssue,
         Platform? platform,
         ReleaseCompleteDate? completeDate,
+        DateTimeOffset currentDate,
         ReleaseStatus? status = null,
         ReleaseDescription? description = null,
         ReleaseVersion? version = null)
@@ -24,7 +25,7 @@ public class Release : AggregateRoot<ReleaseId>
             mainIssue: mainIssue,
             platform: platform,
             completeDate: completeDate,
-            updateDate: ReleaseUpdateDate.Default,
+            updateDate: ReleaseUpdateDate.Create(currentDate),
             status: status ?? ReleaseStatus.Draft,
             description: description ?? ReleaseDescription.Default,
             version: version ?? ReleaseVersion.MinValue
