@@ -19,7 +19,7 @@
             <MudIconButton Icon="@Icons.Filled.Refresh" OnClick="Refresh"/>
         </MudTooltip>
         <MudSpacer/>
-        <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, релизной задаче, статусу и датам"
+        <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, версии и полной дате завершения"
                       Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"/>
     </ToolBarContent>
     <ColGroup>
@@ -57,7 +57,7 @@
         <MudTd DataLabel="Status">@context.Status</MudTd>
       <MudTd DataLabel="UpdateDate">
                     <MudTooltip Text="@DateFormatter.FormatDateTime(context.UpdateDate)">
-                            <MudText>@DateFormatter.Humanize( context.UpdateDate)</MudText>
+                            <MudText>@DateFormatter.Humanize(context.UpdateDate)</MudText>
                     </MudTooltip>
             </MudTd>
             <MudTd DataLabel="CompleteDate">
@@ -118,9 +118,15 @@
             <MudDatePicker Context="_picker" @bind-Date="@context.CompleteDateTime" @ref="_datePicker"
                            PickerVariant="PickerVariant.Dialog">
                 <PickerActions>
-                    <MudButton Class="mr-auto align-self-start" OnClick="@(() => _datePicker.Clear())">Очистить</MudButton>
-                    <MudButton OnClick="@(() => _datePicker.Close(false))">Закрыть</MudButton>
-                    <MudButton Color="Color.Primary" OnClick="@(() => _datePicker.Close())">Сохранить</MudButton>
+                    <MudButton Class="mr-auto align-self-start" OnClick="@(() => _datePicker.Clear())">
+                        Очистить
+                    </MudButton>
+                    <MudButton OnClick="@(() => _datePicker.Close(false))">
+                        Закрыть
+                    </MudButton>
+                    <MudButton Color="Color.Primary" OnClick="@(() => _datePicker.Close())">
+                        Сохранить
+                    </MudButton>
                 </PickerActions>
             </MudDatePicker>
             @* <MudDatePicker @bind-Date="@context.CompleteDate" PickerVariant="PickerVariant.Dialog" /> *@
@@ -265,11 +271,9 @@
             return true;
         if (answer.PlatformName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-        if (answer.MainIssue.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+        if (answer.CompleteDate.ToString()!.Contains(_searchString))
             return true;
-        if (answer.Status.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(_searchString);
+        return $"{answer.Version.Major}.{answer.Version.Minor}.{answer.Version.Patch}".Contains(_searchString);
     }
     
     [Inject] private IDialogService DialogService { get; set; }

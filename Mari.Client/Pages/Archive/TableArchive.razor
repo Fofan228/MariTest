@@ -53,16 +53,16 @@
     private bool _loading;
     private string _url = "Ссылка на задачу";
     private string searchString = "";
-    private IList<ReleaseModel> Releases { get; set; } = new List<ReleaseModel>();
+    private List<ReleaseModel> Releases { get; set; } = new List<ReleaseModel>();
     
 
     protected override async Task OnInitializedAsync()
     {
-     Releases = await ReleaseManager.GetObsolete();
+    // Releases = await ReleaseManager.GetArchive();
         
         
     // TODO Тестовые данные
-        /*Releases = new List<ReleaseModel>
+        Releases = new List<ReleaseModel>
         {
             new ReleaseModel()
             {
@@ -93,10 +93,8 @@
                 CompleteDate = new DateTime(2022, 11, 11),
                 MainIssue = "http",
                 Description = "GG"
-            }*/
-        /*
+            }
         };
-        */
           
         
     // конец

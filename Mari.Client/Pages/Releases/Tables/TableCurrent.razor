@@ -14,7 +14,7 @@
              <MudIconButton Icon="@Icons.Filled.Refresh" OnClick="Refresh"/>
          </MudTooltip>
          <MudSpacer/>
-         <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, релизной задаче, статусу и датам"
+         <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, версии и полной дате завершения"
                        Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"/>
      </ToolBarContent>
      <ColGroup>
@@ -89,11 +89,9 @@
              return true;
          if (answer.PlatformName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
              return true;
-         if (answer.MainIssue.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+         if (answer.CompleteDate.ToString()!.Contains(_searchString))
              return true;
-         if (answer.Status.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-             return true;
-         return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(_searchString);
+         return $"{answer.Version.Major}.{answer.Version.Minor}.{answer.Version.Patch}".Contains(_searchString);
      }
 
      private async Task Refresh()
