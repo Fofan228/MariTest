@@ -9,6 +9,7 @@ public interface IReleaseManager
     Task CreateFromDraft(ReleaseModel release, CancellationToken token = default);
     Task<ReleaseModel?> GetById(Guid id, CancellationToken token = default);
     Task<IList<ReleaseModel>> GetCurrent(CancellationToken token = default);
+    Task<IList<ReleaseModel>> GetObsolete(CancellationToken token = default);
     Task<IList<ReleaseModel>> GetPlanned(CancellationToken token = default);
     Task<IList<ReleaseModel>> GetInWork(CancellationToken token = default);
     Task<IList<PlatformModel>> GetAllPlatforms(CancellationToken token = default);

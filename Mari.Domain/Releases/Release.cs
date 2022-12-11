@@ -99,6 +99,7 @@ public class Release : AggregateRoot<ReleaseId>
 
     public ErrorOr<Updated> ChangeStatus(ReleaseStatus status, DateTimeOffset currentDateTime)
     {
+        Status = status;
         return ChangeUpdateDate(currentDateTime);
     }
 
