@@ -5,11 +5,13 @@
 @using System.Web
 @using Humanizer
 @using Mari.Client.Common.Interfaces.Formatters
+@using Mari.Client.Common.Services
 @using Mari.Client.Models.Comments
 @using Microsoft.IdentityModel.JsonWebTokens
 @inject ICommentManager CommentManager
 @inject IDescriptionFormatter DescriptionFormatter
  @inject IDateFormatter DateFormatter
+ @inject IAuthorizationService AuthorizationService 
 <MudPaper Elevation="0" Class="pt-2"> 
     <MudStack > 
         @foreach (var comment in UserComments)
@@ -95,6 +97,8 @@
     
 @code {
 
+    string id { get; set; }
+    
     [Parameter]
     public string ReleaseId { get; set; } = null!;
 
@@ -116,7 +120,7 @@
         if (!IsEdit) 
         { // добавляем новый
             NewCommnet.ReleaseId = new Guid(ReleaseId);
-            NewCommnet.UserId = 54712435;
+            NewCommnet.UserId = 71459985;
         
             await CommentManager.Create(NewCommnet);
         }
