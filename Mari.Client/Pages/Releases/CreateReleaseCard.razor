@@ -103,7 +103,8 @@
     
     public async Task ClickOnCreateRelease()
     {
-        if (Release.PlatformName is not null &&
+        if ((Release.PlatformName is not null || 
+             Release.PlatformName != String.Empty) &&
             (Release.Version.Major != 0 ||
              Release.Version.Patch != 0 ||
              Release.Version.Minor != 0))

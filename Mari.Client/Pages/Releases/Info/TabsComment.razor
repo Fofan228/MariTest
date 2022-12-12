@@ -12,7 +12,9 @@
 @inject IDescriptionFormatter DescriptionFormatter
  @inject IDateFormatter DateFormatter
  @inject IAuthorizationService AuthorizationService 
-<MudPaper Elevation="0" Class="pt-2"> 
+ @inject ICurrentUserManager CurrentUserManager
+ 
+ <MudPaper Elevation="0" Class="pt-2"> 
     <MudStack > 
         @foreach (var comment in UserComments)
             {
@@ -120,8 +122,8 @@
         if (!IsEdit) 
         { // добавляем новый
             NewCommnet.ReleaseId = new Guid(ReleaseId);
-            NewCommnet.UserId = 71459985;
-        
+            NewCommnet.UserId = (await CurrentUserManager.Get()).Id;
+            
             await CommentManager.Create(NewCommnet);
         }
         else
