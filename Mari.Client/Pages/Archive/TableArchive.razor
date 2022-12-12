@@ -12,7 +12,7 @@
     <ToolBarContent>
           <MudText Typo="Typo.h6">Настройки</MudText>
           <MudSpacer />
-          <MudTextField @bind-Value="searchString" Placeholder="Поиск по платформе, релизной задаче, статусу и датам"
+          <MudTextField @bind-Value="_searchString" Placeholder="Поиск по платформе, версии и полной дате завершения"
                         Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"/>
     </ToolBarContent>
     <HeaderContent>
@@ -52,52 +52,13 @@
 
     private bool _loading;
     private string _url = "Ссылка на задачу";
-    private string searchString = "";
+    private string _searchString = "";
     private IList<ReleaseModel> Releases { get; set; } = new List<ReleaseModel>();
     
 
     protected override async Task OnInitializedAsync()
     {
         Releases = await ReleaseManager.GetObsolete();
-        
-        
-    // TODO Тестовые данные
-        /*Releases = new List<ReleaseModel>
-        {
-            new ReleaseModel()
-            {
-                Id = Guid.NewGuid(),
-                Version = new VersionModel()
-                {
-                    Major = 1,
-                    Minor = 1,
-                    Patch = 1
-                },
-                PlatformName = "Android",
-                UpdateDate = new DateTime(2022, 11, 11),
-                CompleteDate = new DateTime(2022, 11, 11),
-                MainIssue = "http",
-                Description = "GG"
-            },
-            new ReleaseModel()
-            {
-                Id = Guid.NewGuid(),
-                Version = new VersionModel()
-                {
-                    Major = 1,
-                    Minor = 1,
-                    Patch = 1
-                },
-                PlatformName = "Android",
-                UpdateDate = new DateTime(2022, 11, 11),
-                CompleteDate = new DateTime(2022, 11, 11),
-                MainIssue = "http",
-                Description = "GG"
-            }*/
-      //  };
-          
-        
-    // конец
     }
 
     private void RowClicked(TableRowClickEventArgs<ReleaseModel> _)
@@ -107,14 +68,12 @@
     
     private bool FilterFunc(ReleaseModel answer)
     {
-        if (string.IsNullOrEmpty(searchString))
+        if (string.IsNullOrEmpty(_searchString))
             return true;
-        if (answer.PlatformName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (answer.PlatformName.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-        if (answer.MainIssue.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (answer.CompleteDate.ToString()!.Contains(_searchString))
             return true;
-        if (answer.Status.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        return $"{answer.UpdateDate} {answer.CompleteDate}".Contains(searchString);
+        return $"{answer.Version.Major}.{answer.Version.Minor}.{answer.Version.Patch}".Contains(_searchString);
     }
 }
